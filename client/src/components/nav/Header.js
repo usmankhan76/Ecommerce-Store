@@ -23,8 +23,8 @@ const Header = () => {
         {label:(<Link to={'/login'}>Login</Link>),key:'login',type:Link,to:'/login',icon:<UserOutlined/>,className:"float-end"},
 
         {
-        label:(<Link to={'/register'}>'Register'</Link>),
-        key:'Register',icon:<UserAddOutlined/>,className:'float-end'}
+        label:(<Link to={'/signup'}>Sign Up</Link>),
+        key:'Signup',icon:<UserAddOutlined/>,className:'float-end'}
     ]
   return (
     <Menu items={items} mode="horizontal" selectedKeys={current} onClick={handleClick}  className="d-block"/>
