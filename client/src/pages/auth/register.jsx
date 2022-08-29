@@ -6,8 +6,9 @@ import InputField from '../../components/input-field/input-field.component'
 import { auth } from '../../firebase'
  import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom'  
-import { setCurrentUser, setTimeActive,} from '../../components/redux/features/user/user-slice'
+import { setCurrentUser, setTimeActive,} from '../../redux/features/user/user-slice'
 import { useDispatch } from 'react-redux'
+import { Button } from 'antd'
 
 
 const Register = () => {
@@ -31,6 +32,10 @@ const Register = () => {
     setUserData({...userData,[name]:value})
     
   }
+  const config={
+        url:'http://localhost:3000/',
+        handleOnChange:true
+    }
 
   const handleSubmit=async (event)=>{
     
@@ -44,15 +49,15 @@ const Register = () => {
 
     if(validatePassword()){
           createUserWithEmailAndPassword(auth,email,password).then(()=>{
-               toast.info("Please Verify your Email");
-                dispatch(setTimeActive(true));  
-                dispatch(setCurrentUser(auth.currentUser));  
-            sendEmailVerification(auth.currentUser).then(()=>{
-              console.log("cahling")
+              toast.info("Please Verify your Email");
+              dispatch(setTimeActive(true));  
+              console.log('before verification',auth.currentUser)
+              
+            sendEmailVerification(auth.currentUser,config).then(()=>{
               navigate('/verify-email')
+            }).catch((err)=>toast.error(err))
             
             
-          }).catch((err)=>toast.error(err))
           }
           ).catch(err=>toast.error(err.message))
 
@@ -80,7 +85,15 @@ const Register = () => {
             <InputField type='password' onChange={handleOnChange} label="Confirm Password" name='confirmPassword' 
             value={confirmPassword}  />
 
-            <button type='submit' className='btn btn-raised'>Submit </button>
+            
+            <Button
+           onClick={handleSubmit}
+           type='primary'
+           className='mb-3'
+           block
+           shape='round'
+           size='large'
+          >Submit</Button>
           </form>
           
           

@@ -6,15 +6,22 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import 'antd/dist/antd.css'
 import {Provider} from 'react-redux'
-import { store } from './components/redux/store';
-
+import { store } from './redux/store';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import ThemeProvider from 'react-bootstrap/ThemeProvider'
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   
   <React.StrictMode>
     <Provider store={store} >
     <BrowserRouter>
+    <ThemeProvider
+  breakpoints={['xxxl', 'xxl', 'xl', 'lg', 'md', 'sm', 'xs']}
+  minBreakpoint="xs"
+  >
     <App />
+
+  </ThemeProvider>
     </BrowserRouter>
   </Provider>
   </React.StrictMode>

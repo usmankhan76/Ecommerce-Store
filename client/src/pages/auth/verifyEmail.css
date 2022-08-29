@@ -33,3 +33,16 @@
   justify-content: center;
   align-items: center;
 }
+.butn{
+  height: 30px;
+  width: 80px;
+    font-size: 16px;
+    padding: 0 5px;
+    background-color:rgb(6, 81, 232);
+    color: white;
+    border: none;
+    margin-bottom: 5px;
+}
+.butn:hover{
+  background-color: rgb(71, 107, 186);
+}
