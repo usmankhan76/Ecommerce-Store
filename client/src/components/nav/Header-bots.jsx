@@ -15,7 +15,7 @@ const Header = () => {
     
     const dispatch=useDispatch();
     const navigate=useNavigate();
-    const {loginUser}=useSelector(state=>state.user);
+    const {loginUser,role}=useSelector(state=>state.user);
 
     const logOut=()=>{
       console.log('logout')
@@ -50,7 +50,7 @@ const Header = () => {
                  {a ?
                     <img className="avatarImage" alt='U' src={`${a}`} />
                     :<span className='bi bi-person-circle avat' >
-
+                      u
                       </span> }
               </div>
             <NavDropdown  
@@ -60,14 +60,15 @@ const Header = () => {
                 id="collasible-nav-dropdown" 
                
                 >
-                <NavDropdown.Item href="#action/3.1">
+                <NavDropdown.Item >
                   <span className="bi bi-person-lines-fill" style={{marginRight:'10px'}} ></span>
-                  <Link to='/user/dashboard' style={{textDecoration:'none' ,color:'white'}}>Dashboard</Link>
+                  <Link to={role === "admin" ? 'admin/dashboard':'/user/dashboard' } 
+                  style={{textDecoration:'none' ,color:'white'}}>Dashboard</Link>
                 </NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.2">
+                <NavDropdown.Item >
                    <span className='bi-search s' style={{marginRight:'10px'}}></span> Another action
                 </NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.3">
+                <NavDropdown.Item >
                    <span className='bi-search s'style={{marginRight:'10px'}} ></span>  Something
                 </NavDropdown.Item>
                 {loginUser?<NavDropdown.Divider />:null}

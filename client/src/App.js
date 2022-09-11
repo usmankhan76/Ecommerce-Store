@@ -14,7 +14,7 @@ import VerfiyEmail from "./pages/auth/verify-email";
 import { useDispatch, useSelector } from "react-redux";
 import ForgetPassword from "./pages/auth/forget-password";
 import ProtectedRoute from "./components/protected-route/procted-route";
-import { craeteUpdateUser } from "./services/auth-service";
+import { craeteUpdateUser, GetCurrentUser } from "./services/auth-service";
 import NonProtected from "./components/protected-route/protect-verifyEmail";
 import UserDashboard from "./pages/user/user-dashboard";
 import VerifiedUserToken from "./components/protected-route/verified-user-route";
@@ -23,9 +23,14 @@ import VerifyAdmin from "./components/protected-route/verify-amdin-route";
 import UserProfile from "./pages/user/user-profile";
 import UserWishlist from "./pages/user/user-wishlist";
 import UserHistory from "./pages/user/user-history";
+import CreateCategory from "./pages/admin/categories/create-category";
+import UpdateCategoryItem from "./pages/admin/categories/update-category";
+import CreateSubCategory from "./pages/admin/sub-categories/create-sub-category";
+import UpdateSubCategoryItem from "./pages/admin/sub-categories/update-sub-category";
 function App() {
   const dispatch=useDispatch();
   const navigate=useNavigate();
+  const {loginUser}=useSelector(state=>state.user)
 
   function roleBasedRedirect(role){
     if(role==="admin"){
@@ -34,28 +39,33 @@ function App() {
       navigate('/user/dashboard')
     }
   }
-  const {loginUser}=useSelector(state=>state.user)
+
   useEffect(()=>{
     const unsubscribe=onAuthStateChanged(auth, (user)=>{
-      console.log("useEffect is chaling");
+      console.log("useEffect is chaling",user);
       if(user?.emailVerified){
         let name=user.displayName
           // user.reload();
+        
+
        craeteUpdateUser(auth.currentUser,name).then((res)=>{
           console.log("response",res);
           const{name,email,role,tokenId,_id}=res.data
           dispatch(setUserCredientials({name,email,role,tokenId,_id}))
           dispatch(setCurrentUser(user))
           
-            roleBasedRedirect(role)        
-        }).catch(err=>toast.error(err)) 
-
+           roleBasedRedirect(role)        
+        }).catch(err=>toast.error(err))
+        
+        GetCurrentUser().then((res)=>{console.log("get current user",res)}).catch((err)=>{console.log(err.message)})
+        
+        
       
       
       }
     })
     return()=>unsubscribe() 
-  },[dispatch,auth,loginUser])
+  },[loginUser,])
 
   return (
     <>
@@ -87,14 +97,10 @@ function App() {
       </ProtectedRoute>
       } />;
 
-     <Route path ='user/dashboard' element={
-      <VerifiedUserToken>
-        <UserDashboard/>
-      </VerifiedUserToken>
-      } />
-        <Route path='/user/dashboard/history' element={<UserHistory/>}/>
-        <Route path='/user/dashboard/wishlist' element={<UserWishlist/>}/>
-        <Route path='/user/dashboard/profile' element={<UserProfile/>}/>
+     <Route path ='user/dashboard' element={<VerifiedUserToken> <UserDashboard/> </VerifiedUserToken>} />
+      <Route path='/user/dashboard/history' element={<UserHistory/>}/>
+      <Route path='/user/dashboard/wishlist' element={<UserWishlist/>}/>
+      <Route path='/user/dashboard/profile' element={<UserProfile/>}/>
         
   
       <Route path ='admin/dashboard' element={
@@ -102,7 +108,12 @@ function App() {
         <AdminDashboard/>
       </VerifyAdmin> 
       } />;
-       
+       <Route path ='/admin/dashboard/category' element={<VerifyAdmin> <CreateCategory/> </VerifyAdmin> }/>; 
+       <Route path ='/admin/dashboard/sub-category' 
+            element={ <VerifyAdmin> <CreateSubCategory/> </VerifyAdmin> }/>; 
+       <Route path ='/admin/catergory/:slug' element={<VerifyAdmin><UpdateCategoryItem/> </VerifyAdmin> }/>; 
+       <Route path ='/admin/sub-catergory/:slug' element={<VerifyAdmin><UpdateSubCategoryItem/> </VerifyAdmin> }/>; 
+
     
     </Routes>
     </>

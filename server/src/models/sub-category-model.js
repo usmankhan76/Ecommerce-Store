@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
-const {ObjecID}=mongoose.Schema;
+const {ObjectId}=mongoose.Schema;
 
-const categorySchema=new mongoose.Schema({
+const subCategorySchema=new mongoose.Schema({
     name:{
         type:String,
         trim:true, // it remove the extra spaces before and after the name
@@ -15,10 +15,11 @@ const categorySchema=new mongoose.Schema({
         lowecase:true,
         index:true,  // it help us to find particularly slug 
 
-    }
+    },
+    parent:{type:ObjectId,ref:'Category',required:true}
 },
 {
     timestamps:true // it will show the create and update date
 })
 
-module.exports=mongoose.model('Category',categorySchema)
+module.exports=mongoose.model('SubCategoryModel',subCategorySchema)

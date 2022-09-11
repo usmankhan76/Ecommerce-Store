@@ -1,14 +1,14 @@
 const express = require('express');
-const { list, create, read, remove, update } = require('../controllers/category/category');
+const { list, create, read, remove, update } = require('../controllers/category/category-controller');
 const { authMiddleware, adminMiddleware } = require('../middlewares/auth-middle');
 
-const categoryRoutes=express.Router();
+const authRoutes=express.Router();
 
 
-categoryRoutes.post('/category',authMiddleware,adminMiddleware,create)
-categoryRoutes.get('/categories',list)
-categoryRoutes.post('/category:slug',authMiddleware,adminMiddleware,read)
-categoryRoutes.put('/category:slug',authMiddleware,adminMiddleware,update)
-categoryRoutes.delete('/category:slug',authMiddleware,adminMiddleware,remove)
+authRoutes.post('/category',authMiddleware,adminMiddleware,create)
+authRoutes.get('/categories',list)
+authRoutes.get('/category/:slug',read)
+authRoutes.put('/category/:slug',authMiddleware,adminMiddleware,update)
+authRoutes.delete('/category/:slug',authMiddleware,adminMiddleware,remove)
 
-module.exports=categoryRoutes
+module.exports=authRoutes

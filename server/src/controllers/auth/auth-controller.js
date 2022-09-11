@@ -5,7 +5,7 @@ async function creatUpdateUser(req,res) {
     const {photoURL,firebaseUser}=req.userCredientials
     const email=firebaseUser.email
     const name=  email.split('@')[0]
-    console.log(name,'this is name');
+    console.log('this is name',firebaseUser);
     const {uid}=firebaseUser
     const user= await User.findOneAndUpdate(
         {email},// will find user based on email
@@ -27,7 +27,7 @@ async function creatUpdateUser(req,res) {
 async function getCurrentUser(req,res) {
     User.findOne({email:req.userCredientials.firebaseUser.email}).exec((err,user)=>{
         if(err){throw new Error(err)};
-        res.json(user);
+       return res.json(user);
     })
 }
 
