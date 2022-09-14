@@ -9,7 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase";
-import { setCurrentUser, setlogingUserToken, setUserCredientials } from "./redux/features/user/user-slice";
+import { setAuthUserToken, setCurrentUser, setlogingUserToken, setUserCredientials } from "./redux/features/user/user-slice";
 import VerfiyEmail from "./pages/auth/verify-email";
 import { useDispatch, useSelector } from "react-redux";
 import ForgetPassword from "./pages/auth/forget-password";
@@ -27,6 +27,7 @@ import CreateCategory from "./pages/admin/categories/create-category";
 import UpdateCategoryItem from "./pages/admin/categories/update-category";
 import CreateSubCategory from "./pages/admin/sub-categories/create-sub-category";
 import UpdateSubCategoryItem from "./pages/admin/sub-categories/update-sub-category";
+import CreateProduct from "./pages/admin/product/create-product";
 function App() {
   const dispatch=useDispatch();
   const navigate=useNavigate();
@@ -53,6 +54,8 @@ function App() {
           const{name,email,role,tokenId,_id}=res.data
           dispatch(setUserCredientials({name,email,role,tokenId,_id}))
           dispatch(setCurrentUser(user))
+          dispatch(setAuthUserToken(user.accessToken))
+
           
            roleBasedRedirect(role)        
         }).catch(err=>toast.error(err))
@@ -113,6 +116,8 @@ function App() {
             element={ <VerifyAdmin> <CreateSubCategory/> </VerifyAdmin> }/>; 
        <Route path ='/admin/catergory/:slug' element={<VerifyAdmin><UpdateCategoryItem/> </VerifyAdmin> }/>; 
        <Route path ='/admin/sub-catergory/:slug' element={<VerifyAdmin><UpdateSubCategoryItem/> </VerifyAdmin> }/>; 
+       <Route path ='/admin/dashboard/product' element={<VerifyAdmin> <CreateProduct/> </VerifyAdmin> }/>; 
+
 
     
     </Routes>

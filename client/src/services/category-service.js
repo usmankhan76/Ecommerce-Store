@@ -59,4 +59,14 @@ export const updateCategory=async(slug,category,authtoken) => {
     //     headers:{authtoken}
     // })
  }
- 
+
+ export const getParentSubCategories=async(_id) => {
+    console.log("ID check",_id);
+    const options = {
+        method: 'GET',
+        url: `http://localhost:8000/api/category/sub/${_id}`,
+        
+    };
+
+     return await axios.request(options);
+ }

@@ -4,6 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import CategoryForm from '../../../components/category-form/category-form';
 import AdminNavs from '../../../components/nav/admin-navs';
+import SubsSelect from '../../../components/product-form/subs-select';
 import { auth } from '../../../firebase';
 import {  getCategories } from '../../../services/category-service';
 import {  getSubCategory, updateSubCategory } from '../../../services/sub-category-services';
@@ -95,6 +96,7 @@ const UpdateSubCategoryItem = () => {
                                     >{item.name}</option>
                                 })}
                             </select>
+                            <SubsSelect/>
                             
 
                         </div>
