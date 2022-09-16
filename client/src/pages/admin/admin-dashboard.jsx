@@ -1,7 +1,5 @@
 import React from 'react'
-import { Outlet } from 'react-router-dom'
 import AdminNavs from '../../components/nav/admin-navs'
-import SubsSelect from "../../components/product-form/subs-select"
 const AdminDashboard = () => {
   return (<>
    <div className="container-fluid">
@@ -10,7 +8,7 @@ const AdminDashboard = () => {
                 <AdminNavs/>
             </div>
             <div className="col">Admin DashBoard Page
-            <SubsSelect />
+            
             </div>
         </div>
     </div>

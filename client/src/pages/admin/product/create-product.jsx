@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
+import FileUpload from '../../../components/file-upload/file-upload'
 import AdminNavs from '../../../components/nav/admin-navs'
 import ProductForm from '../../../components/product-form/product-form'
 import { getParentSubCategories } from '../../../services/category-service'
@@ -28,10 +29,11 @@ const CreateProduct = () => {
     const {authUserToken}=useSelector((state=>state.user))
     const[subCategories,setSubCategories]=useState([])
     const[showsubs,setShowSubs]=useState(false)
+   
     
     const handleCategoryChange=(e)=>{
         e.preventDefault()
-        console.log("category change",e.target.value);
+        
         setValues({...values,category:e.target.value})
         getParentSubCategories(e.target.value).then((res)=>{
           console.log("Parent subCategories",res.data);
@@ -45,7 +47,7 @@ const CreateProduct = () => {
     let authtoken=authUserToken
     const handleSubmit=(e)=>{
         e.preventDefault()
-        console.log(values);
+       
         createProduct(values,authtoken).then((res)=>{
             console.log("Product response",res.data)
             toast.success(`${values.title} is created successfully`)
@@ -56,16 +58,20 @@ const CreateProduct = () => {
             toast.error(err.response.data.err)
           })
     }
-    console.log("categories",values.categories);
+    
   return (
      <div className="container-fluid">
         <div className="row">
             <div className="col-md-2">
                 <AdminNavs/>
             </div>
-            <div className="col" >
+            <div className="col-md-10" >
                 <h4>create product</h4>
                 <hr />
+                <div className="p-3">
+                    <FileUpload values={values}setValues={setValues}/>
+                    </div>
+                 {JSON.stringify(values.images)}   
                <ProductForm  values={values} handleSubmit={handleSubmit} setValues={setValues} handleCategoryChange={handleCategoryChange} showsubs={showsubs} subCategories={subCategories} />
          
             </div>
