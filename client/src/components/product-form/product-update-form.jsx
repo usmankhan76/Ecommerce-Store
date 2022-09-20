@@ -3,16 +3,19 @@ import { useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { getCategories } from '../../services/category-service';
 import InputField from '../input-field/input-field.component';
-
+import TextField from '@mui/material/TextField'
 import { Form } from 'react-bootstrap';
+import { Box } from '@mui/material';
+import { LoadingOutlined } from '@ant-design/icons';
+import { Spin } from 'antd';
 
-const ProductForm = ({values,setValues,handleSubmit,handleCategoryChange,subCategories,showsubs}) => {
+const ProductUpdateForm = ({values,setValues,handleSubmit,handleCategoryChange,subCategories,categories,showsubs,selectedCategory,laoding}) => {
     // const [categories,setCategories]=useState([])
     const{ 
             title,
             description,
             price,
-            categories,
+            // categories,
             category,
             subs,
             shipping,
@@ -29,13 +32,11 @@ const ProductForm = ({values,setValues,handleSubmit,handleCategoryChange,subCate
         setValues({...values,[name]:value})
     } 
     
-    const getCategoriesFromBackend=() => {
-        
-        getCategories().then(res=>{setValues({...values,categories:res.data})}).catch((err)=>{toast.error(err)})
-      }
-    useEffect(()=>{
-        getCategoriesFromBackend();
-    },[])
+    
+    // useEffect(()=>{
+    //   console.log("Useeffect is challing");
+    //     getCategoriesFromBackend();
+    // },[])
     const handleChangeSubs = (e) => {
       const {value,name}=e.target
         console.log("select",value,name);
@@ -43,46 +44,98 @@ const ProductForm = ({values,setValues,handleSubmit,handleCategoryChange,subCate
 
 
 }; 
-console.log("Subs",subs);
-console.log("Subs check",showsubs);
+console.log("Subs", subs&&  subs);
+console.log("category check",category);
+console.log("categories check",categories);
+const antIcon = (
+  <LoadingOutlined
+    style={{
+      fontSize: 24,
+    }}
+    spin
+  />
+)
   return (
     <> 
      <form onSubmit={handleSubmit}>
-                    <div className="form-group">
-                        <InputField 
+                    
+                      <Box
+                            component="form"
+                            sx={{
+                              '& .MuiTextField-root': { m: 0, width: '100%' },
+                              width:'100%',}}
+                            
+                            autoComplete="off"
+    >
+
+                        <TextField 
                            type="text"
                            name="title"
                            value={title}
                            onChange={handleChange}
                            label='Title'
+                           variant="standard"
+                           fullWidth
+                           InputLabelProps={{
+                              shrink: true,
+                            }}
+                            style={{marginBottom:'15px'}}
                          />
-                          <InputField 
+                          <TextField 
                            type="text"
                            name="description"
                            value={description}
                            onChange={handleChange}
                            label='Description'
+                           variant="standard"
+                           InputLabelProps={{
+                              shrink: true,
+                            }}
+                           fullWidth
+                             style={{marginBottom:'15px'}}
                          />
-                         <InputField 
+                         <div className=" mb-3">
+
+
+                         <TextField 
                            type='Number'
+                           variant="standard"
+                           fullWidth
                            name="price"
                            value={price}
                            onChange={handleChange}
                            label='Price'
-                         />
-                         
-                    
-                         <InputField 
-                           type="Number"
-                           name="quantity"
-                           value={quantity}
-                           onChange={handleChange}
-                           label='Quantity'
-                         />
+                           
+                           InputLabelProps={{
+                              shrink: true,
+                            }}
+                              style={{marginBottom:'15px'}}
+                           />
+                           </div>
+                         <div className=" mb-3">
+
+                       
+                           <TextField
+                          type="Number"
+                          value={quantity}
+                          onChange={handleChange}
+                          name={"quantity"}
+                          label="Quantity"
+                          style={{marginBottom:'15px'}}
+                          variant="standard"
+                          fullWidth
+                          InputLabelProps={{
+                              shrink: true,
+                            }}
+                              />
+                           </div>
+                          </Box>
+                          <div className="form-group">
                           <div className="input-group mb-3"> 
                          <label htmlFor='shipping' className='input-group-text'>Shipping</label>
                          <select name='shipping'
                          className='form-select'
+                         value={shipping==="Yes"?"Yes":"N0"}
                          onChange={handleChange}
                          
                          
@@ -100,7 +153,7 @@ console.log("Subs check",showsubs);
                          <select name='color'
                          className='form-select'
                          onChange={handleChange}
-                        //  value={color}
+                         value={color}
                          >
                             <option value="none" selected disabled hidden >Select Color</option>
                               {colors && colors.map((c)=>(
@@ -118,7 +171,7 @@ console.log("Subs check",showsubs);
                               <label htmlFor='brand' className='input-group-text' >Brand</label>
                               <select name='brand'
                               className='form-select'
-                            
+                              value={brand}
                               onChange={handleChange}
 
                               >
@@ -136,9 +189,11 @@ console.log("Subs check",showsubs);
                             <label htmlFor="category" className='input-group-text'>Parent Category</label>
                             <select name="category" 
                                 onChange={handleCategoryChange}
+                                value={selectedCategory ? selectedCategory :category._id}
                                 className='form-select' >
-                                <option value="none" selected disabled hidden>Select </option>
-                                {categories.length>0 && categories.map(item=>{
+                                  
+                                {/* <option value="none" selected disabled hidden>Select </option> */}
+                                {categories && categories.length>0 && categories.map(item=>{
                                     return <option 
                                      key={item._id}
                                      value={item._id}
@@ -158,14 +213,32 @@ console.log("Subs check",showsubs);
                            
                             <Form.Control 
                               className='form-select' 
+                              as="select"
+                               multiple 
                               value={subs}
                               name="subs"
-                               as="select" multiple 
+                              form-select-color
                                 placeholder="Select"
                                onChange={handleChangeSubs}>
                              {subCategories.length>0 ? subCategories.map(item=>{
-                              return<option style={{borderBottom:'solid 1px '}} key={item._id}value={item._id}>{item.name}</option>
-                             }):(<option style={{borderBottom:'solid 1px '}} value={'none'}>No SubCategories</option>)
+                              return  <option 
+                                        style={{borderBottom:'solid 1px '}} 
+                                        key={item._id}
+                                        value={item._id}>
+                                                {item.name}
+                                                
+                                        </option>
+                             }):(
+                             <option style={{borderBottom:'solid 1px'}} value={'none'}>No SubCategories</option>
+                            //  subs.length>0 ? subs.map(item=>{
+                            //   return  <option 
+                            //             style={{borderBottom:'solid 1px '}} 
+                            //             key={item._id}
+                            //             value={item._id}>
+                            //                     {item.name}
+                            //             </option>
+                            //  }):<option style={{borderBottom:'solid 1px'}} value={'none'}>No SubCategories</option>
+                             )
                              }
                             </Form.Control>
     
@@ -178,8 +251,12 @@ console.log("Subs check",showsubs);
                         
                     </div>
                     
-                    
-                    <button className="btn btn-outline-info " type='submit' >Submit</button>
+                    <div style={{display:'flex',flexDirection:'row',width:'200px' }}>
+                    <button className="btn btn-outline-info " style={{marginRight:'10px'}} type='submit' >Submit</button>
+                    {laoding?(
+                      <div><Spin indicator={antIcon} /></div> ):""}
+
+                    </div>
 
                 </form>
                
@@ -187,4 +264,4 @@ console.log("Subs check",showsubs);
   )
 }
 
-export default ProductForm
+export default ProductUpdateForm

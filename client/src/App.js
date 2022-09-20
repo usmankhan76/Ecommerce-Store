@@ -28,6 +28,8 @@ import UpdateCategoryItem from "./pages/admin/categories/update-category";
 import CreateSubCategory from "./pages/admin/sub-categories/create-sub-category";
 import UpdateSubCategoryItem from "./pages/admin/sub-categories/update-sub-category";
 import CreateProduct from "./pages/admin/product/create-product";
+import AllProducts from "./pages/admin/product/all-products";
+import UpdateProduct from "./pages/admin/product/update-product";
 function App() {
   const dispatch=useDispatch();
   const navigate=useNavigate();
@@ -117,6 +119,8 @@ function App() {
        <Route path ='/admin/catergory/:slug' element={<VerifyAdmin><UpdateCategoryItem/> </VerifyAdmin> }/>; 
        <Route path ='/admin/sub-catergory/:slug' element={<VerifyAdmin><UpdateSubCategoryItem/> </VerifyAdmin> }/>; 
        <Route path ='/admin/dashboard/product' element={<VerifyAdmin> <CreateProduct/> </VerifyAdmin> }/>; 
+       <Route path ='/admin/dashboard/products' element={<VerifyAdmin> <AllProducts/> </VerifyAdmin> }/>; 
+       <Route path ='/admin/dashboard/product/:slug' element={<VerifyAdmin> <UpdateProduct/> </VerifyAdmin> }/>; 
 
 
     

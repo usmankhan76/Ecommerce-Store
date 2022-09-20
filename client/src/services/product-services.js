@@ -11,3 +11,46 @@ export const createProduct=async(product,authtoken)=>{
     }
     return axios.request(options)
 } 
+export const getProducts=async(count)=>{
+    const options={
+        method: 'GET',
+        url: `http://localhost:8000/api/products/${count}`,
+        
+       
+    }
+    return axios.request(options)
+} 
+export const getProduct=async(slug)=>{
+    const options={
+        method: 'GET',
+        url: `http://localhost:8000/api/product/${slug}`,
+        
+       
+    }
+    return axios.request(options)
+} 
+
+export const removeProduct=async(slug,authtoken)=>{
+    const options={
+        method: 'DELETE',
+        url: `http://localhost:8000/api/product/${slug}`,
+         headers:{
+            authtoken,
+        }
+       
+    }
+    return axios.request(options)
+} 
+
+
+export const updateProduct=async(slug,product,authtoken)=>{
+    const options={
+        method: 'PUT',
+        url: `http://localhost:8000/api/product/${slug}`,
+        data: {product},
+        headers:{
+            authtoken,
+        }
+    }
+    return axios.request(options)
+} 

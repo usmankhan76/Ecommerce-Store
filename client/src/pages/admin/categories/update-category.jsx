@@ -5,7 +5,6 @@ import React, {  useEffect, useState } from 'react'
 import {  useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import CategoryForm from '../../../components/category-form/category-form';
-import InputField from '../../../components/input-field/input-field.component';
 // import InputField from '../../../components/input-field/input-field.component';
 import AdminNavs from '../../../components/nav/admin-navs';
 import { auth } from '../../../firebase';

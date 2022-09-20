@@ -17,7 +17,7 @@ const initialValues={
     shipping:"",
     quantity:"",
     images:[],
-    colors:["Black","Brown","Silver","white","Blue"],
+    colors:["Black","Brown","Silver","White","Blue"],
     brands:["Apple","Samsung","Microsoft","Lenevo","ASUS"],
     color:"",
     brand:"",
@@ -34,7 +34,7 @@ const CreateProduct = () => {
     const handleCategoryChange=(e)=>{
         e.preventDefault()
         
-        setValues({...values,category:e.target.value})
+        setValues({...values,subs:[],category:e.target.value})
         getParentSubCategories(e.target.value).then((res)=>{
           console.log("Parent subCategories",res.data);
           setShowSubs(true);

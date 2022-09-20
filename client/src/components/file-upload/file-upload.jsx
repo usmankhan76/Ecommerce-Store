@@ -83,7 +83,7 @@ const FileUpload = ({values,setValues}) => {
                 cursor: 'pointer',
             }}
     >
-            {images&& images.map((item)=>{
+            {images&& images.map((item)=>{  
                 return <Badge 
                         count='X'
                         key={item.public_id}
@@ -105,7 +105,7 @@ const FileUpload = ({values,setValues}) => {
         {loading?(
             <LoadingSipner/>
         ):(
-        <label className='btn btn-primary '  style={{width:'100px'}}>
+        <label className='btn btn-primary  '  style={{width:'100px'}}>
             Chose File
             <input 
                 type='file'

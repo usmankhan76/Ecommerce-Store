@@ -61,7 +61,7 @@ exports.getSubCategoryFromParent=(req,res)=>{
     
     return  subCategoryModel.find({parent:req.params._id}).exec((err,subs)=>{
         if(err) console.log(err);
-        console.log("parent Subs",subs);
+       
         res.json(subs)
     })
 }
