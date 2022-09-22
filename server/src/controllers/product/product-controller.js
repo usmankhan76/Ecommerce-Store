@@ -82,3 +82,50 @@ exports.update=async(req,res)=> {
         })
     }
 }
+
+
+exports.productsCount=async(req,res)=>{
+    try {
+        const allProductsCount=await productModel.find({}).estimatedDocumentCount().exec()
+        res.json(allProductsCount)
+    } catch (error) {
+        console.log("getProductForPagination error",error.message);
+
+    }
+}
+// exports.listProducts=async(req,res)=>{
+//     try {
+//         console.log("listProducts",req.body);
+//         const {sort,order,limit}=req.body
+//         const products=await productModel.find({})
+//         .populate('category')
+//         .populate('subs')
+//         .sort([[sort,order]])//if we have more then one items then it will take two arrays and sort accordingly 
+//         .limit(limit)
+//         .exec()
+
+//         return res.json(products)
+//     } catch (error) {
+        
+//     }
+// }
+exports.listProducts=async(req,res)=>{
+    try {
+
+        console.log("listProducts",req.body);
+        const {sort,order,page}=req.body
+        const currentPage=page||1;
+        const perPage=4
+        const products=await productModel.find({})
+        .skip((currentPage-1)*perPage) // this will show us the products in pages
+        .populate('category')
+        .populate('subs')
+        .sort([[sort,order]])//if we have more then one items then it will take two arrays and sort accordingly 
+        .limit(perPage)
+        .exec()
+
+        return res.json(products)
+    } catch (error) {
+        
+    }
+}

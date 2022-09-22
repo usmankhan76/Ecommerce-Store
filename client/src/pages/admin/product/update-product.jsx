@@ -91,6 +91,7 @@ const UpdateProduct = () => {
     
         }).catch((err)=>{
             console.log("product error",err);
+            setLoading(false)
             toast.error(err.response.data.err)
           })
     }
@@ -121,11 +122,11 @@ const UpdateProduct = () => {
                     <FileUpload values={values}setValues={setValues}/>
                     </div>
                  
-               <ProductUpdateForm  values={values} handleSubmit={handleSubmit} setValues={setValues} 
-               selectedCategory={selectedCategory}
-               handleCategoryChange={handleCategoryChange}
-               showsubs={showsubs} subCategories={subCategories} categories={categories} laoding={laoding}
-               />
+                    <ProductUpdateForm  values={values} handleSubmit={handleSubmit} setValues={setValues} 
+                    selectedCategory={selectedCategory}
+                    handleCategoryChange={handleCategoryChange}
+                    showsubs={showsubs} subCategories={subCategories} categories={categories} laoding={laoding}
+                    />
                </>
                 ):(<LoadingSipner/>)}</div>
                 

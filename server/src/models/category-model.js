@@ -21,4 +21,4 @@ const categorySchema=new mongoose.Schema({
     timestamps:true // it will show the create and update date
 })
 
-module.exports=mongoose.model('Category',categorySchema)
+module.exports=mongoose.model('category',categorySchema)

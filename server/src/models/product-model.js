@@ -30,7 +30,7 @@ const productSchema=new mongoose.Schema({
  },
     category:{
         type:ObjectId,
-        ref:"Category",
+        ref:"category",
     },
     subs:[
      {
@@ -42,10 +42,10 @@ const productSchema=new mongoose.Schema({
        type:Number,
 },
 
-//    sold:{
-//        type:Number,
-//        default:0
-//    },
+   sold:{
+       type:Number,
+       default:0
+   },
 
    images:{
     type:Array,
