@@ -9,7 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase";
-import { setAuthUserToken, setCurrentUser, setlogingUserToken, setUserCredientials } from "./redux/features/user/user-slice";
+import { setAuthUserToken, setCurrentUser, setUserCredientials } from "./redux/features/user/user-slice";
 import VerfiyEmail from "./pages/auth/verify-email";
 import { useDispatch, useSelector } from "react-redux";
 import ForgetPassword from "./pages/auth/forget-password";
@@ -30,6 +30,9 @@ import UpdateSubCategoryItem from "./pages/admin/sub-categories/update-sub-categ
 import CreateProduct from "./pages/admin/product/create-product";
 import AllProducts from "./pages/admin/product/all-products";
 import UpdateProduct from "./pages/admin/product/update-product";
+import ViewProduct from "./pages/view-product";
+import CategoryHome from "./pages/category/category-home";
+import SubCategoryHome from "./pages/sub-category/sub-category-home";
 function App() {
   const dispatch=useDispatch();
   const navigate=useNavigate();
@@ -52,17 +55,24 @@ function App() {
         
 
        craeteUpdateUser(auth.currentUser,name).then((res)=>{
-          console.log("response",res);
+          console.log("response in app",res);
           const{name,email,role,tokenId,_id}=res.data
           dispatch(setUserCredientials({name,email,role,tokenId,_id}))
           dispatch(setCurrentUser(user))
           dispatch(setAuthUserToken(user.accessToken))
 
           
-           roleBasedRedirect(role)        
+          //  roleBasedRedirect(role)        
         }).catch(err=>toast.error(err))
         
-        GetCurrentUser().then((res)=>{console.log("get current user",res)}).catch((err)=>{console.log(err.message)})
+        GetCurrentUser().then((res)=>{
+         console.log("get current user Response",res);
+          const{name,email,role,tokenId,_id}=res.data
+          dispatch(setUserCredientials({name,email,role,tokenId,_id}))
+          dispatch(setCurrentUser(user))
+          dispatch(setAuthUserToken(user.accessToken))
+        
+        }).catch((err)=>{console.log(err.message)})
         
         
       
@@ -84,18 +94,22 @@ function App() {
        <Login/>
      </ProtectedRoute>
      } />;
+
      <Route path='signup' element={
       <ProtectedRoute >
           <Register/>
      </ProtectedRoute>
     } 
      />;
+        
+
      <Route path = 'verify-email' 
      element={
         <NonProtected> 
           <VerfiyEmail/>
         </NonProtected>
      } />;
+
      <Route path ='forget-password' element={
       <ProtectedRoute>
         <ForgetPassword/>
@@ -120,7 +134,11 @@ function App() {
        <Route path ='/admin/sub-catergory/:slug' element={<VerifyAdmin><UpdateSubCategoryItem/> </VerifyAdmin> }/>; 
        <Route path ='/admin/dashboard/product' element={<VerifyAdmin> <CreateProduct/> </VerifyAdmin> }/>; 
        <Route path ='/admin/dashboard/products' element={<VerifyAdmin> <AllProducts/> </VerifyAdmin> }/>; 
-       <Route path ='/admin/dashboard/product/:slug' element={<VerifyAdmin> <UpdateProduct/> </VerifyAdmin> }/>; 
+       <Route path ='/admin/dashboard/product/:slug' 
+              element={<VerifyAdmin> <UpdateProduct/> </VerifyAdmin> }/>;
+        <Route path ='product/:slug' element={ <ViewProduct/>  }/>;             
+        <Route path ='category/:slug' element={ <CategoryHome/>  }/>;             
+        <Route path ='sub-category/:slug' element={ <SubCategoryHome/>  }/>;             
 
 
     

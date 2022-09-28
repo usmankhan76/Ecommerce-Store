@@ -1,5 +1,6 @@
 // const SubCategoryModel = require("../../models/category-model");
 const slugify=require('slugify');
+const productModel = require('../../models/product-model');
 const subCategoryModel = require('../../models/sub-category-model');
 // const subCategoryModel = require('../../models/sub-category-model');
 
@@ -33,7 +34,8 @@ exports.list=async (req,res)=>{
 exports.read=async(req,res)=>{
     console.log("read slug",req.params.slug)
     const Subategory=await subCategoryModel.findOne({slug:req.params.slug}).exec()
-    res.json(Subategory)
+   const findProducts= await productModel.find({subs:Subategory}).populate("category").exec()
+    res.json({Subategory,findProducts})
 
 }
 

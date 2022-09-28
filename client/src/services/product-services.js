@@ -72,3 +72,26 @@ export const getProductsCounting=async()=>{
     }
     return axios.request(options)
 } 
+
+export const productStars=async(productId,stars,authtoken)=>{
+    
+    const options={
+        method: 'PUT',
+        url: `http://localhost:8000/api/product/stars/${productId}`,
+        data:{stars},
+        headers:{authtoken}
+        
+    }
+    return axios.request(options)
+} 
+
+export const getListRelatedProducts=async(productId)=>{
+    
+    const options={
+        method: 'GET',
+        url: `http://localhost:8000/api/product/related/${productId}`,
+        
+        
+    }
+    return axios.request(options)
+}

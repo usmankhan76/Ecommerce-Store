@@ -2,11 +2,21 @@ import { EyeOutlined, ShoppingCartOutlined } from '@ant-design/icons'
 import { Card } from 'antd'
 import Meta from 'antd/lib/card/Meta'
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link,  } from 'react-router-dom'
 import dummy from '../../assets/dummy.jpg'
+import { AverageRating } from '../../services/rating'
 const ProductCard = ({product}) => {
-  const {title,images,description}=product
+  
+
+  const {title,images,description,slug}=product
+ 
   return (
+    <>
+       {product && product.ratings && product.ratings.length>0 ?(
+            AverageRating(product)):(
+                <div className="text-center pt-1 pb-3">
+                    No Rating Yet
+                </div>)}
      <Card
     hoverable
     style={{
@@ -19,7 +29,7 @@ const ProductCard = ({product}) => {
         // className='p-1'
         />}
       actions={[
-        <Link to={`/admin/dashboard/product/`} style={{textDecoration:"none"}}>
+        <Link to={`/product/${slug}`} style={{textDecoration:"none"}}>
           <EyeOutlined className='text-info'/><br/> View Product
       </Link>,
       <>
@@ -29,6 +39,7 @@ const ProductCard = ({product}) => {
     >
     <Meta title={title} description={`${description && description.substring(0,10)}...`} />
   </Card>
+    </>
   )
 }
 

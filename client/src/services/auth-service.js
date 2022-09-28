@@ -43,14 +43,15 @@ export const craeteUpdateUser=async (authuser)=>{
 export const GetCurrentUser=async()=>{
   
 
-  await auth.currentUser.getIdToken(/* forceRefresh */ true).then(function(idToken) {
+  return await auth.currentUser.getIdToken(/* forceRefresh */ true).then(function(idToken) {
     // dispatch(setAuthUserToken(idToken))
     console.log("current id token",idToken)
   // Send token to your backend via HTTPS
+  const authtoken=idToken
   const options = {
         method: 'POST',
         url: 'http://localhost:8000/api/current-user',
-        headers: {authtoken:idToken}
+        headers: {authtoken}
   };
  return   axios.request(options)
   // ...

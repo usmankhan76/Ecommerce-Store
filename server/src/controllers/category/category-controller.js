@@ -1,6 +1,7 @@
 const categoryModel = require("../../models/category-model");
 const slugify=require('slugify');
 const subCategoryModel = require("../../models/sub-category-model");
+const productModel = require("../../models/product-model");
 
 exports.create=async (req,res)=>{
     try {
@@ -31,7 +32,11 @@ exports.list=async (req,res)=>{
 exports.read=async(req,res)=>{
     console.log("read slug",req.params.slug)
     const category=await categoryModel.findOne({slug:req.params.slug}).exec()
-    res.json(category)
+
+    const findProducts= await productModel.find({category}).populate("category").exec()
+
+
+    res.json({findProducts,category})
 
 }
 

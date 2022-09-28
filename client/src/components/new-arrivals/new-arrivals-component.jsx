@@ -43,7 +43,7 @@ const handleChange=(event,value)=>{
   return (
     <>
     
-    <h4 className="text-center p-3 mt-5 mt-5 mb-5 display-4" style={{backgroundColor:'rgb(183, 198, 181)'}}>
+    <h4 className="text-center p-3 mt-5 mt-5 mb-5 display-6" style={{backgroundColor:'rgb(183, 198, 181)'}}>
       New Arrivals
     </h4>
     <div className='container'> 

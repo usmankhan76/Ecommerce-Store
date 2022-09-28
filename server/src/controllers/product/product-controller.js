@@ -1,6 +1,7 @@
 
 const slugify=require('slugify')
 const productModel = require('../../models/product-model')
+const userModel = require('../../models/user-model')
 
 exports.create=async(req,res)=> {
     try {
@@ -127,5 +128,70 @@ exports.listProducts=async(req,res)=>{
         return res.json(products)
     } catch (error) {
         
+    }
+}
+exports.productRating=async(req,res)=>{
+    try {
+        const{stars}=req.body
+        console.table(req.body);
+        // first we get the product by Id using use params
+        const product=await productModel.findById(req.params.productId).exec() // we exec b/c it give product to product variable;
+
+        // second we get the user   
+        const {email}=req.userCredientials.firebaseUser
+        const user=await userModel.findOne({email})  
+        console.log("rating user",user);
+        const userId=user && user._id  
+        console.log("rating controller ID",userId);
+
+        //third we check that the user have give rating or not
+
+        const checkProductRatingObject=product && product.ratings.find((obj)=> (
+            obj.postedBy.toString()===userId.toString()
+            ))
+        //if there is no rating then we push rating in the product rating model
+        if(checkProductRatingObject==undefined){
+           const addRatingToProduct= await productModel.findByIdAndUpdate(product._id,{
+                $push:{ratings:{stars,postedBy:userId}}
+            },
+            {new:true}, // it is used to send newly updated data to the front end and use it when we update
+            
+            ).exec()
+            console.log("rating added",addRatingToProduct)
+            res.json(addRatingToProduct)
+
+        }else{
+            // if the user alread gave the rating then we only update the stars
+            let ratingUpdated=await productModel.updateOne(
+                {ratings:{$elemMatch:checkProductRatingObject}},// this will find the object in rating array in product model and also find the product
+                {$set:{"ratings.$.stars":stars}},// this will set stars to star in rating array
+                {new:true}
+            ).exec()
+             console.log("rating added",ratingUpdated)
+            res.json(ratingUpdated)
+
+        }
+
+
+        
+    } catch (error) {
+        console.log("controller stars",error.message);
+    }
+}
+exports.listRelatedProducts=async(req,res)=>{
+    try {
+        const findProduct=await productModel.findById(req.params.productId).exec();
+        const relatedProducts=await productModel.find({
+            _id:{$ne:findProduct._id},// $ne means not including this id object
+            category:findProduct.category
+        })
+        .limit(4)
+        .populate('category')
+        .populate('subs')
+        .exec()
+
+        res.json((relatedProducts))
+    } catch (error) {
+        console.log("relate product error",error.message)
     }
 }

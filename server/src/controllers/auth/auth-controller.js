@@ -25,10 +25,19 @@ async function creatUpdateUser(req,res) {
     
 }
 async function getCurrentUser(req,res) {
-    User.findOne({email:req.userCredientials.firebaseUser.email}).exec((err,user)=>{
-        if(err){throw new Error(err)};
-       return res.json(user);
-    })
+    // User.findOne({email:req.userCredientials.firebaseUser.email}).exec((err,user)=>{
+    //     if(err){throw new Error(err)};
+    //    return res.json(user);
+    // })
+    try {
+        const findedUser=await User.findOne({email:req.userCredientials.firebaseUser.email}).exec()
+        console.log("get current usre",findedUser);
+        res.json(findedUser)
+        
+    } catch (error) {
+        console.log("getCurrent error",error.message);
+    }
+
 }
 
 

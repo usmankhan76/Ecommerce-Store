@@ -38,10 +38,11 @@ const AllProducts = () => {
     }
     
   }
+  console.log("dasf",products)
   useEffect(()=>{
     getAllProducts();
   },[])
-console.log("products",products);
+
   return (<>
    <div className="container-fluid">
         <div className="row">

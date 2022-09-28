@@ -11,6 +11,8 @@ import { auth } from '../../firebase';
 import { useDispatch, useSelector } from 'react-redux';
 import { setLogOut } from '../../redux/features/user/user-slice';
 import { toast } from 'react-toastify';
+import profileDummy from '../../assets/profileDummy.png'
+
 const Header = () => {
     
     const dispatch=useDispatch();
@@ -28,7 +30,6 @@ const Header = () => {
 
     }
     let a=loginUser && loginUser.providerData[0].photoURL
-    console.log("photo",a);
    
   return (
    <Navbar collapseOnSelect expand="sm" bg="dark" variant="dark" style={{paddingLeft:'0'}}>
@@ -49,9 +50,7 @@ const Header = () => {
             <div className="avatar">
                  {a ?
                     <img className="avatarImage" alt='U' src={`${a}`} />
-                    :<span className='bi bi-person-circle avat' >
-                      u
-                      </span> }
+                    : <img className="avatarImage" alt='U' src={profileDummy} /> }
               </div>
             <NavDropdown  
                 drop='down' 

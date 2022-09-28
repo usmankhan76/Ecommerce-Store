@@ -2,7 +2,7 @@ import './verifyEmail.css'
 import { sendEmailVerification, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import InputField from '../../components/input-field/input-field.component';
 import {  setCurrentUser, setTimeActive, setUserCredientials } from '../../redux/features/user/user-slice';
 import { auth, provider } from '../../firebase';
@@ -14,13 +14,31 @@ import { craeteUpdateUser } from '../../services/auth-service';
 
 function Login(){
   const {loginUer,loginUserToken}=useSelector(state=>state.user);
-  const navigate=useNavigate()
-
-  useEffect(()=>{
-    if(loginUer && loginUserToken ) navigate('/')
-  },[loginUer,navigate,loginUserToken])
+  const location=useLocation()
+ 
   
+  const navigate=useNavigate()
   const dispatch=useDispatch();
+
+  // useEffect(()=>{
+    
+  //   if(loginUer && loginUserToken ) navigate('/')
+  // },[loginUer,navigate,loginUserToken])
+  
+  function roleBasedRedirect(role){
+    const intended=location.state;
+    console.log("This is location",intended.goBack);
+    if(intended){
+      navigate(intended.goBack)
+    }else{
+       if(role==="admin"){
+       navigate('/admin/dashboard')
+      }else{
+        navigate('/user/dashboard')
+      }
+    }
+   
+  }
 
   let [userData,setUserData]=useState({email:'',name:'',password:"",confirmPassword:""})
   let {email,password,name}=userData;
@@ -50,7 +68,8 @@ function Login(){
           dispatch(setUserCredientials({name,email,role,tokenId,_id}))
           
           toast.success( `${auth.currentUser.email} Successfully Log in`)
-          navigate('/')
+          roleBasedRedirect(role)
+          // navigate('/')
         }).catch(err=>toast.error(err))
 
       }

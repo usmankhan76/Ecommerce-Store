@@ -32,12 +32,12 @@ const userSlice=createSlice({
             state.loading=action.payload
         },
         setUserCredientials:(state,action)=>{
-            const {name,email,role,tokenId,id}=action.payload
+            const {name,email,role,tokenId,_id}=action.payload
             state.email=email
             state.name=name
             state.loginUserTokenId=tokenId
             state.role=role
-            state.id=id
+            state.id=_id
 
         },
         setAuthUserToken:(state,action)=>{

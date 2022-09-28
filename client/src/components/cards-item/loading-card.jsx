@@ -14,7 +14,7 @@ const LoadingCard = ({count}) => {
                     marginBottom:'20px',
                     marginRight:'30px'
                     }}>
-                <Skeleton active> LoadingCard</Skeleton>
+                <Skeleton active> </Skeleton>
             </Card>
             )      
             
