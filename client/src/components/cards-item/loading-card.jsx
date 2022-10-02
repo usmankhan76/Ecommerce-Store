@@ -8,7 +8,7 @@ const LoadingCard = ({count}) => {
         for (let index = 0; index<count; index++) {
             
             sekeletonArray.push(
-                <Card className='col-md-3 ' style={{
+                <Card className='col-md-3 ' key={index} style={{
                     width: '250px',
                     marginTop:'10px',
                     marginBottom:'20px',

@@ -195,3 +195,51 @@ exports.listRelatedProducts=async(req,res)=>{
         console.log("relate product error",error.message)
     }
 }
+
+const handleQuery=async(req,res,query)=>{
+    const findProducts=await productModel.find({$text:{$search:query}})
+    .populate('category','_id name')
+    .populate('subs','_id name')
+    .exec()
+
+    res.json(findProducts)
+}
+
+const handlePrice=async(req,res,price)=>{
+    try {
+         const findProducts=await productModel.find({
+        price:{
+            $gte:price[0],//it show greater than price
+            $lte:price[1]//  it show less than price
+            }
+        })
+        .populate('category','_id name')
+        .populate('subs','_id name')
+        .exec()
+
+        res.json(findProducts)
+
+    } catch (error) {
+        console.log("handlePrice error",error.message)
+    }
+   
+}
+
+exports.searchFilters=async(req,res)=>{
+    try {
+        const {query:{query,price}}=req.body
+        console.log(query);
+        if(query){
+            await handleQuery(req,res,query)
+        }
+        if(price!==undefined){
+            console.log('price',price)
+            await handlePrice(req,res,price)
+        }
+        
+    } catch (error) {
+        console.log("search filter error",error.message)
+        
+    }
+}
+

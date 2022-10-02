@@ -23,10 +23,10 @@ const userSlice=createSlice({
     reducers:{
         setCurrentUser:(state,action)=>{state.loginUser=action.payload},
         setTimeActive:(state,action)=>{state.timeActive=action.payload},
-        setlogingUserToken:(state,action)=>{state.loginUserToken=action.payload},
+        setlogingUserToken:(state,action)=>{state.loginUserTokenId=action.payload},
         setLogOut:(state,action)=>{
             state.loginUser="";
-            state.loginUserToken=""
+            state.loginUserTokenId=""
         },
         setLoading:(state,action)=>{
             state.loading=action.payload

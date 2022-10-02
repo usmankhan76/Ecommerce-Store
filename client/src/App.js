@@ -33,6 +33,8 @@ import UpdateProduct from "./pages/admin/product/update-product";
 import ViewProduct from "./pages/view-product";
 import CategoryHome from "./pages/category/category-home";
 import SubCategoryHome from "./pages/sub-category/sub-category-home";
+import ShopPage from "./pages/shop";
+import { CssBaseline } from "@mui/material";
 function App() {
   const dispatch=useDispatch();
   const navigate=useNavigate();
@@ -84,10 +86,12 @@ function App() {
 
   return (
     <>
+    <CssBaseline/>
     <Header/>
     <ToastContainer autoClose={1500}/>
     <Routes>
      <Route path='/' element={<Home/>}  />;
+     <Route path='/shop' element={<ShopPage/>}  />;
      <Route path='login' element={
      <ProtectedRoute >
 

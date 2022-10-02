@@ -95,3 +95,15 @@ export const getListRelatedProducts=async(productId)=>{
     }
     return axios.request(options)
 }
+
+export const getProductsFromSearch=async(query)=>{
+ 
+    console.log("query",query);
+    const options = {
+        method: 'POST',
+        url: 'http://localhost:8000/api/product/search/filter',
+        data: {query}
+    };
+
+   return axios.request(options);
+}
