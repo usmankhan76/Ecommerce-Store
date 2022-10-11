@@ -29,7 +29,7 @@ const SearchForm = () => {
     <div>
         <Paper
             component="form"
-            sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 200 ,height:30,borderRadius:100 ,opacity: 0.9 }}
+            sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 200 ,height:30,borderRadius:100 ,opacity: 0.9 ,marginRight:'15px'}}
             onSubmit={handleSubmit}
         >
       <InputBase

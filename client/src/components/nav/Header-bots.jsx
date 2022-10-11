@@ -13,6 +13,8 @@ import { toast } from 'react-toastify';
 import UserProfileComponent from '../user-profile/user-profile-component';
 import SearchForm from '../search-form/search-form';
 import RedeemIcon from '@mui/icons-material/Redeem';
+import LoginIcon from '@mui/icons-material/Login';
+import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
 const Header = () => {
     
     const dispatch=useDispatch();
@@ -41,7 +43,12 @@ const Header = () => {
 
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav  className="me-auto">
-            <Nav.Link to={'/shop'} as={Link}>  <RedeemIcon style={{marginRight:'4px'}}/>Shop</Nav.Link>
+            <Nav.Link 
+              to={'/shop'} 
+              as={Link}> 
+                 <RedeemIcon style={{marginRight:'4px'}} fontSize='small'/>
+                  Shop
+            </Nav.Link>
 
            
           </Nav>
@@ -53,12 +60,16 @@ const Header = () => {
             
              
             {loginUser? null:(
+                <Nav.Link as={Link} to='/login'><LoginIcon fontSize='small' style={{marginRight:'5px'}}/>
+                  Log In
+                </Nav.Link>
 
-            <Nav.Link as={Link} to='/login'>Log In</Nav.Link>
        
               )}
               <UserOutlined/>
-            {loginUser? null:<Nav.Link as={Link} to='/signup'> Sign up</Nav.Link>}
+            {loginUser? null:<Nav.Link as={Link} to='/signup'> 
+                <PersonAddAltIcon fontSize='small' style={{marginRight:'5px'}}/>Sign up
+              </Nav.Link>}
           </Nav>
         </Navbar.Collapse>
       </Container>

@@ -224,17 +224,145 @@ const handlePrice=async(req,res,price)=>{
     }
    
 }
+const handleCategory=async(req,res,category)=>{
+    try {
+        const findProducts=await productModel.find({category})
+        .populate('category','_id name')
+        .populate('subs','_id name')
+        .exec()
+        
+        res.json(findProducts)
+    } catch (error) {
+        console.log("handlePrice category",error.message)
+        
+    }
+}
+
+// math.floor and Math.ceil we use this in below
+const handleStars=(req,res,stars)=>{
+    // we will use the project aggregate in this func
+    productModel.aggregate([
+   {
+       $project:{
+           document:"$$ROOT",  // this will return the complete document 
+           // title:"$title"  // we can also get specific fields
+           floorAverage:{
+               $floor:{$avg:"$ratings.stars"}  // we use the floor concept to calculate the average
+           }
+       }
+   },
+   { $match:{floorAverage:stars}} // this will compare the giving stars to upper average stars  
+])
+.limit(22)
+.exec(async(err,aggregate)=>{
+   if(err) console.log("Aggregat Error",err.message)
+    console.log("This is the aggregate Prop",aggregate);
+    productModel.find({_id:aggregate})
+   .populate('category','_id name')
+   .populate('subs','_id name')
+   .exec((err,products)=>{
+       if(err) console.log("product aggregate Error",err.message)
+       console.log("This is the aggregate Products",products);
+       res.json(products)
+   })
+})
+}   
+
+const handleSub=async(req,res,sub)=>{
+    try {
+        const findProducts=await productModel.find({subs:sub})
+        .populate('category','_id name')
+        .populate('subs','_id name')
+        .exec()
+
+        res.json(findProducts)
+    } catch (error) {
+        console.log("handleSubs erorr",error.message)
+        
+    }
+    
+
+}
+
+const handleShipping=async(req,res,shipping)=>{
+    try {
+        const findProducts=await productModel.find({shipping})
+        .populate('category','_id name')
+        .populate('subs','_id name')
+        .exec()
+
+        res.json(findProducts)
+    } catch (error) {
+        console.log("handleShipping erorr",error.message)
+        
+    }
+}
+const handleBrand=async(req,res,brand)=>{
+    try {
+        const findProducts=await productModel.find({brand})
+        .populate('category','_id name')
+        .populate('subs','_id name')
+        .exec()
+
+        res.json(findProducts)
+    } catch (error) {
+        console.log("handleBrand erorr",error.message)
+        
+    }
+}
+const handleColor=async(req,res,color)=>{
+    try {
+        const findProducts=await productModel.find({color})
+        .populate('category','_id name')
+        .populate('subs','_id name')
+        .exec()
+
+        res.json(findProducts)
+    } catch (error) {
+        console.log("handleColor erorr",error.message)
+        
+    }
+}
 
 exports.searchFilters=async(req,res)=>{
     try {
-        const {query:{query,price}}=req.body
-        console.log(query);
+        const {query:{query,price,category,stars,sub,color,brand,shipping}}=req.body
+        console.log("This is query",query);
         if(query){
             await handleQuery(req,res,query)
         }
         if(price!==undefined){
             console.log('price',price)
             await handlePrice(req,res,price)
+        }
+        if(category){
+            console.log("category",category)
+            await handleCategory(req,res,category)
+        }
+        if(stars){
+            console.log("stars",stars)
+            handleStars(req,res,stars)
+            
+        }
+        if(sub){
+            console.log("sub",sub)
+            await  handleSub(req,res,sub)
+            
+        }
+        if(shipping){
+            console.log("shipping",shipping)
+            await  handleShipping(req,res,shipping)
+            
+        }
+        if(brand){
+            console.log("brand",brand)
+            await  handleBrand(req,res,brand)
+            
+        }
+        if(color){
+            console.log("color",color)
+            await  handleColor(req,res,color)
+            
         }
         
     } catch (error) {

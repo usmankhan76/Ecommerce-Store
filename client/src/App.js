@@ -6,7 +6,7 @@ import Register from './pages/auth/register';
 import Header from "./components/nav/Header-bots";
 import { toast, ToastContainer} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase";
 import { setAuthUserToken, setCurrentUser, setUserCredientials } from "./redux/features/user/user-slice";
@@ -34,10 +34,10 @@ import ViewProduct from "./pages/view-product";
 import CategoryHome from "./pages/category/category-home";
 import SubCategoryHome from "./pages/sub-category/sub-category-home";
 import ShopPage from "./pages/shop";
-import { CssBaseline } from "@mui/material";
 function App() {
   const dispatch=useDispatch();
   const navigate=useNavigate();
+
   const {loginUser}=useSelector(state=>state.user)
 
   function roleBasedRedirect(role){
@@ -86,7 +86,6 @@ function App() {
 
   return (
     <>
-    <CssBaseline/>
     <Header/>
     <ToastContainer autoClose={1500}/>
     <Routes>

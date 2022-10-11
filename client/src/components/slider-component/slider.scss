@@ -1,0 +1,37 @@
+.mdbRange{
+    single: {
+
+        active: true,
+        multi {
+            active: true;
+            rangeLength: 2;
+            counting: true ;
+            // countingTarget: ['#ex3', '#ex4'];
+        }
+    }
+}
+// .mdbRange{
+//     single: {
+
+//         active: true,
+//         multi: {
+//             active: true,
+//             rangeLength: 3,
+//             counting: true,
+//             countingTarget: ['#ex5', '#ex6', '#ex7'],
+//         }
+//     }
+// }
+
+// .mdbRange{
+//     single: {
+
+//         active: true,
+//         multi: {
+//             active: true,
+//             rangeLength: 4,
+//             counting: true,
+//             countingTarget: ['.ex7'],
+//         }
+//     }
+// }
