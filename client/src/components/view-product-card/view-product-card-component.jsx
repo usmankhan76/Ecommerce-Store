@@ -7,7 +7,7 @@ import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a lo
 import { Carousel } from 'react-responsive-carousel';
 import dummy from "../../assets/dummy.jpg"
 import ViewProductCardPropComp from './view-product-card-properties-comp';
-import { Box, Tab, } from '@mui/material';
+import { Box, Tab, Tooltip, } from '@mui/material';
 import StarRatings from 'react-star-ratings';
 
 import TabList from '@mui/lab/TabList';
@@ -15,15 +15,47 @@ import TabPanel from '@mui/lab/TabPanel';
 import TabContext from '@mui/lab/TabContext';
 import RatingModal from '../modal/rating-modal';
 import { AverageRating } from '../../services/rating';
+import { addToCart } from '../../redux/features/cart/cart-slice';
+import _ from 'lodash'
+import { useDispatch } from 'react-redux';
+import { showDarwer } from '../../redux/features/drawer/drawer.slice';
 
 
 const ViewProductCardComponent = ({product,handleStarsChange,stars}) => {
     const [value, setValue] = useState('1');
-  
+    const [tooltipText,setTooltipText]=useState('Click To Add')
+    const dispatch=useDispatch()
+
     const {title,description,images,_id}=product;
+
     const handleChange = (event, newValue) => {
     setValue(newValue);
-  };
+        };
+
+    const handleAddToCart=()=>{
+    let cart=[];
+    if(typeof window !== 'undefined'){
+      if(JSON.parse(localStorage.getItem('cart')) && JSON.parse(localStorage.getItem('cart')).length >0 ){
+        // if cart is in localStorage get it
+        console.log('local storage with parse',JSON.parse(localStorage.getItem('cart')));
+        cart=JSON.parse(localStorage.getItem('cart'))
+        // cart=localStorage.getItem('cart')
+        console.log('cart parse',cart);
+      }
+      
+
+        
+        
+        cart.push({...product,count:1})
+        let unique= _.uniqWith(cart, _.isEqual)
+        localStorage.setItem('cart',JSON.stringify(unique))
+        dispatch(addToCart(unique))
+        dispatch(showDarwer(true))
+        setTooltipText("Added")
+      
+      
+    }
+  }
 
   return (
     <>
@@ -64,7 +96,14 @@ const ViewProductCardComponent = ({product,handleStarsChange,stars}) => {
         <Card 
            actions={[
             <><Link to='/' style={{textDecoration:"none"}}><HeartOutlined/> <br/> Add to Wishlist</Link></>,
-            <><ShoppingCartOutlined className='text-success'/> <br /> Add To Cart</>,
+            <>
+            <Tooltip title={tooltipText} arrow placement="top">
+
+            <span onClick={handleAddToCart}>
+            <ShoppingCartOutlined className='text-success'/> <br /> Add to Cart
+            </span>
+            </Tooltip>
+            </>,
             <> 
             <RatingModal>
 

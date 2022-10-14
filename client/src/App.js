@@ -34,6 +34,8 @@ import ViewProduct from "./pages/view-product";
 import CategoryHome from "./pages/category/category-home";
 import SubCategoryHome from "./pages/sub-category/sub-category-home";
 import ShopPage from "./pages/shop";
+import CartPage from "./pages/cart";
+import SideDrawer from "./components/side-drawer/side-drawer";
 function App() {
   const dispatch=useDispatch();
   const navigate=useNavigate();
@@ -87,10 +89,12 @@ function App() {
   return (
     <>
     <Header/>
+    <SideDrawer/>
     <ToastContainer autoClose={1500}/>
     <Routes>
      <Route path='/' element={<Home/>}  />;
      <Route path='/shop' element={<ShopPage/>}  />;
+     <Route path='/cart' element={<CartPage/>}  />;
      <Route path='login' element={
      <ProtectedRoute >
 

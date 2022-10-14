@@ -1,14 +1,53 @@
 import { EyeOutlined, ShoppingCartOutlined } from '@ant-design/icons'
 import { Card } from 'antd'
 import Meta from 'antd/lib/card/Meta'
-import React from 'react'
-import { Link,  } from 'react-router-dom'
+import React, { useState } from 'react'
+import { Link, useNavigate,  } from 'react-router-dom'
 import dummy from '../../assets/dummy.jpg'
 import { AverageRating } from '../../services/rating'
+import _ from 'lodash'
+import { Tooltip } from '@mui/material'
+import { useDispatch } from 'react-redux'
+import { addToCart } from '../../redux/features/cart/cart-slice'
+import { showDarwer } from '../../redux/features/drawer/drawer.slice'
+
+
 const ProductCard = ({product}) => {
   
-
   const {title,images,description,slug,price}=product
+  const [tooltipText,setTooltipText]=useState('Click To Add')
+  const navigate=useNavigate()
+  const dispatch=useDispatch()
+
+  const handleAddToCart=()=>{
+    let cart=[];
+    if(typeof window !== 'undefined'){
+      if(JSON.parse(localStorage.getItem('cart')) && JSON.parse(localStorage.getItem('cart')).length >0 ){
+        // if cart is in localStorage get it
+        console.log('local storage with parse',JSON.parse(localStorage.getItem('cart')));
+        cart=JSON.parse(localStorage.getItem('cart'))
+        // cart=localStorage.getItem('cart')
+        console.log('cart parse',cart);
+      }
+      
+
+        
+        
+        cart.push({...product,count:1})
+        let unique= _.uniqWith(cart, _.isEqual)
+        localStorage.setItem('cart',JSON.stringify(unique))
+        dispatch(addToCart(unique))
+        dispatch(showDarwer(true))
+        setTooltipText("Added")
+      
+      
+    }
+  }
+  
+  const handleClickCard=()=>{
+    return navigate(`/product/${slug}` )
+  }
+
  
   return (
     <>
@@ -18,26 +57,29 @@ const ProductCard = ({product}) => {
                     No Rating Yet
                 </div>)}
      <Card
-    hoverable
-    style={{
-      width: '250px',
-      marginTop:'10px',
-      marginBottom:'20px'
-    }}
-    cover={<img alt="example" src={images&& images.length?images[0].url:dummy}  
-        style={{width:'100%',height:'150px',objectFit:'cover',}} 
-        // className='p-1'
-        />}
+        hoverable
+        style={{
+            width: '250px',
+            marginTop:'10px',
+            marginBottom:'20px'
+        }}
+        cover={<img alt="example" src={images&& images.length?images[0].url:dummy}  
+                style={{width:'100%',height:'150px',objectFit:'cover',}} 
+              />}
+
       actions={[
         <Link to={`/product/${slug}`} style={{textDecoration:"none"}}>
           <EyeOutlined className='text-info'/><br/> View Product
       </Link>,
-      <>
+      <Tooltip title={tooltipText} arrow placement="top">
+
+      <span onClick={handleAddToCart}>
       <ShoppingCartOutlined className='text-danger'/> <br /> Add to Cart
-      </>
+      </span>
+    </Tooltip>
       ]}
     >
-    <Meta title={`${title} - ${price}`} description={`${description && description.substring(0,10)}...`} />
+    <Meta onClick={handleClickCard} title={`${title} - ${price}`} description={`${description && description.substring(0,10)}...`} />
   </Card>
     </>
   )
