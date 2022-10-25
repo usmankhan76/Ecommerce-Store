@@ -9,7 +9,7 @@ import ClearIcon from '@mui/icons-material/Clear';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 
-const CheckoutProductItem = ({product}) => {
+const CartProductItem = ({product}) => {
     const {title,price,brand,color,count,shipping,images,_id,quantity}=product
     const [colors,setColors]=useState(["Black","White","Brown","Silver","Blue"])
     const dispatch=useDispatch()
@@ -128,4 +128,4 @@ const CheckoutProductItem = ({product}) => {
   )
 }
 
-export default CheckoutProductItem
+export default CartProductItem

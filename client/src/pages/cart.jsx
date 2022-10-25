@@ -1,4 +1,4 @@
-import { Button, Container, CssBaseline, Grid, Typography } from '@mui/material'
+import { Button, Container,  Grid, Typography } from '@mui/material'
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
@@ -9,12 +9,14 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import CheckoutProductItem from '../components/checkout-item/checkout-product-item';
+import CartProductItem from '../components/cart-product-item/cart-product-item-comp';
+import { saveCartToDb } from '../services/cart-service';
 
 const CartPage = () => {
   const state=useSelector(state=>state)
   const navigate=useNavigate()
   const cart=state.cart
+  const {authUserToken}=state.user;
   const {loginUser}=state.user
   const getTotal=()=>{
    return cart.reduce((cu,ac)=>{
@@ -25,20 +27,16 @@ const CartPage = () => {
     return navigate('/login',{state:{goBack: `/cart`}})
   }
 
-  function createData(Image, Title, Price, Brand, Color,Count, Shipping,Remove) {
-  return { Image, Title, Price, Brand, Color,Count, Shipping,Remove};
-}
   
-const rows = [
-  createData('Frozen yoghurt', 11, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-];
 
-const [age, setAge] = React.useState('');
-
+  const handleProceedToCheckout=()=>{
+    saveCartToDb(cart,authUserToken).then((res)=>{
+      if(res.data.ok){
+        return navigate('/checkout')
+      }
+    })
+    // return navigate('/checkout')
+  }
   
   const ShowProductCart=()=>{
    return <TableContainer component={Paper}>
@@ -57,7 +55,7 @@ const [age, setAge] = React.useState('');
         </TableHead>
         <TableBody>
           {cart.map((product) => (
-            <CheckoutProductItem product={product} key={product._id}/>
+            <CartProductItem product={product} key={product._id}/>
           ))}
         </TableBody>
       </Table>
@@ -109,8 +107,16 @@ const [age, setAge] = React.useState('');
                   Total: <b>${getTotal()}</b>  
                   <hr />
                   {loginUser ?(
-                        <Button color='secondary' variant='contained' disabled={!cart.length}>
-                            Proceed to Checkout
+                        <Button 
+                            // style={{backgroundColor:'#004080',}}
+                            color='success'
+                            variant='contained' 
+                            disabled={!cart.length}
+                            
+                            onClick={handleProceedToCheckout}
+                            >
+                                   Proceed to Checkout
+                            
                         </Button>
                     ):(
                         <Button 

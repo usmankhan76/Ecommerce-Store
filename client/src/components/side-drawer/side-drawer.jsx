@@ -25,7 +25,9 @@ const SideDrawer = () => {
             width='300px'
             title={cart && `${cart.length} products in cart`}    
             size="default"
-            footer={<Button sx={{width:'100%'}} variant="contained" onClick={handleClick}>Checkout</Button>}
+            footer={<Button sx={{width:'100%'}} variant="contained" onClick={handleClick}>
+                          Go To Cart
+                    </Button>}
             >
                 
             {

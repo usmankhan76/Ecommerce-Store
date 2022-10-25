@@ -36,6 +36,9 @@ import SubCategoryHome from "./pages/sub-category/sub-category-home";
 import ShopPage from "./pages/shop";
 import CartPage from "./pages/cart";
 import SideDrawer from "./components/side-drawer/side-drawer";
+import CheckoutPage from "./pages/checkout";
+import CouponPage from "./pages/admin/coupon/coupon-page";
+import PaymentPage from "./pages/payment";
 function App() {
   const dispatch=useDispatch();
   const navigate=useNavigate();
@@ -95,19 +98,20 @@ function App() {
      <Route path='/' element={<Home/>}  />;
      <Route path='/shop' element={<ShopPage/>}  />;
      <Route path='/cart' element={<CartPage/>}  />;
-     <Route path='login' element={
-     <ProtectedRoute >
+     <Route 
+        path='/checkout' 
+        element={<VerifiedUserToken> <CheckoutPage/> </VerifiedUserToken>} />;
+       <Route 
+        path='/payment' 
+        element={<VerifiedUserToken> <PaymentPage/> </VerifiedUserToken>} />;
+     <Route 
+        path='login' 
+        element={<ProtectedRoute > <Login/> </ProtectedRoute>} />;
 
-       <Login/>
-     </ProtectedRoute>
-     } />;
-
-     <Route path='signup' element={
-      <ProtectedRoute >
-          <Register/>
-     </ProtectedRoute>
-    } 
-     />;
+     <Route 
+        path='signup' 
+        element={<ProtectedRoute > <Register/>  </ProtectedRoute>} 
+      />;
         
 
      <Route path = 'verify-email' 
@@ -130,9 +134,9 @@ function App() {
         
   
       <Route path ='admin/dashboard' element={
-      <VerifyAdmin>
-        <AdminDashboard/>
-      </VerifyAdmin> 
+              <VerifyAdmin>
+                <AdminDashboard/>
+              </VerifyAdmin> 
       } />;
        <Route path ='/admin/dashboard/category' element={<VerifyAdmin> <CreateCategory/> </VerifyAdmin> }/>; 
        <Route path ='/admin/dashboard/sub-category' 
@@ -143,6 +147,8 @@ function App() {
        <Route path ='/admin/dashboard/products' element={<VerifyAdmin> <AllProducts/> </VerifyAdmin> }/>; 
        <Route path ='/admin/dashboard/product/:slug' 
               element={<VerifyAdmin> <UpdateProduct/> </VerifyAdmin> }/>;
+
+       <Route path ='/admin/dashboard/coupons' element={<VerifyAdmin> <CouponPage/> </VerifyAdmin> }/>;              
         <Route path ='product/:slug' element={ <ViewProduct/>  }/>;             
         <Route path ='category/:slug' element={ <CategoryHome/>  }/>;             
         <Route path ='sub-category/:slug' element={ <SubCategoryHome/>  }/>;             

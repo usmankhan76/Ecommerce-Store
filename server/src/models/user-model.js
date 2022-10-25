@@ -4,6 +4,7 @@ const {ObjectID}=mongoose.Schema;
 const userSchema=new mongoose.Schema({
     name: String,
     tokenId:String,
+    phoneNumber:String,
     email:{
         type:String,
         required:true,
@@ -17,7 +18,13 @@ const userSchema=new mongoose.Schema({
         type:Array,
         default:[]
     },
-    address: String,
+    address: [{
+            buyerName:{type:String,required:true},
+            country:String,
+            city:String,
+            postalCode:String,
+            homeAddress:String,
+        }],
     // wishlist:[{type:ObjectID,ref:"Product"}]
     
 },
