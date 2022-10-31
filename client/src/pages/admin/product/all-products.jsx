@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 import CardItem from '../../../components/cards-item/cards-item';
 import AdminNavs from '../../../components/nav/admin-navs';
 import LoadingSipner from '../../../components/spin/spin';
-import { getProducts, removeProduct } from '../../../services/product-services';
+import { getProducts, getProductsbyCount, removeProduct } from '../../../services/product-services';
 import {useSelector} from 'react-redux'
 
 const AllProducts = () => {
@@ -13,7 +13,7 @@ const AllProducts = () => {
   const getAllProducts=()=>{
     setLoading(false)
 
-    getProducts(10).then(res=>{
+    getProductsbyCount(10).then(res=>{
       setLoading(false)
       setProducts(res.data)
     }).catch(err=>{
@@ -35,6 +35,8 @@ const AllProducts = () => {
       if(err.message.status===400) toast.error(err.response.data)
       console.log("Product remove error",err.message);
     })
+    }else{
+      setLoading(false)
     }
     
   }

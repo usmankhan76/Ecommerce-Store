@@ -10,12 +10,13 @@ import { addToCart } from '../redux/features/cart/cart-slice'
 import { setCouponApply } from '../redux/features/coupon/coupon-slice'
 import { emptyCart, getUserCart } from '../services/cart-service'
 import { applyCouponOnTotal } from '../services/coupon-services'
-
+import LoadingSipner from '../components/spin/spin'
 const CheckoutPage = () => {
     // const cart=useSelector(state=>state.cart)
     const [products,setProducts]=useState([])
     const dispatch=useDispatch();
     const [productsTotal,setProductsTotal]=useState('')
+    const [loading,setLoading]=useState(false)
     const [productsTotalAfterDiscount,setProductsTotalAfterDiscount]=useState(0)
     const [givenCoupon,setGiveCoupon]=useState('')
     const state=useSelector(state=>state  );
@@ -33,9 +34,11 @@ const CheckoutPage = () => {
   
 
   const getCartFromDb=()=>{
+      setLoading(true)
     getUserCart(authUserToken).then((res)=>{
       console.log("response data userCart",res.data)
       const {products,cartTotal}=res.data
+      setLoading(false)
       setProducts(products)
       dispatch(addToCart(products.product))
       setProductsTotal(cartTotal)
@@ -85,7 +88,8 @@ const CheckoutPage = () => {
   },[])
   return (
     <Container  disableGutters={true} >
-        <Grid container  style={{marginTop:'5px'}}>
+       {loading ?<LoadingSipner/>: ( 
+       <Grid container  style={{marginTop:'5px'}}>
             <Grid item container xs={12} md={8} lg={8} style={{padding:'5px'}} >
                  <Grid item lg={12} xs={12} md={12} xl={12}   >
                     <Typography  variant='h5'>Checkout</Typography>
@@ -145,7 +149,7 @@ const CheckoutPage = () => {
                   Total: <b>$ {productsTotal}</b>  
                   <hr />
                   {productsTotalAfterDiscount > 0 &&  couponIsApplied && (
-                    <p className='bg-success p-2'>
+                    <p className='bg-success p-2' style={{color:'white'}}>
                     Total After Discoun:${productsTotalAfterDiscount}
                     </p>
                   )}
@@ -160,6 +164,7 @@ const CheckoutPage = () => {
                           >
                             Order Now
                      </Button>
+                    
                     {/* <Button variant='contained' color='error' onClick={handleEmptyCart} disabled={products.product && !products.product.length}>
                             Empty  Cart
                      </Button> */}
@@ -176,7 +181,7 @@ const CheckoutPage = () => {
 
             </Grid>
         </Grid>
-
+       )}
     </Container>
   )
 }

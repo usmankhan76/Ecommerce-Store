@@ -38,7 +38,8 @@ import CartPage from "./pages/cart";
 import SideDrawer from "./components/side-drawer/side-drawer";
 import CheckoutPage from "./pages/checkout";
 import CouponPage from "./pages/admin/coupon/coupon-page";
-import PaymentPage from "./pages/payment";
+import PaymentPage from "./pages/payment/payment";
+// import PaymentPage from "./pages/payment";
 function App() {
   const dispatch=useDispatch();
   const navigate=useNavigate();

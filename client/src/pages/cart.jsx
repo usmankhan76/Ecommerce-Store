@@ -1,5 +1,5 @@
 import { Button, Container,  Grid, Typography } from '@mui/material'
-import React from 'react'
+import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import Table from '@mui/material/Table';
@@ -11,9 +11,11 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import CartProductItem from '../components/cart-product-item/cart-product-item-comp';
 import { saveCartToDb } from '../services/cart-service';
+import LoadingButton from '@mui/lab/LoadingButton';
 
 const CartPage = () => {
   const state=useSelector(state=>state)
+  const [loading,setLoading]=useState(false)
   const navigate=useNavigate()
   const cart=state.cart
   const {authUserToken}=state.user;
@@ -30,8 +32,10 @@ const CartPage = () => {
   
 
   const handleProceedToCheckout=()=>{
+    setLoading(true)
     saveCartToDb(cart,authUserToken).then((res)=>{
       if(res.data.ok){
+    setLoading(false)
         return navigate('/checkout')
       }
     })
@@ -107,17 +111,17 @@ const CartPage = () => {
                   Total: <b>${getTotal()}</b>  
                   <hr />
                   {loginUser ?(
-                        <Button 
+                        <LoadingButton 
                             // style={{backgroundColor:'#004080',}}
                             color='success'
                             variant='contained' 
                             disabled={!cart.length}
-                            
+                            loading={loading}
                             onClick={handleProceedToCheckout}
                             >
                                    Proceed to Checkout
                             
-                        </Button>
+                        </LoadingButton>
                     ):(
                         <Button 
                             color='info' 
@@ -128,7 +132,8 @@ const CartPage = () => {
                             Login to Checkout
                           
                         </Button>
-                    ) }  
+                    ) }
+                            
                 </Grid>
                 <Grid item lg={12} xs={12} md={12}>
                  
