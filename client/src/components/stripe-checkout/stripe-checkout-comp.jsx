@@ -8,9 +8,12 @@ import TextField from '@mui/material/TextField';
 import MonetizationOnOutlinedIcon from '@mui/icons-material/MonetizationOnOutlined';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import {Link} from 'react-router-dom'
-import { setOrderConfirm } from '../../redux/features/coupon/coupon-slice';
+import { setCouponApply, setOrderConfirm } from '../../redux/features/coupon/coupon-slice';
 import { Card, CardContent } from '@mui/material';
 import { CardHeader } from '@mui/material';
+import { addToCart } from '../../redux/features/cart/cart-slice';
+import { generateOrder } from '../../services/order-service';
+import { emptyCart } from '../../services/cart-service';
 const StripeCheckoutComp = () => {
     const stripe=useStripe();
     const elements=useElements();
@@ -22,8 +25,10 @@ const StripeCheckoutComp = () => {
     const [total,setTotal]=useState(0)
     const [totalPayeable,setTotalPayeable]=useState(0)
     const {authUserToken}=useSelector(state=>state.user)
-    const [email,setEmail]=useState('')
+    // const [email,setEmail]=useState('')
     const dispatch=useDispatch();
+
+
     const handleSubmit=async (e)=>{
       e.preventDefault();
       setProcessing(true);
@@ -39,33 +44,54 @@ const StripeCheckoutComp = () => {
       setError(`Payment failed ${payload.error.message}`);
       setProcessing(false);
     } else {
+
+      // make order 
+      generateOrder(payload,authUserToken).then((res)=>{
+
+        if(res.data.isOrderCreated==='ok'){
+           //empty the localstorage
+          if(typeof window !=='undefined') localStorage.removeItem('cart')
+          //empty the redux
+          dispatch(addToCart([]))
+          dispatch(setCouponApply(false))
+          //empty Database
+          emptyCart(authUserToken)
+          
+          toast.success("Payment Successfull")
+        }
+      })
+      .catch(err=>console.log("create order error"))
+      
+      
+      
+      dispatch(setOrderConfirm(false))
       setError(null);
       setProcessing(false);
       setSucceeded(true);
       console.log("stripe payload",payload);
-      dispatch(setOrderConfirm(false))
-      toast.success("Payment Successfull")
+     
     }
   };
 
     
     const cartStyle = {
-  style: {
-    base: {
-      color: "#32325d",
-      fontFamily: "Arial, sans-serif",
-      fontSmoothing: "antialiased",
-      fontSize: "16px",
-      "::placeholder": {
-        color: "#32325d",
+      style: {
+        base: {
+          color: "#32325d",
+          fontFamily: "Arial, sans-serif",
+          fontSmoothing: "antialiased",
+          fontSize: "16px",
+          "::placeholder": {
+            color: "#32325d",
+          },
+        },
+        invalid: {
+          color: "#fa755a",
+          iconColor: "#fa755a",
+        },
       },
-    },
-    invalid: {
-      color: "#fa755a",
-      iconColor: "#fa755a",
-    },
-  },
-};
+    };
+
     const handleChange=(event)=>{
     setDisabled(event.empty);
     setError(event.error ? event.error.message : "");

@@ -71,11 +71,11 @@ const ProductCard = ({product}) => {
         <Link to={`/product/${slug}`} style={{textDecoration:"none"}}>
           <EyeOutlined className='text-info'/><br/> View Product
       </Link>,
-      <Tooltip title={tooltipText} arrow placement="top">
+      <Tooltip title={product.quantity<1?"Out of Stock":tooltipText} arrow placement="top">
 
-      <span onClick={handleAddToCart}>
-      <ShoppingCartOutlined className='text-danger'/> <br /> Add to Cart
-      </span>
+      <a disabled={product.quantity<1} style={{textDecoration:'none'}} onClick={handleAddToCart} >
+      <ShoppingCartOutlined className='text-danger'/> <br />{product.quantity<1?"Out of Stock":" Add to Cart"}
+      </a>
     </Tooltip>
       ]}
     >

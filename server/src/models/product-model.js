@@ -40,7 +40,7 @@ const productSchema=new mongoose.Schema({
    ],
    quantity:{
        type:Number,
-},
+        },
 
    sold:{
        type:Number,
