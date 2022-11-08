@@ -39,7 +39,7 @@ const Header = () => {
 
     }
     let profileImage=loginUser && loginUser.providerData[0].photoURL
-
+    // console.log("profile------->",profileImage);
   return (
    <Navbar collapseOnSelect expand="sm" bg="dark" variant="dark" style={{paddingLeft:'0'}}>
       <Container style={{maxWidth:'1305px' }}>

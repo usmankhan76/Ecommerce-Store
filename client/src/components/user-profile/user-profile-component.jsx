@@ -17,6 +17,7 @@ import { Link } from 'react-router-dom';
 export default function UserProfileComponent({profileImage,role,loginUser,logOut}) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+    // console.log("profile in component------->",profileImage);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };

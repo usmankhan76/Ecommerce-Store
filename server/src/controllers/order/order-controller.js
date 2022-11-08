@@ -42,6 +42,21 @@ const createOrder=async(req,res)=>{
         console.log('create order error',error.message);
     }
 }
+const getOrders=async(req,res)=>{
+    try {
+        // find user
+        let {email}=req.userCredientials.firebaseUser;
+        let findUser=await userModel.findOne({email,}).exec();
+        // get login user order
+        let findOrders=await orderModal.find({orderBy:findUser._id}).populate('products.product').exec()
+        console.log("findOrders",findOrders);
+        res.json(findOrders);
+    } catch (error) {
+        console.log('get orders error',error.message);
+        
+    }
+}
 module.exports={
-    createOrder
+    createOrder,
+    getOrders
 }

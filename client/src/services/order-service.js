@@ -10,3 +10,13 @@ export const generateOrder=async(stripeResponse,authtoken)=>{
     }
    return axios.request(options)
 }
+
+export const getUserOrders=async(authtoken)=>{
+    const options={
+        method:'GET',
+        url:'http://localhost:8000/api/user/orders',
+       headers:{authtoken}
+
+    }
+   return axios.request(options)
+}
