@@ -1,12 +1,23 @@
 import React from 'react'
 import OrderItemComp from '../order-item/order-item-comp';
-import { Button, Card, CardContent, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material'
+import { Button, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material'
+import { Document, Page, Text, View, StyleSheet,PDFDownloadLink } from '@react-pdf/renderer';
 import OrderItemOrderComp from '../order-item/order-item-order-comp';
+import InvoiceComp from '../invoice-pdf/invoice-comp';
 // import { Card } from 'antd'
 
 
 const OrderHistoryCardComp = ({order}) => {
     const {products,paymentIntent}=order;
+    const showDownloadPdf=(order)=>{
+     return   <PDFDownloadLink 
+                document={<InvoiceComp order={order}/>}
+                fileName='Invoice.pdf'
+                style={{textDecoration:'none',color:'white'}}
+                >
+                DownLoad PDF    
+        </PDFDownloadLink>
+    }
   return (
     <Grid item lg={12}
         // title={"Show payment info"}
@@ -61,8 +72,7 @@ const OrderHistoryCardComp = ({order}) => {
     </TableContainer>
     
     <h6 style={{padding:'20px'}}>Total Amount Paid: ${paymentIntent.amount/100}</h6>
-    <Button fullWidth size='small' variant='contained' color='success'>Download PDF</Button>
-     {/* </CardContent> */}
+    <Button fullWidth size='small' variant='contained' color='success'>{showDownloadPdf(order)}</Button>
     </Grid>
     
   )

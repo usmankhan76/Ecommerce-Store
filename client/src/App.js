@@ -44,7 +44,7 @@ function App() {
   const dispatch=useDispatch();
   const navigate=useNavigate();
 
-  const {loginUser}=useSelector(state=>state.user)
+  const {loginUser,authUserToken}=useSelector(state=>state.user)
 
   function roleBasedRedirect(role){
     if(role==="admin"){
@@ -73,14 +73,14 @@ function App() {
           //  roleBasedRedirect(role)        
         }).catch(err=>toast.error(err))
         
-        GetCurrentUser().then((res)=>{
-         console.log("get current user Response",res);
-          const{name,email,role,tokenId,_id}=res.data
-          dispatch(setUserCredientials({name,email,role,tokenId,_id}))
-          dispatch(setCurrentUser(user))
-          dispatch(setAuthUserToken(user.accessToken))
+        // GetCurrentUser(authUserToken).then((res)=>{
+        //  console.log("get current user Response",res);
+        //   const{name,email,role,tokenId,_id}=res.data
+        //   dispatch(setUserCredientials({name,email,role,tokenId,_id}))
+        //   dispatch(setCurrentUser(user))
+        //   dispatch(setAuthUserToken(user.accessToken))
         
-        }).catch((err)=>{console.log(err.message)})
+        // }).catch((err)=>{console.log(err.message)})
         
         
       

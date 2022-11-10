@@ -31,7 +31,7 @@ const userCart=async(req,res)=>{
         object.count=cart[i].count;
         object.color=cart[i].color;
         let productPrice=await productModel.findById(cart[i]._id).select("price").exec(); // in this step we find out product and get out only price field 
-        console.log("product price",productPrice.price)
+        // console.log("product price",productPrice.price)
         object.price=productPrice.price;
         
 

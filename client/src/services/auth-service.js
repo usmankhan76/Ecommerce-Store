@@ -40,25 +40,29 @@ export const craeteUpdateUser=async (authuser)=>{
 }
 
 
-export const GetCurrentUser=async()=>{
-  
-
-  return await auth.currentUser.getIdToken(/* forceRefresh */ true).then(function(idToken) {
-    // dispatch(setAuthUserToken(idToken))
-    console.log("current id token",idToken)
-  // Send token to your backend via HTTPS
-  const authtoken=idToken
+export const GetCurrentUser=async(authtoken)=>{
   const options = {
         method: 'POST',
         url: 'http://localhost:8000/api/current-user',
         headers: {authtoken}
   };
  return   axios.request(options)
-  // ...
-}).catch(function(error) {
-  // Handle error
-  console.log(error)
-});
+//   return await auth.currentUser.getIdToken(/* forceRefresh */ true).then(function(idToken) {
+//     // dispatch(setAuthUserToken(idToken))
+//     console.log("current id token",idToken)
+//   // Send token to your backend via HTTPS
+//   const authtoken=idToken
+//   const options = {
+//         method: 'POST',
+//         url: 'http://localhost:8000/api/current-user',
+//         headers: {authtoken}
+//   };
+//  return   axios.request(options)
+//   // ...
+// }).catch(function(error) {
+//   // Handle error
+//   console.log(error)
+// });
   
 
 //  return await axios.request(options);
