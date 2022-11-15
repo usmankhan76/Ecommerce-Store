@@ -96,63 +96,85 @@ function App() {
     <SideDrawer/>
     <ToastContainer autoClose={1500}/>
     <Routes>
-     <Route path='/' element={<Home/>}  />;
-     <Route path='/shop' element={<ShopPage/>}  />;
-     <Route path='/cart' element={<CartPage/>}  />;
-     <Route 
-        path='/checkout' 
-        element={<VerifiedUserToken> <CheckoutPage/> </VerifiedUserToken>} />;
-       <Route 
-        path='/payment' 
-        element={<VerifiedUserToken> <PaymentPage/> </VerifiedUserToken>} />;
-     <Route 
-        path='login' 
-        element={<ProtectedRoute > <Login/> </ProtectedRoute>} />;
+      <Route path='/' element={<Home/>}  />;
+      <Route path='/shop' element={<ShopPage/>}  />;
+      <Route path='/cart' element={<CartPage/>}  />;
+      <Route 
+          path='/checkout' 
+          element={<VerifiedUserToken> <CheckoutPage/> </VerifiedUserToken>} />;
+        <Route 
+          path='/payment' 
+          element={<VerifiedUserToken> <PaymentPage/> </VerifiedUserToken>} />;
+      <Route 
+          path='login' 
+          element={<ProtectedRoute > <Login/> </ProtectedRoute>} />;
 
-     <Route 
+      <Route 
         path='signup' 
         element={<ProtectedRoute > <Register/>  </ProtectedRoute>} 
       />;
         
 
-     <Route path = 'verify-email' 
-     element={
-        <NonProtected> 
-          <VerfiyEmail/>
-        </NonProtected>
-     } />;
+      <Route path = 'verify-email' 
+        element={
+            <NonProtected> 
+              <VerfiyEmail/>
+            </NonProtected>} 
+      />;
 
-     <Route path ='forget-password' element={
-      <ProtectedRoute>
-        <ForgetPassword/>
-      </ProtectedRoute>
-      } />;
+      <Route path ='forget-password' element={
+          <ProtectedRoute>
+            <ForgetPassword/>
+          </ProtectedRoute>
+          } />;
 
-     <Route path ='user/dashboard' element={<VerifiedUserToken> <UserDashboard/> </VerifiedUserToken>} />
+      <Route path ='user/dashboard' element={<VerifiedUserToken> <UserDashboard/> </VerifiedUserToken>} />
       <Route path='/user/dashboard/history' element={<UserHistory/>}/>
       <Route path='/user/dashboard/wishlist' element={<UserWishlist/>}/>
       <Route path='/user/dashboard/profile' element={<UserProfile/>}/>
         
   
-      <Route path ='admin/dashboard' element={
-              <VerifyAdmin>
-                <AdminDashboard/>
-              </VerifyAdmin> 
-      } />;
-       <Route path ='/admin/dashboard/category' element={<VerifyAdmin> <CreateCategory/> </VerifyAdmin> }/>; 
-       <Route path ='/admin/dashboard/sub-category' 
-            element={ <VerifyAdmin> <CreateSubCategory/> </VerifyAdmin> }/>; 
-       <Route path ='/admin/catergory/:slug' element={<VerifyAdmin><UpdateCategoryItem/> </VerifyAdmin> }/>; 
-       <Route path ='/admin/sub-catergory/:slug' element={<VerifyAdmin><UpdateSubCategoryItem/> </VerifyAdmin> }/>; 
-       <Route path ='/admin/dashboard/product' element={<VerifyAdmin> <CreateProduct/> </VerifyAdmin> }/>; 
-       <Route path ='/admin/dashboard/products' element={<VerifyAdmin> <AllProducts/> </VerifyAdmin> }/>; 
-       <Route path ='/admin/dashboard/product/:slug' 
-              element={<VerifyAdmin> <UpdateProduct/> </VerifyAdmin> }/>;
+      <Route 
+            path ='admin/dashboard' 
+            element={<VerifyAdmin> <AdminDashboard/> </VerifyAdmin> } 
+      />;
 
-       <Route path ='/admin/dashboard/coupons' element={<VerifyAdmin> <CouponPage/> </VerifyAdmin> }/>;              
-        <Route path ='product/:slug' element={ <ViewProduct/>  }/>;             
-        <Route path ='category/:slug' element={ <CategoryHome/>  }/>;             
-        <Route path ='sub-category/:slug' element={ <SubCategoryHome/>  }/>;             
+      <Route 
+            path ='/admin/dashboard/category' 
+            element={<VerifyAdmin> <CreateCategory/> </VerifyAdmin> }
+      />; 
+            
+       <Route path ='/admin/dashboard/sub-category' 
+            element={ <VerifyAdmin> <CreateSubCategory/> </VerifyAdmin> }
+      />; 
+
+      <Route 
+            path ='/admin/catergory/:slug' 
+            element={<VerifyAdmin><UpdateCategoryItem/> </VerifyAdmin> }/>;
+
+      <Route 
+            path ='/admin/sub-catergory/:slug' 
+            element={<VerifyAdmin><UpdateSubCategoryItem/> </VerifyAdmin> }/>; 
+
+       <Route path ='/admin/dashboard/product' element={<VerifyAdmin> <CreateProduct/> </VerifyAdmin> }/>; 
+      <Route 
+            path ='/admin/dashboard/products' 
+            element={<VerifyAdmin> <AllProducts/> </VerifyAdmin> }
+      />; 
+      <Route 
+            path ='/admin/dashboard/product/:slug' 
+            element={<VerifyAdmin> <UpdateProduct/> </VerifyAdmin> }
+      />;
+
+      <Route 
+          path ='/admin/dashboard/coupons' 
+          element={<VerifyAdmin> <CouponPage/> </VerifyAdmin> }
+      />;
+      
+
+      <Route path ='product/:slug' element={ <ViewProduct/>  }/>;             
+      <Route path ='category/:slug' element={ <CategoryHome/>  }/>;             
+      <Route path ='sub-category/:slug' element={ <SubCategoryHome/>  }/>;             
 
 
     

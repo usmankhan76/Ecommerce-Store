@@ -1,4 +1,4 @@
-import { GroupOutlined } from '@ant-design/icons'
+
 import { Container, Grid } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
@@ -11,7 +11,7 @@ const UserHistory = () => {
     const [orders,setOrders]=useState([])
     const [loading,setLoading]=useState(false)
     const {authUserToken}=useSelector((state)=>state.user)
-    const fetchOrders=()=>{
+    const fetchOrders=async()=>{
         setLoading(true)
        return getUserOrders(authUserToken).then((res)=>{
             setLoading(false)

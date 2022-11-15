@@ -14,7 +14,7 @@ const OrderItemOrderComp = ({order}) => {
               
             >
               <TableCell style={{whiteSpace:'nowrap'}} align="left">{id}</TableCell>
-              <TableCell align="center">&nbsp;{orderStatus}</TableCell>
+              <TableCell align="center" sx={{color:'blue'}}>&nbsp;{orderStatus}</TableCell>
               <TableCell align="center">{payment_method_types[0]}</TableCell>
              
               <TableCell align="right" >{status}</TableCell>
