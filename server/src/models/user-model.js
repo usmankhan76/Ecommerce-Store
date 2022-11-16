@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const {ObjectID}=mongoose.Schema;
+const {ObjectId}=mongoose.Schema;
 
 const userSchema=new mongoose.Schema({
     name: String,
@@ -25,7 +25,7 @@ const userSchema=new mongoose.Schema({
             postalCode:String,
             homeAddress:String,
         }],
-    // wishlist:[{type:ObjectID,ref:"Product"}]
+    wishlist:[{type:ObjectId,ref:"ProductModel"}]
     
 },
 {timestamps:true});

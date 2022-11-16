@@ -16,14 +16,14 @@ const ViewProduct = () => {
     const {authUserToken,loginUser,id}=useSelector(state=>state.user)
 
     const loadProduct=()=>{
-        console.log("lpado fucntioan is runnign");
+        // console.log("lpado fucntioan is runnign");
         setLoading(true)
         getProduct(slug).then((res)=>{
-            console.log("product res",res.data);
+            // console.log("product res",res.data);
             setProduct(res.data) 
             setLoading(false)
             getListRelatedProducts(res.data._id).then((res)=>{
-                console.log("related response",res.data);
+                // console.log("related response",res.data);
                 setRelatedProducts(res.data)
                 
             }).catch((error)=>{
@@ -38,7 +38,7 @@ const ViewProduct = () => {
 
     const handleStarsChange=(newRating,name)=>{
         setStars(newRating)
-        console.log("handel stars",newRating,name);
+        // console.log("handel stars",newRating,name);
         productStars(name,newRating,authtoken).then((res)=>{
             toast.success("Thanks For you Review")
         loadProduct()
@@ -48,7 +48,7 @@ const ViewProduct = () => {
         })
     }
     useEffect(()=>{
-        console.log("useEffect in loadPorduct");
+        // console.log("useEffect in loadPorduct");
         loadProduct()
     },[slug])
 
@@ -58,7 +58,7 @@ const ViewProduct = () => {
             const checkProductRatingObject= product.ratings.find((obj)=> (
             obj.postedBy.toString()===id.toString()
             ))
-            console.log("useEfect check object",checkProductRatingObject);
+            // console.log("useEfect check object",checkProductRatingObject);
             checkProductRatingObject && setStars(checkProductRatingObject.stars)
         }
     })

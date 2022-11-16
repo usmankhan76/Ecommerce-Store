@@ -4,6 +4,7 @@ import { StarOutlined } from '@ant-design/icons';
 import { Modal } from 'antd';
 import { toast } from 'react-toastify';
 import {useNavigate, useParams} from "react-router-dom"
+import StarBorderIcon from '@mui/icons-material/StarBorder';
 const RatingModal = ({children}) => {
     const{loginUser}=useSelector(state=>state.user);
     const[showModal,setShowModal]=useState(false)
@@ -12,16 +13,16 @@ const RatingModal = ({children}) => {
    
   return (
     <>
-    <div onClick={()=>setShowModal(true)}>
+    <div onClick={()=>setShowModal(true)} style={{marginTop:'13px'}}>
         
-        <StarOutlined className='text-danger' /><br/> {" "}
+        <StarBorderIcon className='text-danger' /><br/> {" "}
         {loginUser?"Leave Rating":"Login to Leave rating"}
     </div>
     {loginUser?(
         <Modal 
       title='Leave Your Rating'
       centered
-      visible={showModal}
+      open={showModal}
      
       onOk={()=>{
           setShowModal(false)

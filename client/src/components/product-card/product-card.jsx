@@ -68,7 +68,7 @@ const ProductCard = ({product}) => {
               />}
 
       actions={[
-        <Link to={`/product/${slug}`} style={{textDecoration:"none"}}>
+      <Link to={`/product/${slug}`} style={{textDecoration:"none"}}>
           <EyeOutlined className='text-info'/><br/> View Product
       </Link>,
       <Tooltip title={product.quantity<1?"Out of Stock":tooltipText} arrow placement="top">
@@ -76,7 +76,8 @@ const ProductCard = ({product}) => {
       <a disabled={product.quantity<1} style={{textDecoration:'none'}} onClick={handleAddToCart} >
       <ShoppingCartOutlined className='text-danger'/> <br />{product.quantity<1?"Out of Stock":" Add to Cart"}
       </a>
-    </Tooltip>
+    </Tooltip>,
+    
       ]}
     >
     <Meta onClick={handleClickCard} title={`${title} - ${price}`} description={`${description && description.substring(0,10)}...`} />
