@@ -11,6 +11,8 @@ import { setCouponApply } from '../redux/features/coupon/coupon-slice'
 import { emptyCart, getUserCart } from '../services/cart-service'
 import { applyCouponOnTotal } from '../services/coupon-services'
 import LoadingSipner from '../components/spin/spin'
+import { createCashOrderInB } from '../services/cashOnD-service'
+import { setCashOnD } from '../redux/features/cashOnDelivery/cashOnDelivery-slice'
 const CheckoutPage = () => {
     // const cart=useSelector(state=>state.cart)
     const [products,setProducts]=useState([])
@@ -24,6 +26,7 @@ const CheckoutPage = () => {
     const {couponIsApplied,orderConfirmed}=state.coupon
     const navigate=useNavigate()
     const [dialogOpen,setDialogOpen]=useState(false)
+    const COD=state.cashOnD
   //   const getTotal=()=>{
   //  return products.reduce((cu,ac)=>{
   //   return cu+(ac.count*ac.price)
@@ -32,7 +35,7 @@ const CheckoutPage = () => {
   // }
 
   
-
+ console.log("cash",COD);
   const getCartFromDb=()=>{
       setLoading(true)
     getUserCart(authUserToken).then((res)=>{
@@ -81,8 +84,35 @@ const CheckoutPage = () => {
       console.log("conpon apply error ",err.message)
     })
   }
-      console.log('res apply coupon',productsTotalAfterDiscount)
-      console.log("coupone reduxe",couponIsApplied)
+  const createCashOrder=()=>{ 
+    createCashOrderInB(authUserToken,COD).then((res)=>{
+      console.log("create cash order",res.data)
+      if(res.data.isOrderCreated==='ok'){
+        // reset redux ,empty local storage , reset coupon, res COD,redirect
+        // reset local storage
+        if(typeof window !== 'undefined') localStorage.removeItem('cart')
+        //empty redux
+        dispatch(addToCart([]));
+        dispatch(setCouponApply(false));
+        dispatch(setCouponApply(false));
+        dispatch(setCashOnD(false))
+        //empty database
+        emptyCart(authUserToken)
+        //redirect
+        setTimeout(() => {
+          navigate('/user/dashboard/history')
+          
+        }, 1000);
+        //
+        toast.success("Order is successfully placed")
+
+
+      }
+    
+    }).catch(err=>console.log("createCashOrderInB eror",err.message))
+  }
+      // console.log('res apply coupon',productsTotalAfterDiscount)
+      // console.log("coupone reduxe",couponIsApplied)
   useEffect(()=>{
     getCartFromDb()
   },[])
@@ -155,7 +185,18 @@ const CheckoutPage = () => {
                   )}
 
                   <div style={{display:'flex',flexDirection:'row',justifyContent:'space-between'}}>
-                     <Button
+                   {COD?(
+                      <Button
+                          color='success'
+                          variant='contained' 
+                          // disabled={!products.length}
+                          disabled={!orderConfirmed}
+                          onClick={createCashOrder}
+                          >
+                            Place Order
+                     </Button>
+                   ):(
+                      <Button
                           color='success'
                           variant='contained' 
                           // disabled={!products.length}
@@ -164,10 +205,10 @@ const CheckoutPage = () => {
                           >
                             Order Now
                      </Button>
+                   )}
+                     
                     
-                    {/* <Button variant='contained' color='error' onClick={handleEmptyCart} disabled={products.product && !products.product.length}>
-                            Empty  Cart
-                     </Button> */}
+                   
                   <EmptyCartDialogComp  
                       open={dialogOpen} 
                       setOpen={setDialogOpen} 

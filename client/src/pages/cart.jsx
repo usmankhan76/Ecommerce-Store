@@ -1,6 +1,6 @@
 import { Button, Container,  Grid, Typography } from '@mui/material'
 import React, { useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -12,10 +12,13 @@ import Paper from '@mui/material/Paper';
 import CartProductItem from '../components/cart-product-item/cart-product-item-comp';
 import { saveCartToDb } from '../services/cart-service';
 import LoadingButton from '@mui/lab/LoadingButton';
+import { setCashOnD } from '../redux/features/cashOnDelivery/cashOnDelivery-slice';
 
 const CartPage = () => {
   const state=useSelector(state=>state)
   const [loading,setLoading]=useState(false)
+  const [loading2,setLoading2]=useState(false)
+  const dispatch=useDispatch();
   const navigate=useNavigate()
   const cart=state.cart
   const {authUserToken}=state.user;
@@ -33,9 +36,21 @@ const CartPage = () => {
 
   const handleProceedToCheckout=()=>{
     setLoading(true)
+    dispatch(setCashOnD(false))
     saveCartToDb(cart,authUserToken).then((res)=>{
       if(res.data.ok){
     setLoading(false)
+        return navigate('/checkout')
+      }
+    })
+    // return navigate('/checkout')
+  }
+   const handleCashOnD=()=>{
+    setLoading2(true)
+    dispatch(setCashOnD(true))
+    saveCartToDb(cart,authUserToken).then((res)=>{
+      if(res.data.ok){
+    setLoading2(false)
         return navigate('/checkout')
       }
     })
@@ -111,17 +126,34 @@ const CartPage = () => {
                   Total: <b>${getTotal()}</b>  
                   <hr />
                   {loginUser ?(
+                      <>
                         <LoadingButton 
                             // style={{backgroundColor:'#004080',}}
                             color='success'
                             variant='contained' 
-                            disabled={!cart.length}
+                            disabled={!cart.length ||loading2}
                             loading={loading}
                             onClick={handleProceedToCheckout}
+                            fullWidth
                             >
                                    Proceed to Checkout
                             
                         </LoadingButton>
+                        <br/>
+                        <LoadingButton 
+                            // style={{backgroundColor:'#004080',}}
+                            color='success'
+                            variant='contained' 
+                            disabled={!cart.length || loading}
+                            loading={loading2}
+                            onClick={handleCashOnD}
+                            sx={{marginTop:'10px',}}
+                            fullWidth={true}
+                            >
+                                  Pay Cash On Delivery
+                            
+                        </LoadingButton>
+                      </>
                     ):(
                         <Button 
                             color='info' 

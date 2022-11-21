@@ -4,6 +4,7 @@ import { Button, Grid, Paper, Table, TableBody, TableCell, TableContainer, Table
 import { Document, Page, Text, View, StyleSheet,PDFDownloadLink } from '@react-pdf/renderer';
 import OrderItemOrderComp from '../order-item/order-item-order-comp';
 import InvoiceComp from '../invoice-pdf/invoice-comp';
+import { useSelector } from 'react-redux';
 // import { Card } from 'antd'
 
 
@@ -11,7 +12,7 @@ const OrderHistoryCardComp = ({order}) => {
     const {products,paymentIntent}=order;
     const showDownloadPdf=(order)=>{
      return   <PDFDownloadLink 
-                document={<InvoiceComp order={order}/>}
+                document={<InvoiceComp order={order} />}
                 fileName='Invoice.pdf'
                 style={{textDecoration:'none',color:'white'}}
                 >
@@ -27,7 +28,7 @@ const OrderHistoryCardComp = ({order}) => {
     {/* <CardContent> */}
 
    
-    <h6  className='p-2 text-center'>Order Details</h6>
+    <h6  className='p-2 text-center'> Order Details</h6>
     <TableContainer component={Paper} sx={{}}>
       <Table sx={{ minWidth: 650 }}  aria-label="simple table">
         <TableHead sx={{backgroundColor:'#D3D8E2',}}>
@@ -71,7 +72,7 @@ const OrderHistoryCardComp = ({order}) => {
       </Table>
     </TableContainer>
     
-    <h6 style={{padding:'20px'}}>Total Amount Paid: ${paymentIntent.amount/100}</h6>
+    <h6 style={{padding:'20px'}}>{paymentIntent.status==="Cash On Delivery" ?"Total Amount Paid on Delivery":'Total Amount Paid:'} ${paymentIntent.amount/100}</h6>
     <Button fullWidth size='small' variant='contained' color='success'>{showDownloadPdf(order)}</Button>
     </Grid>
     

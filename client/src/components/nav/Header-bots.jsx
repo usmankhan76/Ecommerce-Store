@@ -25,9 +25,9 @@ const Header = () => {
     const navigate=useNavigate();
     const {loginUser,role}=useSelector(state=>state.user);
     const cart=useSelector(state=>state.cart)
-    console.log("this is cart ",cart);
+    // console.log("this is cart ",cart);
     const bageCount = cart.length >0 ?cart.length:0
-    console.log("cart count",bageCount);
+    // console.log("cart count",bageCount);
     const logOut=()=>{
     
       

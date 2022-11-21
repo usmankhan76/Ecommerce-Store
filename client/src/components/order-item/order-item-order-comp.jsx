@@ -3,8 +3,9 @@ import React from 'react'
 
 const OrderItemOrderComp = ({order}) => {
     const{orderStatus,paymentIntent}=order
-    console.log("orrder adn order", order);
+    // console.log("orrder adn order", order);                                    
     const {id,currency,payment_method_types,status,created}=paymentIntent
+    // console.log("cehck error",payment_method_types);
   return (
     
     <TableRow

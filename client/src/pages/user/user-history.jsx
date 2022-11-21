@@ -35,7 +35,7 @@ const UserHistory = () => {
                <Grid item lg={12} md={12} sm={12} xs={12}>
                 
                 <h4 className='p-2 '>
-                    {orders.length>0?"Purchase Orders":"No Purchase Orders"}
+                    {orders.length>0? (`${orders.length} Purchase Orders`):"No Purchase Orders"}
                 </h4>
                </Grid>
                 <Grid item container  lg={12} sm={12} xs={12} >

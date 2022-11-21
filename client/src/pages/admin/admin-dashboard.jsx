@@ -20,7 +20,7 @@ const AdminDashboard = () => {
       setOrders(res.data)
     })
   }
-  console.log('getting order',orders); 
+  // console.log('getting order',orders); 
   const handleOrderStatusChange=(orderId,orderStatus)=>{
     updateOrderStatusInB(authUserToken,orderId,orderStatus).then((res)=>{
       toast.success("Order status updated successfully")
@@ -62,7 +62,7 @@ const AdminDashboard = () => {
                <Grid item lg={12} md={12} sm={12} xs={12}>
                 
                 <h4 className='p-2 '>
-                    {orders.length>0?"Purchase Orders":"No Purchase Orders"}
+                    {orders.length>0?(`${orders.length} Purchase Orders`):"No Purchase Orders"}
                 </h4>
                </Grid>
                 <Grid item container  lg={12} sm={12} xs={12} >
@@ -93,10 +93,12 @@ const AdminDashboard = () => {
                                       <label htmlFor='shipping' className='input-group-text'>Updat Order Status</label>
                                           <select name='shipping'
                                           className='form-select'
+                                          defaultValue={order.orderStatus}
                                           onChange={(e)=>handleOrderStatusChange(order._id,e.target.value)}
                                           >
                                               <option value='none'  selected disabled hidden >Set Status</option>
                                               <option value="Not Processed">Not Processed</option>
+                                              <option value="Cash On Delivery">Cash On Delivery</option>
                                               <option value="Processing">Processing</option>
                                               <option value="Dispatched">Dispatched</option>
                                               <option value="Completed">Completed</option>

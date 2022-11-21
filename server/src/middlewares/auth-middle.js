@@ -5,7 +5,7 @@ exports.authMiddleware=async (req,res,next)=>{
     try {   
     const{name,photoURL,authtoken}=req.headers
 
-    console.log("auth token",authtoken)
+    // console.log("auth token",authtoken)
     // console.log("auth header",req.headers)
     // console.log("auth body",req.body)
         // console.log("this is header",req.headers);

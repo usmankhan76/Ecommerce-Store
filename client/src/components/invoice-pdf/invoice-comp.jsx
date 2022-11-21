@@ -1,9 +1,11 @@
 import React from 'react'
 import { Document, Page, Text, View, StyleSheet,} from '@react-pdf/renderer';
 import {Table,TableHeader,TableCell,TableBody,DataTableCell} from "@david.kucsai/react-pdf-table"
-const InvoiceComp = ({order}) => {
+import { useSelector } from 'react-redux';
+const InvoiceComp = ({order,}) => {
     const{orderStatus,paymentIntent}=order
-    console.log('invoice order',order);
+    // console.log('invoice order',order);
+    
 
   return (
     <Document>
@@ -45,7 +47,7 @@ const InvoiceComp = ({order}) => {
                         Order Status: {'           '}{orderStatus}
                     </Text>{'\n'}
                     <Text>
-                        Total Amount Paid: {'  '}${paymentIntent.amount}
+                      {paymentIntent.status==="Cash On Delivery"?"Total Amount Paid on Delivery":"  Total Amount Paid"}: {'  '}${paymentIntent.amount/100}
                     </Text>
                     
                 </Text>
