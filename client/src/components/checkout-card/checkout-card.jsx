@@ -10,10 +10,11 @@ import dummy from "../../assets/dummy.jpg"
 import { Badge } from '@mui/material';
 const CheckoutCard = ({product,count}) => {
     const {images,title,description,price,}=product;
-    console.log(price)
+    // console.log(price)
+    
   return (
     <>
-      <Card sx={{ display: 'flex',flexDirection:'row',height:'80px',marginBottom:'20px' ,padding:'10px'}}>
+      <Card sx={{ display: 'flex',flexDirection:'row',height:'100px',marginBottom:'20px' ,padding:'10px'}}>
           <Badge badgeContent={count} color='primary'>
         <CardMedia
         component="img"
@@ -25,21 +26,21 @@ const CheckoutCard = ({product,count}) => {
         </Badge>
       <>
      
-      <Box sx={{ display: 'flex', flexDirection: 'row',justifyContent:'space-between',width:'100%' }}>
-        <CardContent sx={{marginTop:'-10px'}}>
+      {/* <Box sx={{ width:'100%',backgroundColor:'red' }}> */}
+        <CardContent sx={{marginTop:'-10px',width:'100%',display: 'flex', flexDirection: 'column',alignItems:'flex-start',justifyContent:'space-between',}}>
           <Typography  variant="subtitle1">
             {title}
           </Typography>
+        <Box sx={{ display: 'flex', flexDirection: 'row',justifyContent:'space-between',width:'100%',padding:'15px 0px' }}>
           <Typography variant="subtitle2" color="text.secondary">
              {description && description.substring(0,20)}... 
           </Typography>
-        </CardContent>
-        <Box sx={{ display: 'flex', flexDirection: 'row',alignItems:'flex-end', }}>
           <Typography>
                 $ {count? price*count:price}
           </Typography>
         </Box>
-      </Box>
+        </CardContent>
+      {/* </Box> */}
        </>
     </Card>
     </>

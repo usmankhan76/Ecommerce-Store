@@ -11,7 +11,7 @@ import { setOrderConfirm } from '../../redux/features/coupon/coupon-slice';
 const UserAddressFormComp = () => {
     const dispatch=useDispatch();
 
-     let { control, handleSubmit,setValue,formState } = useForm({
+     let { control, handleSubmit,setValue,formState:{errors,isSubmitSuccessful} } = useForm({
     defaultValues: {
       firstName: '',
       phoneNumber:'',
@@ -34,7 +34,7 @@ const UserAddressFormComp = () => {
     //  setValue('homeAddress','')
     //  setValue('postalCode','')
      toast.success('Address save successfly')
-    console.log('This is SUCCUSSEFUL in functon',formState.isSubmitSuccessful)
+    console.log('This is SUCCUSSEFUL in functon',isSubmitSuccessful)
     
     dispatch(setOrderConfirm(true))
       }
@@ -45,7 +45,8 @@ const UserAddressFormComp = () => {
   // console.log('This is control',control._formValues)
   // console.log('This is formState',formState)
   // console.log('This is defaultValues',formState.defaultValues)
-  console.log('This is SUCCUSSEFUL',formState.isSubmitSuccessful)
+  console.log('This is SUCCUSSEFUL',isSubmitSuccessful)
+  console.log('This is error',errors)
 
   return (
     <>
@@ -59,7 +60,7 @@ const UserAddressFormComp = () => {
                   name="firstName"
                   control={control}
                   render={({ field }) => <TextField required={true} {...field} fullWidth={true} variant="standard"  label='Name'/>}
-                /> 
+                />     {errors.firstName?.type === 'required' && <p role="alert">First name is required</p>}
             </Grid>
             <Grid item lg={12} xs={12} sm={12}>
 
@@ -71,7 +72,17 @@ const UserAddressFormComp = () => {
               /> 
             </Grid>
             <FormInput fullWidth={true} required={true} label="City" name={"city"} control={control}/>
-            <FormInput fullWidth={true} required={true} label="Postal Code"  name={"postalCode"} control={control}/>
+            <FormInput 
+                  fullWidth={true} 
+                  required={true} 
+                  label="Postal Code"  
+                  name={"postalCode"} 
+                  control={control} 
+                  minLength={2} 
+                  pattern={ "^[0-9]+$"} 
+                  errrors={errors}
+                  
+                  />
       {/* <Grid>
 
       <Controller
@@ -87,7 +98,17 @@ const UserAddressFormComp = () => {
         </Grid> */}
 
             <FormInput fullWidth={true} required={true} label="Country" name={"country"} control={control}/>
-            <FormInput fullWidth={true} required={true} label="Phone Number"  name={"phoneNumber"} control={control}/>
+            <FormInput 
+              fullWidth={true} 
+              required={true} 
+              label="Phone Number"  
+              name={"phoneNumber"} 
+              control={control} 
+              minLength={11} 
+              pattern={ "^[0-9]+$"} 
+           
+                          />
+                          
 
        
       

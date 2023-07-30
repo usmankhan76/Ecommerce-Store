@@ -18,6 +18,7 @@ import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { Badge } from '@mui/material';
 import Person2OutlinedIcon from '@mui/icons-material/Person2Outlined';
+import { addToCart, emptyCartStatate } from '../../redux/features/cart/cart-slice';
 
 const Header = () => {
     
@@ -32,6 +33,9 @@ const Header = () => {
     
       
       signOut(auth).then(()=>{
+        if(typeof window!=='undefined') localStorage.removeItem("cart")
+        // dispatch(addToCart([]));
+        dispatch(emptyCartStatate([]));
         dispatch(setLogOut())
         toast.success(`${loginUser.email} is successfully Log out`)
         navigate('/')
@@ -41,7 +45,7 @@ const Header = () => {
     let profileImage=loginUser && loginUser.providerData[0].photoURL
     // console.log("profile------->",profileImage);
   return (
-   <Navbar collapseOnSelect expand="sm" bg="dark" variant="dark" style={{paddingLeft:'0'}}>
+   <Navbar collapseOnSelect sticky='top' fixed='top' expand="sm" bg="light" data-bs-theme="light">
       <Container style={{maxWidth:'1305px' }}>
 
         <Navbar.Brand as={Link} to='/' >Royal Collection</Navbar.Brand>
@@ -87,9 +91,9 @@ const Header = () => {
        
               )}
               
-            {loginUser? null:<Nav.Link as={Link} to='/signup'> 
+            {/* {loginUser? null:<Nav.Link as={Link} to='/signup'> 
                 <PersonAddAltIcon fontSize='small' style={{marginRight:'5px'}}/>Sign up
-              </Nav.Link>}
+              </Nav.Link>} */}
           </Nav>
         </Navbar.Collapse>
       </Container>

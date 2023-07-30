@@ -28,17 +28,37 @@ const ProductCard = ({product}) => {
         cart=JSON.parse(localStorage.getItem('cart'))
         // cart=localStorage.getItem('cart')
         console.log('cart parse',cart);
-      }
-      
 
+        //I added below code 
+        // let newCart=cart.map((item)=>{
+        //   if(item._id===product._id){
+        //     return {...product,count:++item.count}
+        //   }
+        // })
+        // console.log("checccccccccccck this new cart",newCart)
+        // dispatch(addToCart(newCart))
+      }
+    
+        if(cart.length>0){
+          let findPorduct=cart.find((item)=>item._id===product._id)
+        console.log("checccccccccccck this new Proddddddduct",findPorduct)
+         dispatch(showDarwer(true))
+          setTooltipText("Already Added")
+        }else{
+
+
+          cart.push({...product,count:++product.count|| 1})
+          let unique= _.uniqWith(cart, _.isEqual)
+          localStorage.setItem('cart',JSON.stringify(unique))
+          console.log("this is array we passing in state",unique)
+          dispatch(addToCart(unique))
+  
+  
+          dispatch(showDarwer(true))
+          setTooltipText("Added")
+        }
         
         
-        cart.push({...product,count:1})
-        let unique= _.uniqWith(cart, _.isEqual)
-        localStorage.setItem('cart',JSON.stringify(unique))
-        dispatch(addToCart(unique))
-        dispatch(showDarwer(true))
-        setTooltipText("Added")
       
       
     }
@@ -58,10 +78,14 @@ const ProductCard = ({product}) => {
                 </div>)}
      <Card
         hoverable
+        bordered={true}
         style={{
             width: '250px',
             marginTop:'10px',
-            marginBottom:'20px'
+            marginBottom:'20px',
+            // border:'solid',
+            // borderRadius:"10px"
+            
         }}
         cover={<img alt="example" src={images&& images.length?images[0].url:dummy}  
                 style={{width:'100%',height:'150px',objectFit:'cover',}} 

@@ -27,7 +27,7 @@ const UserHistory = () => {
   return (
     <Container disableGutters={true} >
     {/* <Grid container > */}
-        <Grid container  lg={12} xs={12} sm={12} xl={12} >
+        <Grid container  >
             <Grid item lg={2} sm={12} xl={2} xs={12}>
                 <UserNavs/>
             </Grid>

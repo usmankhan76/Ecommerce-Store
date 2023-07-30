@@ -13,7 +13,14 @@ export const store=configureStore({
     drawer:drawerReducer,
     coupon:couponReducer,
     cashOnD:cashOnDReducer
-   }
+   },
+   middleware: getDefaultMiddleware => getDefaultMiddleware({
+        serializableCheck: {
+            ignoredActions: ['user/setCurrentUser','user/setAuthUserToken','user/setUserCredientials'],
+            ignoredActionPaths: ['loginUser'],
+            ignoredPaths: ['user.loginUser']
+        }
+    })
 
     
 });

@@ -6,6 +6,7 @@ import AdminNavs from '../../../components/nav/admin-navs'
 import ProductForm from '../../../components/product-form/product-form'
 import { getParentSubCategories } from '../../../services/category-service'
 import { createProduct } from '../../../services/product-services'
+import { useNavigate } from 'react-router-dom'
 
 const initialValues={
     title:'',
@@ -17,8 +18,8 @@ const initialValues={
     shipping:"",
     quantity:"",
     images:[],
-    colors:["Black","Brown","Silver","White","Blue"],
-    brands:["Apple","Samsung","Microsoft","Lenevo","ASUS"],
+    colors:["Black","Brown","Silver","White","Blue","Grey"],
+    brands:["Apple","Dell","Samsung","Hp","Microsoft","Lenevo","ASUS"],
     color:"",
     brand:"",
 
@@ -29,6 +30,7 @@ const CreateProduct = () => {
     const {authUserToken}=useSelector((state=>state.user))
     const[subCategories,setSubCategories]=useState([])
     const[showsubs,setShowSubs]=useState(false)
+    const navigate=useNavigate()
    
     
     const handleCategoryChange=(e)=>{
@@ -52,6 +54,7 @@ const CreateProduct = () => {
             console.log("Product response",res.data)
             toast.success(`${values.title} is created successfully`)
             window.location.reload();
+        //    return navigate("/admin/dashboard/products")
     
         }).catch((err)=>{
             console.log("product error",err);
@@ -71,7 +74,7 @@ const CreateProduct = () => {
                 <div className="p-3">
                     <FileUpload values={values}setValues={setValues}/>
                     </div>
-                 {JSON.stringify(values.images)}   
+                 {/* {JSON.stringify(values.images)}    */}
                <ProductForm  values={values} handleSubmit={handleSubmit} setValues={setValues} handleCategoryChange={handleCategoryChange} showsubs={showsubs} subCategories={subCategories} />
          
             </div>

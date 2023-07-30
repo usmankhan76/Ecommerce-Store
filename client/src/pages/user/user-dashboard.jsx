@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import UserNavs from '../../components/nav/user-navs'
+import ResponsiveDrawer from '../../components/user-side-nav/user-side-nav-comp'
 
 const UserDashboard = () => {
   return (
@@ -7,8 +8,9 @@ const UserDashboard = () => {
         <div className="row">
             <div className="col-md-2">
                 <UserNavs/>
+                {/* <ResponsiveDrawer/> */}
             </div>
-            <div className="col">use DashBoard Page</div>
+            <div className="col">user DashBoard Page</div>
         </div>
     </div>
     )

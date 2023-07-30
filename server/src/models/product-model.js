@@ -58,12 +58,12 @@ const productSchema=new mongoose.Schema({
 
    color:{
     type:String,
-    enum:["Black","White","Brown","Silver","Blue"] // it means there is not other value but we define there
+    enum:["Black","White","Brown","Silver","Blue","Grey"] // it means there is not other value but we define there
    },
 
    brand:{
     type:String,
-    enum:["Apple","Microsoft","Samsung","Lenevo","Asus"] 
+    enum:["Apple","Microsoft","Samsung","Lenevo","Asus","Hp","Dell"] 
    },
    ratings:[{
     stars:Number,

@@ -35,21 +35,22 @@ const CheckoutPage = () => {
   // }
 
   
- console.log("cash",COD);
+//  console.log("cash",COD);
   const getCartFromDb=()=>{
-      setLoading(true)
+    setLoading(true)
     getUserCart(authUserToken).then((res)=>{
-      console.log("response data userCart",res.data)
+      console.log("response data userCart checkout.js",res.data)
       const {products,cartTotal}=res.data
       setLoading(false)
       setProducts(products)
-      dispatch(addToCart(products.product))
+      // console.log("response data check products checkout.js",products.product)   
+      // dispatch(addToCart(products.product))
       setProductsTotal(cartTotal)
     }).catch(err=>console.log('getCart error',err.message))
   }
   const handleEmptyCart=()=>{
     emptyCart(authUserToken).then((res)=>{
-      console.log("empty response",res.data) 
+      // console.log("empty response",res.data) 
       setProducts([])
       dispatch(addToCart([]))
       setProductsTotal(0)
@@ -114,8 +115,9 @@ const CheckoutPage = () => {
       // console.log('res apply coupon',productsTotalAfterDiscount)
       // console.log("coupone reduxe",couponIsApplied)
   useEffect(()=>{
+    console.log("this is console in checkout useEffect")
     getCartFromDb()
-  },[])
+  },[authUserToken])
   return (
     <Container  disableGutters={true} >
        {loading ?<LoadingSipner/>: ( 

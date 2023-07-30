@@ -12,7 +12,7 @@ import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
-import { Checkbox, Divider, FormControl, FormControlLabel, FormGroup, Grid, Radio, RadioGroup, TextField } from '@mui/material'
+import { Checkbox, Container, Divider, FormControl, FormControlLabel, FormGroup, Grid, Radio, RadioGroup, TextField } from '@mui/material'
 import { setSearchQuery } from '../redux/features/search/search-slice'
 import { getCategories } from '../services/category-service'
 import StarsFilterComponent from '../components/stars-filter/stars-filter-component'
@@ -24,11 +24,12 @@ import SubdirectoryArrowRightIcon from '@mui/icons-material/SubdirectoryArrowRig
 import ColorLensIcon from '@mui/icons-material/ColorLens';
 import LoyaltyIcon from '@mui/icons-material/Loyalty';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
+import Card from '../components/CardsMouseFlow/cards'
 
 const ShopPage = () => {
     const [loading,setLoading]=useState(false)
     const [products,setProducts]=useState([])
-    const [price,setPrice]=useState([100,10000000])
+    const [price,setPrice]=useState([100,3000])
     // const [ok,setOk]=useState(false)
     const {text}=useSelector(state=>state.search)
     const dispatch=useDispatch();
@@ -122,7 +123,7 @@ const ShopPage = () => {
 
     const loadAllProducts=()=>{
             setLoading(true)
-            getProductsbyCount(6).then((res)=>{
+            getProductsbyCount(10).then((res)=>{
                 setProducts(res.data)
                 setLoading(false)
             }).catch((err)=>{
@@ -174,21 +175,26 @@ const ShopPage = () => {
 
     const showCategories=()=>{
       return  categories.map(c=>{
-           return <ListItemButton key={c._id}>
+           return (
+        //    <ListItemButton key={c._id}></ListItemButton>
                         <FormControlLabel  
+                            key={c._id}
+                            sx={{marginLeft:'10px'}}
                             control={<Checkbox 
-                            size='small' 
-                            value={c._id} 
-                            onClick={handleCategory} />}
+                                size='small' 
+                                value={c._id} 
+                                onClick={handleCategory} />}
                             label={c.name}
                             checked={selectedCategories.includes(c._id)}
-                            />
-                </ListItemButton>
+                            />)
+               
         })
+   
     }
     
     const handleStarClick=(num)=>{
-        console.log("star click",num);
+        // console.log("star click",num);
+        
         dispatch(setSearchQuery(""))
         setSelectedCategories([])
         setSelectedBrand('')
@@ -228,15 +234,20 @@ const ShopPage = () => {
             )
     }
     const handleSubCategory=(s)=>{
-       
-        setSelectedSubCategories([s])
-        dispatch(setSearchQuery(""))
-        setSelectedCategories([])
-        setSelectedBrand('')
-        setSelectedColor('')
-        setSelectedShipping('')
-        setPrice([100,10000000])
-        fetchProducts({sub:s})
+       if(s===selectedSubCategories[0]){
+        setSelectedSubCategories([]);
+        setLoad(!load)
+       }else{
+
+           setSelectedSubCategories([s])
+           dispatch(setSearchQuery(""))
+           setSelectedCategories([])
+           setSelectedBrand('')
+           setSelectedColor('')
+           setSelectedShipping('')
+           setPrice([100,10000000])
+           fetchProducts({sub:s})
+        }
     }
         
 
@@ -259,49 +270,75 @@ const ShopPage = () => {
         </Grid>
     }
     const handleBrandChange=(e)=>{
+
+        const clickedBrand=e.target.value;
+        if(selectedBrand===clickedBrand){
+            setSelectedBrand('');
+            setLoad(!load)
+        }else{
         setSelectedShipping('')
-         setSelectedSubCategories([])
+        setSelectedSubCategories([])
         dispatch(setSearchQuery(""))
         setSelectedCategories([])
         setPrice([100,10000000])
         setSelectedBrand(e.target.value)
         setSelectedColor('')
         fetchProducts({brand:e.target.value})
+        }
+        
+        
+        // setSelectedShipping('')
+        // setSelectedSubCategories([])
+        // dispatch(setSearchQuery(""))
+        // setSelectedCategories([])
+        // setPrice([100,10000000])
+        // setSelectedBrand(e.target.value)
+        // setSelectedColor('')
+        // fetchProducts({brand:e.target.value})
     }
     const showBrands=()=>{
-        return brands.map(b=>(
+
+         return brands.map(b=>(
             <FormControlLabel 
                 sx={{marginLeft:'10px'}}
-                value={b}
+              
                 control={
-                    <Radio 
+                    <Checkbox 
                         size='small' 
-                        onChange={handleBrandChange} 
-                        // checked={selectedBrand.includes(b)} //to understand this see showCategories  
-                        checked={b===selectedBrand}
+                        value={b}
+                        onClick={handleBrandChange} 
+                        checked={selectedBrand.includes(b)} //to understand this see showCategories  
+                        // checked={b===selectedBrand}
                         />} 
+                // checked={selectedBrand.includes(b)}
                 label={b}
                 key={b} 
+               
              />))
     }
     const handleColorChange=(e)=>{
-        
-         setSelectedSubCategories([])
-        dispatch(setSearchQuery(""))
-        setSelectedCategories([])
-        setPrice([100,10000000])
-        setSelectedBrand('')
-        setSelectedShipping('')
-        setSelectedColor(e.target.value)
-        fetchProducts({color:e.target.value})
+        if(e.target.value===selectedColor){
+            setSelectedColor('')
+            setLoad(!load);
+        }else{
+
+            setSelectedSubCategories([])
+            dispatch(setSearchQuery(""))
+            setSelectedCategories([])
+            setPrice([100,10000000])
+            setSelectedBrand('')
+            setSelectedShipping('')
+            setSelectedColor(e.target.value)
+            fetchProducts({color:e.target.value})
+        }
     }
     const showColors=()=>{
-        return colors.map(c=>(
+          return colors.map(c=>(
             <FormControlLabel 
                 sx={{marginLeft:'10px'}}
-                value={c}
                 control={
-                    <Radio 
+                    <Checkbox 
+                        value={c}
                         size='small' 
                         onChange={handleColorChange} 
                         // checked={selectedBrand.includes(b)} //to understand this see showCategories  
@@ -364,219 +401,241 @@ const ShopPage = () => {
     // },[ok,price])
 
   return (
-    
-    <div className='container-fluid'>
-        <div className="row">
-            <div className="col-md-3 ">
-                <div style={{display:'flex',flexDirection:'row',marginLeft:'5px' }}   >
-                <FilterListIcon style={{fontSize:'30px',marginTop:'10px'}}/>
+        <Container maxWidth={"100%"} disableGutters={true}   sx={{backgroundColor:'rgb(245, 251, 255)',width:'100%'}}>
+        <Grid container spacing={1} >
+            <Grid item lg={3} md={3} sm={4} xs={12}>
+                <div   style={{display:'flex',flexDirection:'row',marginLeft:'10px' ,
+                marginTop:'6px',borderBottom:'1px solid',}}  >
 
-                <h4 style={{marginTop:'10px',marginLeft:'5px'}}>Filter Products</h4>
-                </div>
+                    <FilterListIcon style={{fontSize:'30px',marginTop:'10px'}}/>
+                    <h4 style={{marginTop:'10px',marginLeft:'5px' ,wordWrap:'normal'}}>Filter Products</h4>
+
                 <hr />
-             <List
-                sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
-                component="nav"
-                // aria-labelledby="search/filter menu"
-                // subheader={
-                //     <ListSubheader component="div" id="nested-list-subheader">
-                //     Search/Filter Menu
-                //     </ListSubheader>
-                // }
-                >
-                    {/* <ListItemButton>
-                            <ListItemIcon>
-                            <SendIcon />
-                            </ListItemIcon>
-                            <ListItemText primary="Sent mail" />
-                    </ListItemButton> */}
-                     <ListItemButton onClick={handleClickCategories}>
-                            <ListItemIcon>
-                                <CategoryIcon />
-                            </ListItemIcon>
-                            <ListItemText primary="Categories" />
-                            {open2 ? <ExpandLess /> : <ExpandMore />}
-                    </ListItemButton>
-                    <Collapse in={open2} timeout="auto" unmountOnExit>
-                        <List component="div" disablePadding>
-                        
-                            {/* <ListItemButton> */}
-                                <FormGroup >
-                                    {showCategories()}
-                                </FormGroup>
-                            {/* </ListItemButton> */}
-                                
-                        </List>
-                    </Collapse>
-                     <Divider />
-                   
-                    <ListItemButton onClick={handleClickPrice}>
-                            <ListItemIcon>
-                                <MonetizationOnIcon />
-                            </ListItemIcon>
-                            <ListItemText primary="Filter by price" />
-                            {open ? <ExpandLess /> : <ExpandMore />}
-                    </ListItemButton>
-                    <Collapse in={open} timeout="auto" unmountOnExit>
-                            <List component="div" disablePadding >
-                                
-                                    <div className="d-flex justify-content-around">
-                                        
-                                        <TextField 
-                                            size='small' 
-                                            inputProps={{ type: 'number'}} 
-                                            id="outlined-basic"
-                                            margin='dense' 
-                                            label={`Min  $100`} 
-                                            variant="outlined" 
-                                            sx={{width:'110px'}}
-                                           
-                                            value={price[0]} 
-                                            onChange={onChange1} />
-                                            
-                                        <TextField 
-                                            size='small' 
-                                            inputProps={{ type: 'number'}} 
-                                            id="outlined-basic" 
-                                            margin='dense'  
-                                            label={`Max  $10000000`} 
-                                            variant="outlined" 
-                                            sx={{width:'110px'}} 
-                                            value={price[1]} 
-                                            onChange={onChange2}/>
-                                    </div>
-                                
-                                
-                            </List>
-                    </Collapse>
-                     <Divider />
-                   
-
-                    <ListItemButton onClick={handleClickStars}>
-                            <ListItemIcon>
-                                <StarBorderIcon />
-                            </ListItemIcon>
-                            <ListItemText primary="Rating" />
-                            {starsOpen ? <ExpandLess /> : <ExpandMore />}
-                    </ListItemButton>
-                    <Collapse in={starsOpen} timeout="auto" unmountOnExit>
-                        <List component="div" disablePadding>
-                        
-                                    {showStars()}
-                                    
-                                
-                        </List>
-                    </Collapse>
-                     <Divider />
-                     <ListItemButton onClick={handleClickSub}>
-                            <ListItemIcon>
-                                <SubdirectoryArrowRightIcon />
-                            </ListItemIcon>
-                            <ListItemText primary="Sub Categories" />
-                            {subOpen ? <ExpandLess /> : <ExpandMore />}
-                    </ListItemButton>
-                    <Collapse in={subOpen} timeout="auto" unmountOnExit>
-                                        
-                            <List component="div" disablePadding style={{marginBottom:'10px'}} >
-                                {showSubs()}
-                                
-                            </List>
-                    </Collapse>
-                
-                     <Divider />
-                    
-                     <ListItemButton onClick={handleClickBrand}>
-                            <ListItemIcon>
-                                <LoyaltyIcon />
-                            </ListItemIcon>
-                            <ListItemText primary="Brands" />
-                            {brandOpen ? <ExpandLess /> : <ExpandMore />}
-                    </ListItemButton>
-                    <Collapse in={brandOpen} timeout="auto" unmountOnExit>
-                            <List component="div" disablePadding >
-                                
-                                <FormControl>
-                                    <RadioGroup
-                                        // aria-labelledby="demo-radio-buttons-group-label"
-                                        // defaultValue="female"
-                                        // name="radio-buttons-group"
-                                    >
-                                    {showBrands()}
-                                    </RadioGroup>
-                                </FormControl>
-
-                            </List>
-                    </Collapse>
-                    
-                    {/* Color */}
-                    <ListItemButton onClick={handleClickColor}>
-                            <ListItemIcon>
-                                <ColorLensIcon />
-                            </ListItemIcon>
-                            <ListItemText primary="Colors" />
-                            {colorOpen ? <ExpandLess /> : <ExpandMore />}
-                    </ListItemButton>
-                    <Collapse in={colorOpen} timeout="auto" unmountOnExit>
-                            <List component="div" disablePadding >
-                                
-                                <FormControl>
-                                    <RadioGroup
-                                        
-                                    >
-                                    {showColors()}
-                                    </RadioGroup>
-                                </FormControl>
-
-                            </List>
-                    </Collapse>
-                    {/* For shipping */}
-                     <ListItemButton onClick={handleClickShipping}>
-                            <ListItemIcon>
-                                <LocalShippingIcon />
-                            </ListItemIcon>
-                            <ListItemText primary="Shipping" />
-                            {shippingOpen? <ExpandLess /> : <ExpandMore />}
-                    </ListItemButton>
-                    <Collapse in={shippingOpen} timeout="auto" unmountOnExit>
-                            <List component="div" disablePadding >
-                                
-                                <FormControl>
-                                    <RadioGroup
-                                        
-                                    >
-                                    {showShipping()}
-                                    </RadioGroup>
-                                </FormControl>
-
-                            </List>
-                    </Collapse>
-                </List>
-                   
-                                                            
-            </div>
-
-            <div className="col-md-9 text-center  ">
-                <h4 className='pt-2 pb-2'>Products</h4>
-                        <hr />
-                <div className="row mt-3">
-
-                
-               {  loading? <LoadingSipner/>: (
-                
-                products && products.length<1 ? "No Product Found" :(
-                    products.map((product)=>{
-                        return  <div className="col-md-4 pb-5" key={product._id}>
-                                <ProductCard product={product} />
-                               </div>
-                            }
-
-                    ) )  
-                
-                )}
                 </div>
-            </div>
-        </div>
-    </div>
+                {/* <Grid item lg={12} > */}
+                    <List
+                    sx={{ width: '100%', 
+                            // maxWidth: 360, 
+                            // borderRight:'1px solid',
+                            minWidth:300,
+                            // bgcolor: 'background.paper'
+                            bgcolor: 'rgb(245, 251, 255)'
+                         }}
+                    component="nav"
+                    // aria-labelledby="search/filter menu"
+                    // subheader={
+                    //     <ListSubheader component="div" id="nested-list-subheader">
+                    //     Search/Filter Menu
+                    //     </ListSubheader>
+                    // }
+                    >
+                        {/* <ListItemButton>
+                                <ListItemIcon>
+                                <SendIcon />
+                                </ListItemIcon>
+                                <ListItemText primary="Sent mail" />
+                        </ListItemButton> */}
+                        <ListItemButton onClick={handleClickCategories}>
+                                <ListItemIcon>
+                                    <CategoryIcon />
+                                </ListItemIcon>
+                                <ListItemText primary="Categories" />
+                                {open2 ? <ExpandLess /> : <ExpandMore />}
+                        </ListItemButton>
+                        <Collapse in={open2} timeout="auto" unmountOnExit>
+                            <List component="div" disablePadding>
+                            
+                                {/* <ListItemButton> */}
+                                    <FormGroup >
+                                        {showCategories()}
+                                    </FormGroup>
+                                {/* </ListItemButton> */}
+                                    
+                            </List>
+                        </Collapse>
+                        <Divider />
+                    
+                        <ListItemButton onClick={handleClickPrice}>
+                                <ListItemIcon>
+                                    <MonetizationOnIcon />
+                                </ListItemIcon>
+                                <ListItemText primary="Filter by price" />
+                                {open ? <ExpandLess /> : <ExpandMore />}
+                        </ListItemButton>
+                        <Collapse in={open} timeout="auto" unmountOnExit>
+                                <List component="div" disablePadding >
+                                    
+                                        <div className="d-flex justify-content-around">
+                                            
+                                            <TextField 
+                                                size='small' 
+                                                inputProps={{ type: 'number'}} 
+                                                id="outlined-basic"
+                                                margin='dense' 
+                                                label={`Min  $100`} 
+                                                variant="outlined" 
+                                                sx={{width:'110px'}}
+                                            
+                                                value={price[0]} 
+                                                onChange={onChange1} />
+                                                
+                                            <TextField 
+                                                size='small' 
+                                                inputProps={{ type: 'number'}} 
+                                                id="outlined-basic" 
+                                                margin='dense'  
+                                                label={`Max  $30000`} 
+                                                variant="outlined" 
+                                                sx={{width:'110px'}} 
+                                                value={price[1]} 
+                                                onChange={onChange2}/>
+                                        </div>
+                                    
+                                    
+                                </List>
+                        </Collapse>
+                        <Divider />
+                    
+
+                        <ListItemButton onClick={handleClickStars}>
+                                <ListItemIcon>
+                                    <StarBorderIcon />
+                                </ListItemIcon>
+                                <ListItemText primary="Rating" />
+                                {starsOpen ? <ExpandLess /> : <ExpandMore />}
+                        </ListItemButton>
+                        <Collapse in={starsOpen} timeout="auto" unmountOnExit>
+                            <List component="div" disablePadding>
+                            
+                                        {showStars()}
+                                        
+                                    
+                            </List>
+                        </Collapse>
+                        <Divider />
+                        <ListItemButton onClick={handleClickSub}>
+                                <ListItemIcon>
+                                    <SubdirectoryArrowRightIcon />
+                                </ListItemIcon>
+                                <ListItemText primary="Sub Categories" />
+                                {subOpen ? <ExpandLess /> : <ExpandMore />}
+                        </ListItemButton>
+                        <Collapse in={subOpen} timeout="auto" unmountOnExit>
+                                            
+                                <List component="div" disablePadding style={{marginBottom:'10px'}} >
+                                    {showSubs()}
+                                    
+                                </List>
+                        </Collapse>
+                    
+                        <Divider />
+                        
+                        <ListItemButton onClick={handleClickBrand}>
+                                <ListItemIcon>
+                                    <LoyaltyIcon />
+                                </ListItemIcon>
+                                <ListItemText primary="Brands" />
+                                {brandOpen ? <ExpandLess /> : <ExpandMore />}
+                        </ListItemButton>
+                        <Collapse in={brandOpen} timeout="auto" unmountOnExit>
+                                <List component="div" disablePadding >
+                                    
+                                    <FormControl>
+                                        <RadioGroup
+                                            // aria-labelledby="demo-radio-buttons-group-label"
+                                            // defaultValue="female"
+                                            // name="radio-buttons-group"
+                                        >
+                                        {showBrands()}
+                                        </RadioGroup>
+                                    </FormControl>
+
+                                </List>
+                        </Collapse>
+                        
+                        {/* Color */}
+                        <ListItemButton onClick={handleClickColor}>
+                                <ListItemIcon>
+                                    <ColorLensIcon />
+                                </ListItemIcon>
+                                <ListItemText primary="Colors" />
+                                {colorOpen ? <ExpandLess /> : <ExpandMore />}
+                        </ListItemButton>
+                        <Collapse in={colorOpen} timeout="auto" unmountOnExit>
+                                <List component="div" disablePadding >
+                                    
+                                    <FormControl>
+                                        <RadioGroup
+                                            
+                                        >
+                                        {showColors()}
+                                        </RadioGroup>
+                                    </FormControl>
+
+                                </List>
+                        </Collapse>
+                        {/* For shipping */}
+                        <ListItemButton onClick={handleClickShipping}>
+                                <ListItemIcon>
+                                    <LocalShippingIcon />
+                                </ListItemIcon>
+                                <ListItemText primary="Shipping" />
+                                {shippingOpen? <ExpandLess /> : <ExpandMore />}
+                        </ListItemButton>
+                        <Collapse in={shippingOpen} timeout="auto" unmountOnExit>
+                                <List component="div" disablePadding >
+                                    
+                                    <FormControl>
+                                        <RadioGroup
+                                            
+                                        >
+                                        {showShipping()}
+                                        </RadioGroup>
+                                    </FormControl>
+
+                                </List>
+                        </Collapse>
+                    </List>
+                {/* </Grid> */}
+                                                            
+            </Grid>
+
+            <Grid container item lg={9} md={9} sm={8} 
+                sx={{minHeight:"100vh"}}
+                
+                >
+                <Grid item lg={12} md={12} sm={12} xs={12}   
+                        sx={{display:'flex',flexDirection:'row',justifyContent:'space-around' ,
+                                borderBottom:'1px solid ',maxHeight:'10vh'}} >
+                    <h4 className='pt-2 pb-2'>Products</h4>
+
+                </Grid>
+
+                <Grid container item lg={12} md={12} sm={12} xs={12}>
+                    {  loading ? <LoadingSipner/>: (
+                        
+                        products && products.length<1 ? "No Product Found" :(
+                            products.map((product)=>{
+                                return  <Grid item 
+                                sx={{display:'flex',
+                                flexDirection:'column',
+                                alignItems:'center'}} 
+                                lg={4} md={6} sm={12} xs={12} 
+                                key={product._id}>
+                                                <hr/>
+                                        {/* <ProductCard product={product} /> */}
+                                        <Card product={product}/>
+                                    </Grid>
+                                    }
+
+                            ) )  
+                        
+                        )}
+                
+                </Grid>
+            </Grid>
+        </Grid>
+    </Container>
   )
 }
 

@@ -7,11 +7,9 @@ const AdminNavs = () => {
 
     <nav >
         <ul className="nav flex-column">
+            
             <li className="nav-item">
-                <Link to={"/admin/dashboard/history"} className='nav-link'>History</Link>
-            </li>
-            <li className="nav-item">
-                <Link to={"/admin/dashboard/product"} className='nav-link'>Product</Link>
+                <Link to={"/admin/dashboard/product"} className='nav-link'>Create Product</Link>
             </li>
             <li className="nav-item">
                 <Link to={"/admin/dashboard/products"} className='nav-link'>Products</Link>

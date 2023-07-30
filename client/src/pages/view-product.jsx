@@ -6,6 +6,7 @@ import ProductCard from '../components/product-card/product-card'
 import LoadingSipner from '../components/spin/spin'
 import ViewProductCardComponent from '../components/view-product-card/view-product-card-component'
 import { getListRelatedProducts, getProduct, productStars } from '../services/product-services'
+import Card from '../components/CardsMouseFlow/cards'
 
 const ViewProduct = () => {
     const {slug}=useParams()
@@ -82,7 +83,8 @@ const ViewProduct = () => {
                 {relatedProducts.length && relatedProducts.length>0?(
                     relatedProducts.map((product)=>{
                         return  <div className="col-md-3 pb-5" key={product._id}>
-                                <ProductCard product={product} />
+                                {/* <ProductCard product={product} /> */}
+                                <Card product={product} />
                             </div>
                 })):<div>No Products </div>}
         </div>

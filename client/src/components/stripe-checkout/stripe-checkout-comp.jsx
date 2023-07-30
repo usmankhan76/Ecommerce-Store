@@ -68,7 +68,7 @@ const StripeCheckoutComp = () => {
       setError(null);
       setProcessing(false);
       setSucceeded(true);
-      console.log("stripe payload",payload);
+      // console.log("stripe payload",payload);
      
     }
   };

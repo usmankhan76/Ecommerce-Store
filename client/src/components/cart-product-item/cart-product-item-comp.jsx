@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import ModalImage from "react-modal-image";
 import { useDispatch } from 'react-redux';
 import dummy from "../../assets/dummy.jpg"
-import { addToCart } from '../../redux/features/cart/cart-slice';
+import { addToCart, emptyCartStatate } from '../../redux/features/cart/cart-slice';
 import {toast} from 'react-toastify'
 import ClearIcon from '@mui/icons-material/Clear';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
@@ -62,11 +62,21 @@ const CartProductItem = ({product}) => {
             cart=JSON.parse(localStorage.getItem('cart'))
         }
         const filterArray=cart.filter((p)=>(p._id!==_id))
-      
-        dispatch(addToCart(filterArray))
+        console.log("lennnnnnnnnnnnnnngth",filterArray.length<1);
+          dispatch(addToCart(filterArray))
+
+        // if(filterArray.length<1){
+        //     dispatch(emptyCartStatate(filterArray));
+        // }else{
+        //   dispatch(addToCart(filterArray))
+
+        // }
+        // dispatch()
         localStorage.setItem('cart',JSON.stringify(filterArray))
     }
   }
+
+
   return (
     <TableRow
               

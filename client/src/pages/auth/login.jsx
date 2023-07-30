@@ -8,14 +8,19 @@ import {  setCurrentUser, setTimeActive, setUserCredientials } from '../../redux
 import { auth, provider } from '../../firebase';
 import { toast } from 'react-toastify';
 import { Button } from 'antd';
-import { DownloadOutlined, GoogleOutlined, MailOutlined } from '@ant-design/icons';
+import {  GoogleOutlined, MailOutlined } from '@ant-design/icons';
 import { craeteUpdateUser } from '../../services/auth-service';
+import { getUserCart } from '../../services/cart-service';
+import { addToCart, addToCartFromDb } from '../../redux/features/cart/cart-slice';
+import _ from 'lodash'
 
 
 function Login(){
-  const {loginUer,loginUserToken}=useSelector(state=>state.user);
+  // const {loginUer,loginUserToken}=useSelector(state=>state.user);
   const location=useLocation()
- 
+  const [products,setProducts]=useState([]);
+  const state=useSelector((state)=>state)
+  const {authUserToken}=state.user
   
   const navigate=useNavigate()
   const dispatch=useDispatch();
@@ -50,7 +55,7 @@ function Login(){
   }
   const login = (event) => {
       event.preventDefault();
-
+     
       signInWithEmailAndPassword(auth, email, password)
       .then(() => {
         if(!auth.currentUser.emailVerified) {
@@ -68,15 +73,41 @@ function Login(){
           dispatch(setUserCredientials({name,email,role,tokenId,_id}))
           
           toast.success( `${auth.currentUser.email} Successfully Log in`)
+          
+          getUserCart(authUserToken).then((res)=>{
+          const {products}=res.data
+            let cart=[]
+          if(typeof window !== 'undefined' ){
+            if(JSON.parse(localStorage.getItem('cart') && JSON.parse(localStorage.getItem('cart').length>0 ))){
+
+              cart=JSON.parse(localStorage.getItem('cart'))
+            }
+
+           
+            console.log("--------------> userCart",res.data)
+            cart=products.map(({product,count})=> ({...product,count}))
+            let unique= _.uniqWith(cart, _.isEqual)  //sd
+            localStorage.setItem('cart',JSON.stringify(unique)) //sd
+            console.log("--------------> userCart AARRAy",cart)
+            dispatch(addToCartFromDb(cart))
+
+          }
+      
+          // dispatch(addToCart(products.product))
+        }).catch(err=>console.log('getCart error',err.message))
+
           roleBasedRedirect(role)
           // navigate('/')
         }).catch(err=>toast.error(err))
-
       }
+
+
       }).catch(err => toast.error(err.message))
+
+       
   }
 
-  const googleSignIn= ()=>{
+ const googleSignIn= ()=>{
     
     signInWithPopup(auth,provider).then(({user})=>{
       craeteUpdateUser(auth.currentUser,name).then((res)=>{
@@ -84,6 +115,28 @@ function Login(){
           const{name,email,role,tokenId,_id}=res.data
           dispatch(setUserCredientials({name,email,role,tokenId,_id}))
           dispatch(setCurrentUser(user))
+
+          return getUserCart(authUserToken).then((res)=>{
+          const {products}=res.data
+            let cart=[]
+          if(typeof window !== 'undefined' ){
+            if(JSON.parse(localStorage.getItem('cart') && JSON.parse(localStorage.getItem('cart').length>0 ))){
+
+              cart=JSON.parse(localStorage.getItem('cart'))
+            }
+
+           
+            console.log("--------------> userCart",res.data)
+            cart=products.map(({product,count})=> ({...product,count}))
+            let unique= _.uniqWith(cart, _.isEqual)  //sd
+            localStorage.setItem('cart',JSON.stringify(unique)) //sd
+            console.log("--------------> userCart AARRAy",cart)
+            dispatch(addToCartFromDb(cart))
+
+          }
+      
+          // dispatch(addToCart(products.product))
+        }).catch(err=>console.log('getCart error',err.message))
           
          toast.success(`${user.email} is successful Login`)
           navigate('/')
@@ -133,7 +186,8 @@ function Login(){
         <div style={{display:'flex',justifyContent:'space-between'}}>
         <p>
           Don't have and account? 
-          <Link to='/verify-email' style={{textDecoration:'none'}}> Create one here</Link>
+          {/* <Link to='/verify-email' style={{textDecoration:'none'}}> Create one here</Link> */}
+          <Link to='/signup' style={{textDecoration:'none'}}> Create one here</Link>
         </p>
         <Link to='/forget-password' className='float-right text-danger' style={{textDecoration:'none'}}>Forget Password</Link>
           </div>  

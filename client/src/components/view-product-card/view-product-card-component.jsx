@@ -89,8 +89,8 @@ const ViewProductCardComponent = ({product,handleStarsChange,stars}) => {
             showArrows={true} 
             autoPlay={true} >
 
-            {images&& images.length>0 ? images.map(i=><img src={i.url} key={i.public_id} alt={title} />)
-            :<img src={dummy} alt="No Pic"/>}
+            {images&& images.length>0 ? images.map(i=><img src={i.url} key={i.public_id} alt={title} style={{objectFit:'cover'}} />)
+            :<img src={dummy} alt="No Pic" />}
         </Carousel>
 
         <Box sx={{ width: '100%', typography: 'body1' }}>
@@ -99,12 +99,10 @@ const ViewProductCardComponent = ({product,handleStarsChange,stars}) => {
                 <TabList onChange={handleChange} aria-label="lab API tabs example">
                     <Tab label="Description" value="1" />
                     <Tab label="Contact Us" value="2" />
-                    <Tab label="Item Three" value="3" />
                 </TabList>
                 </Box>
                 <TabPanel value="1">{description}</TabPanel>
                 <TabPanel value="2">Contact Us on xxxx xxxx xxx</TabPanel>
-                <TabPanel value="3">Item Three</TabPanel>
             </TabContext>
     </Box>
     </div>

@@ -14,6 +14,8 @@ import Logout from '@mui/icons-material/Logout';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import { Link } from 'react-router-dom';
 
+
+
 export default function UserProfileComponent({profileImage,role,loginUser,logOut}) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -24,9 +26,9 @@ export default function UserProfileComponent({profileImage,role,loginUser,logOut
   const handleClose = () => {
     setAnchorEl(null);
   };
-const firstLetter=loginUser.email.charAt(0)
-const titleName=loginUser.email && loginUser.email.split('@')[0]
-
+  const firstLetter=loginUser.email.charAt(0)
+  const titleName=loginUser.email && loginUser.email.split('@')[0]
+  
   return (
     <React.Fragment>
       <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center'  }}>
@@ -43,7 +45,7 @@ const titleName=loginUser.email && loginUser.email.split('@')[0]
           >
              <Avatar sx={{ width:32, height: 32}} src={profileImage&&profileImage} >{firstLetter}</Avatar> 
             
-            <Typography align='right' color='white' sx={{marginLeft:1}}>
+            <Typography align='right' color='grey' sx={{marginLeft:1}}>
                 {titleName}
             </Typography>
           </IconButton>
@@ -97,25 +99,15 @@ const titleName=loginUser.email && loginUser.email.split('@')[0]
                 <ListItemIcon>
                     <DashboardIcon />
                 </ListItemIcon>
-            <Link   to={role === "admin" ? 'admin/dashboard':'/user/dashboard' } 
+            <Link   
+              to={role === "admin" ? 'admin/dashboard':'/user/dashboard' } 
+              // to={role === "admin" ? 'admin/dashboard/products':'/user/dashboard' } 
                     style={{textDecoration:'none' ,color:'black'}}>
                             Dashboard
             </Link>
             </MenuItem>
 
         <Divider />
-        <MenuItem>
-          <ListItemIcon>
-            <PersonAdd fontSize="small" />
-          </ListItemIcon>
-          Add another account
-        </MenuItem>
-        <MenuItem>
-          <ListItemIcon>
-            <Settings fontSize="small" />
-          </ListItemIcon>
-          Settings
-        </MenuItem>
         {loginUser&& (
             <MenuItem onClick={()=>logOut()}>
             <ListItemIcon>
@@ -127,5 +119,8 @@ const titleName=loginUser.email && loginUser.email.split('@')[0]
         )}
       </Menu>
     </React.Fragment>
+
+    
+   
   );
 }
