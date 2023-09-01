@@ -14,7 +14,6 @@ const cartSlice=createSlice({
     initialState,
     reducers:{
         addToCart:(state,action)=>{
-            console.log("this is the cart item new",action.payload)
        
             return state=action.payload
         },

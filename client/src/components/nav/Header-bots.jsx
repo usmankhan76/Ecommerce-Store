@@ -1,9 +1,8 @@
-import React, { useState } from 'react'
+import React from 'react'
 import './header-bots.css'
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import {   UserOutlined } from '@ant-design/icons';
 import { Link, useNavigate } from 'react-router-dom';
 import { signOut } from 'firebase/auth';
 import { auth } from '../../firebase';
@@ -13,12 +12,10 @@ import { toast } from 'react-toastify';
 import UserProfileComponent from '../user-profile/user-profile-component';
 import SearchForm from '../search-form/search-form';
 import RedeemIcon from '@mui/icons-material/Redeem';
-import LoginIcon from '@mui/icons-material/Login';
-import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { Badge } from '@mui/material';
 import Person2OutlinedIcon from '@mui/icons-material/Person2Outlined';
-import { addToCart, emptyCartStatate } from '../../redux/features/cart/cart-slice';
+import {  emptyCartStatate } from '../../redux/features/cart/cart-slice';
 
 const Header = () => {
     
@@ -26,9 +23,7 @@ const Header = () => {
     const navigate=useNavigate();
     const {loginUser,role}=useSelector(state=>state.user);
     const cart=useSelector(state=>state.cart)
-    // console.log("this is cart ",cart);
     const bageCount = cart.length >0 ?cart.length:0
-    // console.log("cart count",bageCount);
     const logOut=()=>{
     
       
@@ -43,7 +38,7 @@ const Header = () => {
 
     }
     let profileImage=loginUser && loginUser.providerData[0].photoURL
-    // console.log("profile------->",profileImage);
+  
   return (
    <Navbar collapseOnSelect sticky='top' fixed='top' expand="sm" bg="light" data-bs-theme="light">
       <Container style={{maxWidth:'1305px' }}>

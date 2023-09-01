@@ -44,7 +44,6 @@ const UpdateProduct = () => {
     const getProductFromBackend=()=>{
         setShowUpdateForm(false)
         getProduct(slug).then(res=>{
-            console.log("Product check",res.data);
             setShowUpdateForm(true)
             setValues({...values,...res.data});
             setShowSubs(true)
@@ -57,11 +56,8 @@ const UpdateProduct = () => {
         
         setValues({...values,subs:[]})
         setSelectedCategory(e.target.value)
-        console.log("Selected Category",selectedCategory);
         getParentSubCategories(e.target.value).then((res)=>{
-            console.log("Parent subCategories",res.data);
             setShowSubs(true);
-            console.log("check",showsubs)
             setSubCategories(res.data);
         }).catch(error=>console.log(error.message))
 
@@ -84,7 +80,6 @@ const UpdateProduct = () => {
         e.preventDefault()
        setLoading(true)
         updateProduct(slug,values,authtoken).then((res)=>{
-            console.log("update response",res.data)
        setLoading(false)
             toast.success(`${res.data.title} is update successfully`)
             navigate('/admin/dashboard/products')

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Paper from '@mui/material/Paper';
 import InputBase from '@mui/material/InputBase';
 import IconButton from '@mui/material/IconButton';
@@ -18,7 +18,6 @@ const SearchForm = () => {
     }
     const handleSubmit=(e)=>{
         e.preventDefault()
-        console.log("submit",text);
         navigate(`/shop?${text}`)
         
 

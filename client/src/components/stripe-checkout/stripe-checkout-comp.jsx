@@ -68,7 +68,6 @@ const StripeCheckoutComp = () => {
       setError(null);
       setProcessing(false);
       setSucceeded(true);
-      // console.log("stripe payload",payload);
      
     }
   };
@@ -101,7 +100,6 @@ const StripeCheckoutComp = () => {
   const fetchPaymentIntent=()=>{
     getPaymentIntents(authUserToken).then((res)=>{
       const {total,totalPayeable,clientSecret}=res.data
-      // console.log("payment intent response",res.data.clientSecret)
       setClientSecret(clientSecret)
       setTotal(total)
       setTotalPayeable(totalPayeable)
@@ -135,7 +133,7 @@ const StripeCheckoutComp = () => {
 
    
     <form id="payment-form" className='stripe-form' onSubmit={handleSubmit}>
-      
+      <span style={{marginBottom:"15px",color:'red'}}>For test  4242 4242 4242 4242  CVC=123 ZIP=22222 </span>
       {/* <TextField 
         type="text"
         fullWidth

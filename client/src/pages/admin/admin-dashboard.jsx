@@ -22,7 +22,6 @@ const AdminDashboard = () => {
       setOrders(res.data)
     })
   }
-  // console.log('getting order',orders); 
   const handleOrderStatusChange=(orderId,orderStatus)=>{
     updateOrderStatusInB(authUserToken,orderId,orderStatus).then((res)=>{
       toast.success("Order status updated successfully")

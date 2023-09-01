@@ -32,7 +32,6 @@ exports.list=async (req,res)=>{
 }
 
 exports.read=async(req,res)=>{
-    console.log("read slug",req.params.slug)
     const Subategory=await subCategoryModel.findOne({slug:req.params.slug}).exec()
    const findProducts= await productModel.find({subs:Subategory}).populate("category").exec()
     res.json({Subategory,findProducts})
@@ -42,7 +41,6 @@ exports.read=async(req,res)=>{
 exports.update=async (req,res)=>{
     try {
         const {subCategory,parent}=req.body;
-        console.log("update",subCategory,req.params.slug)
         const update=await subCategoryModel.findOneAndUpdate(
             {slug:req.params.slug},
             {name:subCategory,parent,slug:slugify(subCategory)},

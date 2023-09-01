@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import AdminNavs from '../../../components/nav/admin-navs'
 // import DatePicker from "react-datepicker";
 // import "react-datepicker/dist/react-datepicker.css";
-import { Box, FormControl, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from '@mui/material';
+import { Box, FormControl,  Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from '@mui/material';
 import { crateCouponInDb, getCoupons, removeCoupon } from '../../../services/coupon-services';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
@@ -25,7 +25,6 @@ const CouponPage = () => {
     
     const handleSubmit=(e)=>{
         e.preventDefault()
-        console.log(coupon)
         crateCouponInDb(coupon,authUserToken).then((res)=>{
             setCoupon({name:'',discount:'',expiry:new Date()})
             fetchCoupons()
@@ -36,14 +35,12 @@ const CouponPage = () => {
     const fetchCoupons=()=>{
          setLoading(true)
         getCoupons().then((res)=>{
-            console.log("coupons",res.data)
             setLoading(false)
            return setCoupons(res.data)
         }).catch(err=>console.log("getConpon error",err.message))
     }
 
      const handleDelete=(_id)=>{
-        console.log("id",_id)
         if(window.confirm('Delte')){
             removeCoupon(_id,authUserToken).then((res)=>{
                 fetchCoupons()

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import ProductCard from '../../components/product-card/product-card'
 import LoadingSipner from '../../components/spin/spin'
 import { getSubCategory } from '../../services/sub-category-services'
 import Card from '../../components/CardsMouseFlow/cards'
@@ -16,7 +15,6 @@ const SubCategoryHome = () => {
         setLoading(true)
         getSubCategory(slug).then((res)=>{
             setLoading(false)
-            console.log("load Product From SubCategory",res.data);
             setProducts(res.data.findProducts)
             setSubCategory(res.data.Subategory)
         }).catch(err=>{
@@ -24,7 +22,6 @@ const SubCategoryHome = () => {
             console.log("loadProductFromCategory",err.message)
         })
     }
-    console.log("Subcategory",subCategory);
 
     useEffect(()=>{
         loadProductFromSubCategory()

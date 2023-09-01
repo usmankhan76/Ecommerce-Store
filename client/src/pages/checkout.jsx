@@ -1,4 +1,4 @@
-import { Button, Container, FormControl, Grid, TextField, Typography } from '@mui/material'
+import { Button, Container, Grid, TextField, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
@@ -35,11 +35,9 @@ const CheckoutPage = () => {
   // }
 
   
-//  console.log("cash",COD);
   const getCartFromDb=()=>{
     setLoading(true)
     getUserCart(authUserToken).then((res)=>{
-      console.log("response data userCart checkout.js",res.data)
       const {products,cartTotal}=res.data
       setLoading(false)
       setProducts(products)
@@ -75,7 +73,6 @@ const CheckoutPage = () => {
       }
       else{
         setProductsTotalAfterDiscount(res.data)
-        console.log('else is running')
         toast.success('Coupon is applied successfuly')
         dispatch(setCouponApply(true))
         setGiveCoupon('')
@@ -115,8 +112,8 @@ const CheckoutPage = () => {
       // console.log('res apply coupon',productsTotalAfterDiscount)
       // console.log("coupone reduxe",couponIsApplied)
   useEffect(()=>{
-    console.log("this is console in checkout useEffect")
     getCartFromDb()
+    //eslint-disable-next-line
   },[authUserToken])
   return (
     <Container  disableGutters={true} >
@@ -151,7 +148,7 @@ const CheckoutPage = () => {
                             fullWidth={true} 
                             variant="standard"
                             style={{marginBottom:'10px'}} 
-                            label='Apply Coupon'
+                            label='Apply Coupon for test "SUMMER SALE"'
                             onChange={handleCouponChange}/>
                         <Button  
                             variant='contained' 

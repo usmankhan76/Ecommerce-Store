@@ -6,7 +6,7 @@ import InputField from '../../components/input-field/input-field.component'
 import { auth } from '../../firebase'
  import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom'  
-import { setCurrentUser, setTimeActive,} from '../../redux/features/user/user-slice'
+import {  setTimeActive,} from '../../redux/features/user/user-slice'
 import { useDispatch } from 'react-redux'
 import { Button } from 'antd'
 
@@ -51,7 +51,6 @@ const Register = () => {
           createUserWithEmailAndPassword(auth,email,password).then(()=>{
               toast.info("Please Verify your Email");
               dispatch(setTimeActive(true));  
-              console.log('before verification',auth.currentUser)
               
             sendEmailVerification(auth.currentUser,config).then(()=>{
               navigate('/verify-email')

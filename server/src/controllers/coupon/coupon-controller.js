@@ -1,6 +1,6 @@
 
 const cartModal = require('../../models/cart-modal')
-const couponModal = require('../../models/coupon-modal')
+// const couponModal = require('../../models/coupon-modal')
 const coupenModal=require('../../models/coupon-modal')
 const userModel = require('../../models/user-model')
 
@@ -39,7 +39,8 @@ const applyCoupon=async(req,res)=>{
         const{coupon}=req.body
         const {firebaseUser:{email}}=req.userCredientials;
         // first we find the the cupon in correct or incorrect
-        const findCoupon=await couponModal.findOne({name:coupon}).exec()
+        // const findCoupon=await couponModal.findOne({name:coupon}).exec()
+        const findCoupon=await coupenModal.findOne({name:coupon}).exec()
         if(findCoupon===null){
             return res.json({err:'coupon is invalid'});
         }

@@ -18,7 +18,7 @@ const Header = () => {
     const {loginUser}=useSelector(state=>state.user);
 
     const logOut=()=>{
-      console.log('logout')
+    
       
       signOut(auth).then(()=>{
         dispatch(setLogOut())
@@ -46,7 +46,6 @@ const Header = () => {
 
     ]
     function itemss(){
-      let newArray=[]
       if(loginUser){
   
       let newA=items.map((item)=>{
@@ -58,8 +57,7 @@ const Header = () => {
           
         }
         )
-        console.log("newArray",newArray)
-        console.log("newArray!!",newA)
+        
         return newA
        
           

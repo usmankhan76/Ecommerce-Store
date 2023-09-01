@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 import CardItem from '../../../components/cards-item/cards-item';
 import AdminNavs from '../../../components/nav/admin-navs';
 import LoadingSipner from '../../../components/spin/spin';
-import { getProducts, getProductsbyCount, removeProduct } from '../../../services/product-services';
+import {  getProductsbyCount, removeProduct } from '../../../services/product-services';
 import {useSelector} from 'react-redux'
 
 const AllProducts = () => {
@@ -40,7 +40,6 @@ const AllProducts = () => {
     }
     
   }
-  console.log("dasf",products)
   useEffect(()=>{
     getAllProducts();
   },[])

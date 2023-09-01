@@ -16,11 +16,9 @@ const UserWishlist = () => {
         setLoading(true)
         getWishlistFromB(authUserToken).then((res)=>{
             setLoading(false)
-            console.log('its response',res.data);
             setWishlist(res.data.wishlist)
         }).catch((err)=>{console.log("get wishlist error",err.message);})
     }
-    console.log("wishlist ",wishlist);
 
     const handleRemoveFromWishList=(productId)=>{
         removeFromWishlist(productId,authUserToken).then((res)=>{

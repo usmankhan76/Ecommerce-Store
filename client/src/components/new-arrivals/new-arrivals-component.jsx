@@ -4,12 +4,10 @@ import { toast } from 'react-toastify';
 import { getProducts, getProductsCounting } from '../../services/product-services';
 import LoadingCard from '../cards-item/loading-card';
 
-import ProductCard from '../product-card/product-card';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import { Grid } from '@mui/material';
 import Card from '../CardsMouseFlow/cards';
-import CategoryButton from '../category-button/categoryButton';
 
  const NewArrivalComponent = () => {
   const[products,setProducts]=useState([]);
@@ -40,7 +38,7 @@ import CategoryButton from '../category-button/categoryButton';
     getProductsCount() 
   },[page])
 const handleChange=(event,value)=>{
-                    console.log("page",value);
+                    
                     return setPage(value)
                   }
   return (

@@ -1,5 +1,4 @@
 import React from 'react'
-import { useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -10,7 +9,7 @@ import dummy from "../../assets/dummy.jpg"
 import { Badge } from '@mui/material';
 const CheckoutCard = ({product,count}) => {
     const {images,title,description,price,}=product;
-    // console.log(price)
+  
     
   return (
     <>

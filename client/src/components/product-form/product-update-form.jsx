@@ -1,8 +1,4 @@
 import React from 'react'
-import { useEffect } from 'react';
-import { toast } from 'react-toastify';
-import { getCategories } from '../../services/category-service';
-import InputField from '../input-field/input-field.component';
 import TextField from '@mui/material/TextField'
 import { Form } from 'react-bootstrap';
 import { Box } from '@mui/material';
@@ -28,7 +24,6 @@ const ProductUpdateForm = ({values,setValues,handleSubmit,handleCategoryChange,s
       }=values;
     const handleChange=(e)=>{
         const {value,name}=e.target
-        console.log("select",value,name);
         setValues({...values,[name]:value})
     } 
     
@@ -39,14 +34,11 @@ const ProductUpdateForm = ({values,setValues,handleSubmit,handleCategoryChange,s
     // },[])
     const handleChangeSubs = (e) => {
       const {value,name}=e.target
-        console.log("select",value,name);
           setValues({...values,subs:value})
 
 
 }; 
-console.log("Subs", subs&&  subs);
-console.log("category check",category);
-console.log("categories check",categories);
+
 const antIcon = (
   <LoadingOutlined
     style={{

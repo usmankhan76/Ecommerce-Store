@@ -378,7 +378,6 @@ const ShopPage = () => {
     }
 
     useEffect(()=>{
-        console.log("useEffect 1 fetch all products")
         loadAllProducts()
         //get categories
         getCategories().then(res=>{setCategories(res.data)})
@@ -387,7 +386,6 @@ const ShopPage = () => {
     },[load])
 
     useEffect(()=>{
-        console.log("fetch products base on search useeffect")
         const delay=setTimeout(() => {
             
             fetchProducts({query:text})

@@ -4,7 +4,7 @@ import {Table,TableHeader,TableCell,TableBody,DataTableCell} from "@david.kucsai
 import { useSelector } from 'react-redux';
 const InvoiceComp = ({order,}) => {
     const{orderStatus,paymentIntent}=order
-    // console.log('invoice order',order);
+  
     
 
   return (

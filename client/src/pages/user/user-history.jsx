@@ -15,11 +15,9 @@ const UserHistory = () => {
         setLoading(true)
        return getUserOrders(authUserToken).then((res)=>{
             setLoading(false)
-            console.log('getUser Order response',res.data);
            return setOrders(res.data)
         }).catch((err)=>{console.log("getUser order error",err.message);})
     }
-            // console.log('Order ',orders);
     useEffect(()=>{
         fetchOrders();
     },[])

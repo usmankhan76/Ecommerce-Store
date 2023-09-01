@@ -13,7 +13,6 @@ const SubCategoryItem = ({item,categories,getSubCategoriesFromBackend}) => {
 
         let idToken=auth.currentUser.accessToken
         await removeSubCategory(slug,idToken).then(res=>{
-            console.log(res)
             toast.error("successfully removed")
             getSubCategoriesFromBackend()
             

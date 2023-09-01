@@ -2,11 +2,10 @@ import { Button } from 'antd';
 import { sendPasswordResetEmail } from 'firebase/auth';
 import React from 'react'
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux'
+import {  useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import InputField from '../../components/input-field/input-field.component';
-import { setLoading } from '../../redux/features/user/user-slice';
 import LoadingSipner from '../../components/spin/spin'
 import { auth } from '../../firebase';
 
@@ -23,7 +22,6 @@ const ForgetPassword = () => {
         handleOnChange:true
     }
     const handleSubmit=()=>{
-        console.log('hello',email);
         sendPasswordResetEmail(auth, email,config)
         .then(() => {
             toast.success("Email sent successfully")

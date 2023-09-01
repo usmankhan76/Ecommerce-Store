@@ -1,4 +1,4 @@
-import React, {useEffect } from 'react'
+import React from 'react'
 import { loadStripe } from '@stripe/stripe-js'
 import './stripe-style.css'
 import {Elements} from '@stripe/react-stripe-js'
@@ -15,6 +15,7 @@ const PaymentPage = () => {
 
         <Elements stripe={stripePro}>
             <div className="col-md-6 offset-md-3">
+              
                 <StripeCheckoutComp/>
             </div>
       </Elements>

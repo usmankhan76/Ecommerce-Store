@@ -25,7 +25,6 @@ const UserProfile = () => {
             toast.error(err)
         })
         // updatePassword
-        console.log(password)
     }
   return (
     <div className="container-fluid">

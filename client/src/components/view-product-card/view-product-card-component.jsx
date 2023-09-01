@@ -41,10 +41,8 @@ const ViewProductCardComponent = ({product,handleStarsChange,stars}) => {
         if(typeof window !== 'undefined'){
         if(JSON.parse(localStorage.getItem('cart')) && JSON.parse(localStorage.getItem('cart')).length >0 ){
             // if cart is in localStorage get it
-            // console.log('local storage with parse',JSON.parse(localStorage.getItem('cart')));
             cart=JSON.parse(localStorage.getItem('cart'))
         
-            // console.log('cart parse',cart);
         }
         
             cart.push({...product,count:1})
@@ -59,7 +57,6 @@ const ViewProductCardComponent = ({product,handleStarsChange,stars}) => {
     }
     const handleAddToWishlist=()=>{
         addToWishlist(_id,authUserToken).then((res)=>{
-            console.log("res addTowishlist",res.data);
             if(res.data.saveProductToWishList===true){
                 toast.success(`${title} successfully add to Wishlist `)
             }    

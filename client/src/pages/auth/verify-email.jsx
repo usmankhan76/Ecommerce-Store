@@ -25,7 +25,6 @@ const VerfiyEmail = () => {
 
  
     useEffect(() => {
-       console.log("check user",loginUser);
     const interval = setInterval(() => {
       
         if(loginUser?.emailVerified){
@@ -43,9 +42,7 @@ const VerfiyEmail = () => {
   },[loginUser,dispatch,navigate])
   
   useEffect(()=>{
-    console.log("useEffect is chaling")
       let interval
-      console.log("check user",loginUser.reloadUserInfo);
         // console.log("proptotype",Object.getPrototypeOf(loginUser).reload());
 
     // const interval1 = setInterval(() => {

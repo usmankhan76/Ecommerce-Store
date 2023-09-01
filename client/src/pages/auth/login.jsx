@@ -1,6 +1,6 @@
 import './verifyEmail.css'
 import { sendEmailVerification, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
-import React, { useEffect, useState } from 'react'
+import React, {  useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import InputField from '../../components/input-field/input-field.component';
@@ -11,14 +11,13 @@ import { Button } from 'antd';
 import {  GoogleOutlined, MailOutlined } from '@ant-design/icons';
 import { craeteUpdateUser } from '../../services/auth-service';
 import { getUserCart } from '../../services/cart-service';
-import { addToCart, addToCartFromDb } from '../../redux/features/cart/cart-slice';
+import {  addToCartFromDb } from '../../redux/features/cart/cart-slice';
 import _ from 'lodash'
 
 
 function Login(){
   // const {loginUer,loginUserToken}=useSelector(state=>state.user);
   const location=useLocation()
-  const [products,setProducts]=useState([]);
   const state=useSelector((state)=>state)
   const {authUserToken}=state.user
   
@@ -32,7 +31,6 @@ function Login(){
   
   function roleBasedRedirect(role){
     const intended=location.state;
-    console.log("This is location",intended.goBack);
     if(intended){
       navigate(intended.goBack)
     }else{
@@ -68,7 +66,6 @@ function Login(){
       }else{
 
         craeteUpdateUser(auth.currentUser,name).then((res)=>{
-          console.log("response",res);
           const{name,email,role,tokenId,_id}=res.data
           dispatch(setUserCredientials({name,email,role,tokenId,_id}))
           
@@ -84,11 +81,9 @@ function Login(){
             }
 
            
-            console.log("--------------> userCart",res.data)
             cart=products.map(({product,count})=> ({...product,count}))
             let unique= _.uniqWith(cart, _.isEqual)  //sd
             localStorage.setItem('cart',JSON.stringify(unique)) //sd
-            console.log("--------------> userCart AARRAy",cart)
             dispatch(addToCartFromDb(cart))
 
           }
@@ -111,7 +106,6 @@ function Login(){
     
     signInWithPopup(auth,provider).then(({user})=>{
       craeteUpdateUser(auth.currentUser,name).then((res)=>{
-          console.log("response",res);
           const{name,email,role,tokenId,_id}=res.data
           dispatch(setUserCredientials({name,email,role,tokenId,_id}))
           dispatch(setCurrentUser(user))
@@ -126,11 +120,9 @@ function Login(){
             }
 
            
-            console.log("--------------> userCart",res.data)
             cart=products.map(({product,count})=> ({...product,count}))
             let unique= _.uniqWith(cart, _.isEqual)  //sd
             localStorage.setItem('cart',JSON.stringify(unique)) //sd
-            console.log("--------------> userCart AARRAy",cart)
             dispatch(addToCartFromDb(cart))
 
           }

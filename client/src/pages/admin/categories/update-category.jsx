@@ -16,7 +16,6 @@ import { getcategory, updateCategory } from '../../../services/category-service'
 const UpdateCategoryItem = () => {
     const {slug}=useParams();
     const navigate=useNavigate();
-    console.log(slug,"its prams");
     let [name,setName]=useState('');
     let [loading,setLoading]=useState(false);
    
@@ -25,7 +24,6 @@ const UpdateCategoryItem = () => {
      const getCategoryFromBackend=(slug) => {
         
         getcategory(slug).then(res=>{
-            // console.log(res.data,"data coming")
             setName(res.data.name)
         }).catch((err)=>{toast.error(err)})
         
@@ -40,7 +38,6 @@ const UpdateCategoryItem = () => {
         setLoading(true)
         let idToken=auth.currentUser.accessToken
         updateCategory(slug,name,idToken).then((resp)=>{
-                console.log("category response",resp);
                 setLoading(false) 
                 
                     toast.success(`${resp.data.name} is updated successfully`)

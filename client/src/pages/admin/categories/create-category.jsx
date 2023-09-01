@@ -1,10 +1,9 @@
 
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify';
 import CategoryForm from '../../../components/category-form/category-form';
 import FilterSearchItem from '../../../components/category-form/filter-search-item';
 import CategoryItem from '../../../components/category-item/catergory-item';
-import InputField from '../../../components/input-field/input-field.component';
 import AdminNavs from '../../../components/nav/admin-navs';
 import { auth } from '../../../firebase';
 import { createCategory, getCategories } from '../../../services/category-service';
@@ -19,7 +18,6 @@ const CreateCategory = () => {
     let [categories,setCategories]=useState([]);
     
     
-    console.log("keyword",keyword)
      const getCategoriesFromBackend=() => {
         
         getCategories().then(res=>{setCategories(res.data)}).catch((err)=>{toast.error(err)})
@@ -34,7 +32,6 @@ const CreateCategory = () => {
         setLoading(true)
         let idToken=auth.currentUser.accessToken
         createCategory(name,idToken).then((resp)=>{
-                console.log("category response",resp);
                 setLoading(false) 
                 
                     toast.success(`${resp.data.name} is created successfully`)
@@ -51,7 +48,6 @@ const CreateCategory = () => {
     const searched=(keywordM)=>(item)=>item.name.toLowerCase().includes(keywordM)
 
    
-    console.log("catergory",categories)
   return (
     <div className="container-fluid">
         <div className="row">

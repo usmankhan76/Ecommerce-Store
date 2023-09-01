@@ -44,9 +44,7 @@ const UpdateSubCategoryItem = () => {
         event.preventDefault()
         setLoading(true)
         let idToken=auth.currentUser.accessToken
-        console.log("authtoken in update",idToken)
         updateSubCategory(slug,subCategory,parentCategory,idToken).then((resp)=>{
-                console.log("category response",resp);
                 setLoading(false) 
                 
                     toast.success(`${resp.data.name} is updated successfully`)

@@ -1,5 +1,5 @@
-import { AntDesignOutlined, UserOutlined } from '@ant-design/icons'
-import { Avatar, Badge, Tooltip } from 'antd'
+
+import { Avatar, Badge } from 'antd'
 import axios from 'axios'
 import React, { useState } from 'react'
 import Resizer from "react-image-file-resizer"
@@ -18,7 +18,7 @@ const FileUpload = ({values,setValues}) => {
         let files=e.target.files;
         // let filesArray=Object.keys(files).map(item=>files[item])
        
-        console.log("file chose array",files);
+       
         let allUploadedFiles=images
         setLoading(true)
         if(files){
@@ -40,7 +40,6 @@ const FileUpload = ({values,setValues}) => {
                         maxBodyLength: 1000000
                     }
                     axios.request(options).then((res)=>{
-                        console.log("uir images",res.data);
                         allUploadedFiles.push(res.data)
                         setLoading(false)
                         setValues({...values,images:allUploadedFiles})
@@ -54,7 +53,7 @@ const FileUpload = ({values,setValues}) => {
 
     }
     const removeImage=(public_id)=>{
-        console.log(public_id);
+        
         let options={
             method:"POST",
             url:'http://localhost:8000/api/removeimage',
@@ -62,7 +61,7 @@ const FileUpload = ({values,setValues}) => {
             headers:{authtoken:authUserToken}
         }
         axios.request(options).then((res)=>{
-            console.log("response",res.data);
+            
             let filterImages=images.filter((item)=> (item.public_id!==public_id))
             setValues({...values,images:filterImages})
             return toast.error("Deleted Successfully")

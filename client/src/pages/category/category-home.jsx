@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import ProductCard from '../../components/product-card/product-card'
 import LoadingSipner from '../../components/spin/spin'
 import { getcategory } from '../../services/category-service'
 import Card from '../../components/CardsMouseFlow/cards'
@@ -15,7 +14,6 @@ const CategoryHome = () => {
         setLoading(true)
         getcategory(slug).then((res)=>{
             setLoading(false)
-            console.log("load Product From Category",res.data);
             setProducts(res.data.findProducts)
             setCategory(res.data.category)
         }).catch(err=>{
@@ -23,7 +21,6 @@ const CategoryHome = () => {
             console.log("loadProductFromCategory",err.message)
         })
     }
-    console.log("category",category);
 
     useEffect(()=>{
         loadProductFromCategory()

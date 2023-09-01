@@ -72,26 +72,12 @@ export default function Card({product}) {
     if(typeof window !== 'undefined'){
       if(JSON.parse(localStorage.getItem('cart')) && JSON.parse(localStorage.getItem('cart')).length >0 ){
         // if cart is in localStorage get it
-        console.log('local storage with parse',JSON.parse(localStorage.getItem('cart')));
+        
         cart=JSON.parse(localStorage.getItem('cart'))
-        // cart=localStorage.getItem('cart')
-        console.log('cart parse',cart);
-
-        //I added below code 
-        // let newCart=cart.map((item)=>{
-        //   if(item._id===product._id){
-        //     return {...product,count:++item.count}
-        //   }
-        // })
-        // console.log("checccccccccccck this new cart",newCart)
-        // dispatch(addToCart(newCart))
+        
       }
     
-        // if(cart.length>0){
-        //   let findPorduct=cart.find((item)=>item._id===product._id)
-        // console.log("checccccccccccck this new Proddddddduct",findPorduct)
-        //  p=findPorduct
-        // }
+      
 
 
         let itemExist=cart.find((item)=>item._id===product._id);
@@ -99,17 +85,16 @@ export default function Card({product}) {
           cart= cart.map(item=>item._id===product._id?({...product,count:itemExist.count+1}):item)
           let unique= _.uniqWith(cart, _.isEqual)
           localStorage.setItem('cart',JSON.stringify(unique))
-          console.log("this is array we passing in state",unique)
           dispatch(addToCart(unique))
         }else{
 
-          // console.log('pppppppppppppppp',p )
+        
           // cart.push({...product,count: p.count? ++p.count : 1})
           // cart.push({...product,count: p?.count+1|| 1})
           cart.push({...product,count:1})
           let unique= _.uniqWith(cart, _.isEqual)
           localStorage.setItem('cart',JSON.stringify(unique))
-          console.log("this is array we passing in state",unique)
+          
           dispatch(addToCart(unique))
         }
 

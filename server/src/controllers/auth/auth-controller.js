@@ -13,13 +13,12 @@ async function creatUpdateUser(req,res) {
         {new:true}// it will return us the updated version
     )
     if(user){
-        console.log("User updated",user);
+      
         res.json(user)
     }else{
         const newUser=await new User({
             email,name,photoURL,tokenId:uid
         }).save()
-        console.log("User Created",newUser);
         res.json(newUser)
     }
     

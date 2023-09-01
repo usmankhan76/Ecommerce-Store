@@ -24,7 +24,6 @@ const UserAddressFormComp = () => {
     const {authUserToken}=useSelector(state=>state.user);
 
   const onSubmit = data =>{
-     console.log(data)
      saveUserAddress(data,authUserToken).then((res)=>{
       if (res.data.ok) {
     //      setValue("firstName",'')
@@ -34,7 +33,6 @@ const UserAddressFormComp = () => {
     //  setValue('homeAddress','')
     //  setValue('postalCode','')
      toast.success('Address save successfly')
-    console.log('This is SUCCUSSEFUL in functon',isSubmitSuccessful)
     
     dispatch(setOrderConfirm(true))
       }
@@ -45,8 +43,8 @@ const UserAddressFormComp = () => {
   // console.log('This is control',control._formValues)
   // console.log('This is formState',formState)
   // console.log('This is defaultValues',formState.defaultValues)
-  console.log('This is SUCCUSSEFUL',isSubmitSuccessful)
-  console.log('This is error',errors)
+  // console.log('This is SUCCUSSEFUL',isSubmitSuccessful)
+  // console.log('This is error',errors)
 
   return (
     <>

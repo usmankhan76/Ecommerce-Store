@@ -1,47 +1,15 @@
-import {Route,Routes, useNavigate} from "react-router-dom"
-import { lazy, useEffect, useState } from "react";
+import {Route,Routes} from "react-router-dom"
+import { lazy, useEffect } from "react";
 import { auth } from "./firebase";
 import 'react-toastify/dist/ReactToastify.css';
 import { toast, ToastContainer} from 'react-toastify'
 import { onAuthStateChanged } from "firebase/auth";
 import { setAuthUserToken, setCurrentUser, setUserCredientials } from "./redux/features/user/user-slice";
 import { useDispatch, useSelector } from "react-redux";
-import { craeteUpdateUser, GetCurrentUser } from "./services/auth-service";
+import { craeteUpdateUser} from "./services/auth-service";
 import { Suspense } from "react";
 
 
-
-// import Home from './pages/home';
-// import Login from './pages/auth/login';
-// import Header from "./components/nav/Header-bots";
-// import Register from './pages/auth/register';
-// import VerfiyEmail from "./pages/auth/verify-email";
-// import ForgetPassword from "./pages/auth/forget-password";
-// import ProtectedRoute from "./components/protected-route/procted-route";
-// import NonProtected from "./components/protected-route/protect-verifyEmail";
-// import UserDashboard from "./pages/user/user-dashboard";
-// import VerifiedUserToken from "./components/protected-route/verified-user-route";
-// import AdminDashboard from "./pages/admin/admin-dashboard";
-// import VerifyAdmin from "./components/protected-route/verify-amdin-route";
-// import UserProfile from "./pages/user/user-profile";
-// import UserWishlist from "./pages/user/user-wishlist";
-// import UserHistory from "./pages/user/user-history";
-// import CreateCategory from "./pages/admin/categories/create-category";
-// import UpdateCategoryItem from "./pages/admin/categories/update-category";
-// import CreateSubCategory from "./pages/admin/sub-categories/create-sub-category";
-// import UpdateSubCategoryItem from "./pages/admin/sub-categories/update-sub-category";
-// import CreateProduct from "./pages/admin/product/create-product";
-// import AllProducts from "./pages/admin/product/all-products";
-// import UpdateProduct from "./pages/admin/product/update-product";
-// import ViewProduct from "./pages/view-product";
-// import CategoryHome from "./pages/category/category-home";
-// import SubCategoryHome from "./pages/sub-category/sub-category-home";
-// import ShopPage from "./pages/shop";
-// import CartPage from "./pages/cart";
-// import SideDrawer from "./components/side-drawer/side-drawer";
-// import CheckoutPage from "./pages/checkout";
-// import CouponPage from "./pages/admin/coupon/coupon-page";
-// import PaymentPage from "./pages/payment/payment";
 
 
 // with react lazy
@@ -81,84 +49,41 @@ const PaymentPage =lazy(()=>import("./pages/payment/payment")) ;
 
 
 
-// import PaymentPage from "./pages/payment";
+
 function App() {
   const dispatch=useDispatch();
   // const navigate=useNavigate();
 
-  const {loginUser,authUserToken}=useSelector(state=>state.user)
-  // function roleBasedRedirect(role){
-  //   if(role==="admin"){
-  //     navigate('/admin/dashboard')
-  //   }else{
-  //     navigate('/user/dashboard')
-  //   }
-  // }
+  const {loginUser}=useSelector(state=>state.user)
 
   useEffect(()=>{
     const unsubscribe=onAuthStateChanged(auth, (user)=>{
-      // console.log("useEffect is chaling",user);
       
 
 
       if(user?.emailVerified){
         let name=user.displayName
-          // user.reload();
+
         
 
        craeteUpdateUser(auth.currentUser,name).then((res)=>{
-          console.log("response in app",res.data);
-          console.log("response in of user",user);
+
           const{name,email,role,tokenId,_id}=res.data
           dispatch(setUserCredientials({name,email,role,tokenId,_id}))
-          // dispatch(setCurrentUser(user))
-          // dispatch(setCurrentUser(JSON.stringify(user)))
           dispatch(setCurrentUser(user))
           dispatch(setAuthUserToken(user.accessToken))
-
-          
-          //  roleBasedRedirect(role)        
+ 
         }).catch(err=>toast.error(err))
-        
-      
 
-        // GetCurrentUser(authUserToken).then((res)=>{
-        //  console.log("get current user Response",res);
-        //   const{name,email,role,tokenId,_id}=res.data
-        //   dispatch(setUserCredientials({name,email,role,tokenId,_id}))
-        //   dispatch(setCurrentUser(user))
-        //   dispatch(setAuthUserToken(user.accessToken))
-        
-        // }).catch((err)=>{console.log(err.message)})
-        
         
       
       
       }
     })
     return()=>unsubscribe() 
+    // eslint-disable-next-line 
   },[loginUser])
 
-    // useEffect(() => {
-    //     getUserCart(authUserToken).then(res=>{
-    //     const{products}=res.data;
-    //     dispatch(addToCart(products.product))
-    //     console.log("___________CART AFter LOGIN",res.data.products)
-
-    //   }).catch(err=>console.log('getCart error',err.message))
-    // }, [authUserToken,loginUser])
-    
-
-  // useEffect(()=>{
-  //    getUserCart(authUserToken).then(res=>{
-  //       const{products}=res.data;
-  //       console.log("___________CART AFter LOGIN First",res.data)
-  //       dispatch(addToCart(products.product))
-  //       console.log("___________CART AFter LOGIN",products.product)
-
-
-  //     }).catch(err=>console.log('getCart error',err.message))
-  // },[authUserToken])
 
   return (
     <>

@@ -36,7 +36,7 @@ import Card from '../CardsMouseFlow/cards';
     getProductsCount()
   },[page])
   const handleChange=(event,value)=>{
-                    console.log("page",value);
+                    
                     return setPage(value)
                   }
   return (

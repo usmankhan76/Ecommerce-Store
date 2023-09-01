@@ -13,19 +13,14 @@ const ProductForm = ({values,setValues,handleSubmit,handleCategoryChange,subCate
             description,
             price,
             categories,
-            category,
             subs,
-            shipping,
             quantity,
-            images,
             colors,
             brands,
-            color,
-            brand,
+          
       }=values;
     const handleChange=(e)=>{
         const {value,name}=e.target
-        console.log("select",value,name);
         setValues({...values,[name]:value})
     } 
     
@@ -37,14 +32,11 @@ const ProductForm = ({values,setValues,handleSubmit,handleCategoryChange,subCate
         getCategoriesFromBackend();
     },[])
     const handleChangeSubs = (e) => {
-      const {value,name}=e.target
-        console.log("select",value,name);
+      const {value}=e.target
           setValues({...values,subs:value})
 
 
 }; 
-console.log("Subs",subs);
-console.log("Subs check",showsubs);
   return (
     <> 
      <form onSubmit={handleSubmit}>

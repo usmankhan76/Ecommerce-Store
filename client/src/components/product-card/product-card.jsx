@@ -24,24 +24,14 @@ const ProductCard = ({product}) => {
     if(typeof window !== 'undefined'){
       if(JSON.parse(localStorage.getItem('cart')) && JSON.parse(localStorage.getItem('cart')).length >0 ){
         // if cart is in localStorage get it
-        console.log('local storage with parse',JSON.parse(localStorage.getItem('cart')));
         cart=JSON.parse(localStorage.getItem('cart'))
         // cart=localStorage.getItem('cart')
-        console.log('cart parse',cart);
 
-        //I added below code 
-        // let newCart=cart.map((item)=>{
-        //   if(item._id===product._id){
-        //     return {...product,count:++item.count}
-        //   }
-        // })
-        // console.log("checccccccccccck this new cart",newCart)
-        // dispatch(addToCart(newCart))
+
       }
     
         if(cart.length>0){
           let findPorduct=cart.find((item)=>item._id===product._id)
-        console.log("checccccccccccck this new Proddddddduct",findPorduct)
          dispatch(showDarwer(true))
           setTooltipText("Already Added")
         }else{
@@ -50,7 +40,6 @@ const ProductCard = ({product}) => {
           cart.push({...product,count:++product.count|| 1})
           let unique= _.uniqWith(cart, _.isEqual)
           localStorage.setItem('cart',JSON.stringify(unique))
-          console.log("this is array we passing in state",unique)
           dispatch(addToCart(unique))
   
   

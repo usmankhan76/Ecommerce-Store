@@ -3,12 +3,10 @@ import React, {  useEffect, useState } from 'react'
 import { toast } from 'react-toastify';
 import CategoryForm from '../../../components/category-form/category-form';
 import FilterSearchItem from '../../../components/category-form/filter-search-item';
-import CategoryItem from '../../../components/category-item/catergory-item';
-import InputField from '../../../components/input-field/input-field.component';
 import AdminNavs from '../../../components/nav/admin-navs';
 import SubCategoryItem from '../../../components/sub-category-item/sub-catergory-item';
 import { auth } from '../../../firebase';
-import { createCategory, getCategories } from '../../../services/category-service';
+import {  getCategories } from '../../../services/category-service';
 import { createSubCategory, getSubCategories } from '../../../services/sub-category-services';
 
 
@@ -23,7 +21,6 @@ const CreateSubCategory = () => {
     let [parentCategory,setParentCategory]=useState(['']);
     
     
-    console.log("keyword",keyword)
      const getSubCategoriesFromBackend=() => {
         
         getSubCategories().then(res=>{setSubCategories(res.data)}).catch((err)=>{toast.error(err)})
@@ -43,7 +40,6 @@ const CreateSubCategory = () => {
         setLoading(true)
         let idToken=auth.currentUser.accessToken
         createSubCategory(name,parentCategory,idToken).then((resp)=>{
-                console.log("category response",resp);
                 setLoading(false) 
                 
                     toast.success(`${resp.data.name} is created successfully`)
@@ -61,7 +57,6 @@ const CreateSubCategory = () => {
     const searched=(keywordM)=>(item)=>item.name.toLowerCase().includes(keywordM)
 
    
-    console.log("subCategories",subCategories)
   return (
     <div className="container-fluid">
         <div className="row">

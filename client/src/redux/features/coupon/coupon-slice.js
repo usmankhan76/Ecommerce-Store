@@ -9,7 +9,7 @@ const couponSlice=createSlice({
     initialState,
     reducers:{
     setCouponApply:(state,action)=>{
-            console.log('check payload',action.payload)
+            
             return state={...state,couponIsApplied:action.payload}
         },
     

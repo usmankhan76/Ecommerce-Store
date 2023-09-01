@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import ProductCard from '../components/product-card/product-card'
 import LoadingSipner from '../components/spin/spin'
 import ViewProductCardComponent from '../components/view-product-card/view-product-card-component'
 import { getListRelatedProducts, getProduct, productStars } from '../services/product-services'
@@ -17,7 +16,6 @@ const ViewProduct = () => {
     const {authUserToken,loginUser,id}=useSelector(state=>state.user)
 
     const loadProduct=()=>{
-        // console.log("lpado fucntioan is runnign");
         setLoading(true)
         getProduct(slug).then((res)=>{
             // console.log("product res",res.data);
@@ -49,7 +47,6 @@ const ViewProduct = () => {
         })
     }
     useEffect(()=>{
-        // console.log("useEffect in loadPorduct");
         loadProduct()
     },[slug])
 

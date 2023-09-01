@@ -56,13 +56,13 @@ const CartProductItem = ({product}) => {
 
   const handleRemoveProduct=()=>{
     let cart=[];
-    console.log("id",_id)
+    
     if(typeof window !== 'undefined'){
         if(JSON.parse(localStorage.getItem('cart')) && JSON.parse(localStorage.getItem('cart')).length >0 ){
             cart=JSON.parse(localStorage.getItem('cart'))
         }
         const filterArray=cart.filter((p)=>(p._id!==_id))
-        console.log("lennnnnnnnnnnnnnngth",filterArray.length<1);
+        
           dispatch(addToCart(filterArray))
 
         // if(filterArray.length<1){

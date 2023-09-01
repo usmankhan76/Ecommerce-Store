@@ -13,7 +13,6 @@ const userCart=async(req,res)=>{
     let {email}=firebaseUser;
     const {cart}=req.body
     let products=[]
-    console.log("body carts",cart)
     // first we check the user
     const findUser= await userModel.findOne({email}).exec();
     //second we check the cart of existing user
@@ -31,7 +30,6 @@ const userCart=async(req,res)=>{
         object.count=cart[i].count;
         object.color=cart[i].color;
         let productPrice=await productModel.findById(cart[i]._id).select("price").exec(); // in this step we find out product and get out only price field 
-        // console.log("product price",productPrice.price)
         object.price=productPrice.price;
         
 
@@ -43,14 +41,13 @@ const userCart=async(req,res)=>{
     for (let i = 0; i < products.length; i++) {
         cartTotal=cartTotal+(products[i].price*products[i].count);
     }
-    // console.log("cartTotal in ba",cartTotal)
+    
     let newCart=await new cartModal({
         products,
         cartTotal,
         orderBy:findUser._id
     }).save();
 
-    // console.log("USer cart",newCart)
     res.json({ok:true})
 
     } catch (error) {
@@ -88,7 +85,6 @@ const emptyUserCart=async(req,res)=>{
 }
 const saveAddress=async(req,res)=>{
     try {
-        console.log("save Addres",req.body.cartAddress)
         const {country,city,postalCode,phoneNumber,firstName,homeAddress}=req.body.cartAddress
         let adrs=[{
                 country,
@@ -98,7 +94,7 @@ const saveAddress=async(req,res)=>{
                 homeAddress
 
             }]
-            console.log("check adrs",adrs)
+
         const{firebaseUser:{email}}=req.userCredientials;
         const findUser=await userModel.findOneAndUpdate({email},{
             phoneNumber,

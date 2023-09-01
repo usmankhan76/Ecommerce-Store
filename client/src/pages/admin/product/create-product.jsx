@@ -38,9 +38,7 @@ const CreateProduct = () => {
         
         setValues({...values,subs:[],category:e.target.value})
         getParentSubCategories(e.target.value).then((res)=>{
-          console.log("Parent subCategories",res.data);
           setShowSubs(true);
-          console.log("check",showsubs)
           setSubCategories(res.data);
         }).catch(error=>console.log(error.message))
     } 
@@ -51,7 +49,6 @@ const CreateProduct = () => {
         e.preventDefault()
        
         createProduct(values,authtoken).then((res)=>{
-            console.log("Product response",res.data)
             toast.success(`${values.title} is created successfully`)
             window.location.reload();
         //    return navigate("/admin/dashboard/products")
