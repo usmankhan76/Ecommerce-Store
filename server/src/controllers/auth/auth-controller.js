@@ -5,7 +5,7 @@ async function creatUpdateUser(req,res) {
     const {photoURL,firebaseUser}=req.userCredientials
     const email=firebaseUser.email
     const name=  email.split('@')[0]
-    console.log('this is name',firebaseUser);
+  
     const {uid}=firebaseUser
     const user= await User.findOneAndUpdate(
         {email},// will find user based on email

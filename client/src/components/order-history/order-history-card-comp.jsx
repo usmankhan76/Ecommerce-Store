@@ -1,18 +1,17 @@
 import React from 'react'
 import OrderItemComp from '../order-item/order-item-comp';
 import { Button, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material'
-import { Document, Page, Text, View, StyleSheet,PDFDownloadLink } from '@react-pdf/renderer';
+import { PDFDownloadLink } from '@react-pdf/renderer';
 import OrderItemOrderComp from '../order-item/order-item-order-comp';
-import InvoiceComp from '../invoice-pdf/invoice-comp';
-import { useSelector } from 'react-redux';
-// import { Card } from 'antd'
+// import InvoiceComp from '../invoice-pdf/invoice-comp';
+import InvoiceComp2 from '../invoice-pdf/invoice-comp-2';
 
 
 const OrderHistoryCardComp = ({order}) => {
     const {products,paymentIntent}=order;
     const showDownloadPdf=(order)=>{
      return   <PDFDownloadLink 
-                document={<InvoiceComp order={order} />}
+                document={<InvoiceComp2 order={order} />}
                 fileName='Invoice.pdf'
                 style={{textDecoration:'none',color:'white'}}
                 >

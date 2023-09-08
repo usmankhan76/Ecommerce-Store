@@ -85,6 +85,8 @@ function App() {
   },[loginUser])
 
 
+      // "@react-pdf/renderer": "^3.0.1", this is the dependency version
+      // "@david.kucsai/react-pdf-table": "^0.4.1",
   return (
     <>
     <Header/>

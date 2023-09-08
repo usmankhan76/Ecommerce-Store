@@ -110,7 +110,7 @@ const getOrders=async(req,res)=>{
         let findOrders=await orderModal.find({
             orderBy:findUser._id
         }).sort("-createdAt").populate('products.product').exec()
-        console.log("findOrders",findOrders);
+      
         res.json(findOrders);
     } catch (error) {
         console.log('get orders error',error.message);

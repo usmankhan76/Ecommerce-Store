@@ -1,7 +1,6 @@
 import React from 'react'
 import { Document, Page, Text, View, StyleSheet,} from '@react-pdf/renderer';
-import {Table,TableHeader,TableCell,TableBody,DataTableCell} from "@david.kucsai/react-pdf-table"
-import { useSelector } from 'react-redux';
+// import {Table,TableHeader,TableCell,TableBody,DataTableCell} from "@david.kucsai/react-pdf-table"
 const InvoiceComp = ({order,}) => {
     const{orderStatus,paymentIntent}=order
   
@@ -15,7 +14,7 @@ const InvoiceComp = ({order,}) => {
                 <Text style={styles.title}>Order Invoice</Text>
                 <Text style={styles.author}>Ecommerce Store</Text>
                 <Text style={styles.subtitle}>Order Summary</Text>
-                <Table>
+                {/* <Table>
                     <TableHeader>
                         <TableCell>Title</TableCell>
                         <TableCell>Price</TableCell>
@@ -23,19 +22,19 @@ const InvoiceComp = ({order,}) => {
                         <TableCell>Brand</TableCell>
                         <TableCell>Color</TableCell>
                     </TableHeader>
-                </Table>
+                </Table> */}
                 {/* We use another table for display data */}
-                 <Table data={order.products}> 
+                 {/* <Table data={order.products}>  */}
                  {/* we give the data in form of array */}
-                    <TableBody>
+                    {/* <TableBody>
                         <DataTableCell getContent={(x)=>x.product.title}/>
                         <DataTableCell getContent={(x)=>`$${x.product.price}`}/>
                         <DataTableCell getContent={(x)=>x.count}/>
                         <DataTableCell getContent={(x)=>x.product.brand}/>
                         <DataTableCell getContent={(x)=>x.product.color}/>
                         
-                    </TableBody>
-                </Table>
+                    </TableBody> */}
+                {/* </Table> */}
                 <Text style={styles.text}>
                     <Text>
                         Date: {'                       '}{new Date(paymentIntent.created*1000).toLocaleString()}
@@ -51,7 +50,7 @@ const InvoiceComp = ({order,}) => {
                     </Text>
                     
                 </Text>
-                <Text style={styles.footer}>~ Thnak For Shopping With Us ~</Text>
+                <Text style={styles.footer}>~ Thanks For Shopping With Us ~</Text>
 
             </View>
         </Page>
