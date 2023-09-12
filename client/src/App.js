@@ -87,6 +87,7 @@ function App() {
 
       // "@react-pdf/renderer": "^3.0.1", this is the dependency version
       // "@david.kucsai/react-pdf-table": "^0.4.1",
+      // "heroku-postbuild": "cd client && npm install && npm install --only=dev --no-shrinkwrap && npm run build", root directory script
   return (
     <>
     <Header/>
