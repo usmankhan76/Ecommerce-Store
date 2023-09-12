@@ -16,6 +16,7 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { Badge } from '@mui/material';
 import Person2OutlinedIcon from '@mui/icons-material/Person2Outlined';
 import {  emptyCartStatate } from '../../redux/features/cart/cart-slice';
+import {ReactComponent as Logo} from '../../assets/logo.svg'
 
 const Header = () => {
     
@@ -43,7 +44,10 @@ const Header = () => {
    <Navbar collapseOnSelect sticky='top' fixed='top' expand="sm" bg="light" data-bs-theme="light">
       <Container style={{maxWidth:'1305px' }}>
 
-        <Navbar.Brand as={Link} to='/' >Royal Collection</Navbar.Brand>
+        {/* <Navbar.Brand as={Link} to='/' >Royal Collection</Navbar.Brand> */}
+        <Link to='/' className='logo' >
+          <Logo />
+        </Link>
 
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
 
