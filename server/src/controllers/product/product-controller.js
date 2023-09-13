@@ -111,7 +111,8 @@ exports.productsCount=async(req,res)=>{
 //     }
 // }
 exports.listProducts=async(req,res)=>{
-    try {
+    try { 
+
 
         console.log("listProducts",req.body);
         const {sort,order,page}=req.body
@@ -124,7 +125,7 @@ exports.listProducts=async(req,res)=>{
         .sort([[sort,order]])//if we have more then one items then it will take two arrays and sort accordingly 
         .limit(perPage)
         .exec()
-
+        res.header("Access-Control-Allow-Origin", "*");
         return res.json(products)
     } catch (error) {
         

@@ -31,12 +31,18 @@ const dbURI= process.env.NODE_ENV==='production'?process.env.PROD_DB_URI:process
 
 
 
-
+const corsOptions = {
+  origin: process.env.NODE_ENV === 'production'
+    ? 'https://e-commerce-app-uk-348041fc9365.herokuapp.com' // Your Heroku app URL
+    : '*', // Your local development URL
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true, // Include cookies and authentication headers if needed
+};
 
 //middleware
+app.use(cors(corsOptions))
 app.use(morgan("dev"))
 app.use(bodyParser.json({limit:'50mb'}))
-app.use(cors())
 
 
 if(process.env.NODE_ENV==="production"){ 

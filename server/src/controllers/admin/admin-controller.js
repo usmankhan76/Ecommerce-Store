@@ -18,7 +18,7 @@ const showOrders=async(req,res)=>{
 const updateOrderStatus=async(req,res)=>{
     try {
         //find order
-        console.log("updateOrder body",req.body);
+        // console.log("updateOrder body",req.body);
         const {orderId,orderStatus}=req.body
 
 

@@ -33,7 +33,7 @@ const FileUpload = ({values,setValues}) => {
                 (uri)=>{
                     let options={
                         method:"POST",
-                        url:'http://localhost:8000/api/uploadimages',
+                        url:`${process.env.NODE_ENV==='production' ? process.env.REACT_APP_API:'http://localhost:8000/api'}/uploadimages`,
                         data:{image:uri},
                         headers:{authtoken:authUserToken},
                         maxContentLength: 1000000,
@@ -56,7 +56,7 @@ const FileUpload = ({values,setValues}) => {
         
         let options={
             method:"POST",
-            url:'http://localhost:8000/api/removeimage',
+            url:'`${process.env.REACT_APP_API}`/removeimage',
             data:{public_id},
             headers:{authtoken:authUserToken}
         }

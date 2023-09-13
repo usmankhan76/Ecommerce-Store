@@ -3,7 +3,7 @@ import axios from "axios"
 export const getCategories=async() => {
     const options = {
         method: 'GET',
-        url: 'http://localhost:8000/api/categories',
+        url: `${process.env.NODE_ENV==='production'?process.env.REACT_APP_API:'http://localhost:8000/api'}/categories`,
         
     };
 
@@ -14,7 +14,7 @@ export const getcategory=async(slug) => {
     // console.log("category slug",slug)
     const options = {
         method: 'GET',
-        url: `http://localhost:8000/api/category/${slug}`,
+        url: `${process.env.NODE_ENV==='production'?process.env.REACT_APP_API:'http://localhost:8000/api'}/category/${slug}`,
         
     };
 
@@ -23,7 +23,7 @@ export const getcategory=async(slug) => {
  export const removeCategory=async(slug,authtoken) => {
     const options = {
         method: 'DELETE',
-        url: `http://localhost:8000/api/category/${slug}`,
+        url: `${process.env.NODE_ENV==='production'?process.env.REACT_APP_API:'http://localhost:8000/api'}/category/${slug}`,
         headers:{authtoken}
     };
 
@@ -33,7 +33,7 @@ export const updateCategory=async(slug,category,authtoken) => {
     
     const options = {
         method: 'PUT',
-        url: `http://localhost:8000/api/category/${slug}`,
+        url: `${process.env.NODE_ENV==='production'?process.env.REACT_APP_API:'http://localhost:8000/api'}/category/${slug}`,
         data:{category},
         headers:{
             authtoken,
@@ -47,7 +47,7 @@ export const updateCategory=async(slug,category,authtoken) => {
    
     const options = {
         method: 'POST',
-        url: 'http://localhost:8000/api/category',
+        url: `${process.env.NODE_ENV==='production'?process.env.REACT_APP_API:'http://localhost:8000/api'}/category`,
         data: {category},
         headers:{
             authtoken,
@@ -55,7 +55,7 @@ export const updateCategory=async(slug,category,authtoken) => {
     };
 
     return await axios.request(options);
-    // return await  axios.post('http://localhost:8000/api/category',category,{
+    // return await  axios.post('`${process.env.NODE_ENV==='production'?process.env.REACT_APP_API:'http://localhost:8000/api'}`/category',category,{
     //     headers:{authtoken}
     // })
  }
@@ -64,7 +64,7 @@ export const updateCategory=async(slug,category,authtoken) => {
     console.log("ID check",_id);
     const options = {
         method: 'GET',
-        url: `http://localhost:8000/api/category/sub/${_id}`,
+        url: `${process.env.NODE_ENV==='production'?process.env.REACT_APP_API:'http://localhost:8000/api'}/category/sub/${_id}`,
         
     };
 

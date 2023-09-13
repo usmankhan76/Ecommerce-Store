@@ -13,7 +13,7 @@ export const craeteUpdateUser=async (authuser)=>{
  
   const options = {
     method: 'POST',
-    url: 'http://localhost:8000/api/create-update-user',
+    url: `${process.env.NODE_ENV==='production'?process.env.REACT_APP_API:'http://localhost:8000/api'}/create-update-user`,
     headers: {authtoken,name,photoURL}
   };
 
@@ -24,7 +24,7 @@ export const craeteUpdateUser=async (authuser)=>{
 export const GetCurrentUser=async(authtoken)=>{
   const options = {
         method: 'POST',
-        url: 'http://localhost:8000/api/current-user',
+        url: `${process.env.NODE_ENV==='production'?process.env.REACT_APP_API:'http://localhost:8000/api'}/current-user`,
         headers: {authtoken}
   };
  return   axios.request(options)

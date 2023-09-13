@@ -18,7 +18,7 @@ const ForgetPassword = () => {
     }
     const navigate=useNavigate();
     const config={
-        url:'http://localhost:3000/login',
+        url:process.enn.REACT_APP_FROGET_PASSWORD_REDIRECT,
         handleOnChange:true
     }
     const handleSubmit=()=>{

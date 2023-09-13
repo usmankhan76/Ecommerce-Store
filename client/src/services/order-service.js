@@ -3,7 +3,7 @@ import axios from "axios"
 export const generateOrder=async(stripeResponse,authtoken)=>{
     const options={
         method:'POST',
-        url:'http://localhost:8000/api/user/order',
+        url:`${process.env.NODE_ENV==='production'?process.env.REACT_APP_API:'http://localhost:8000/api'}/user/order`,
         data:{stripeResponse},
         headers:{authtoken}
 
@@ -14,7 +14,7 @@ export const generateOrder=async(stripeResponse,authtoken)=>{
 export const getUserOrders=async(authtoken)=>{
     const options={
         method:'GET',
-        url:'http://localhost:8000/api/user/orders',
+        url:`${process.env.NODE_ENV==='production'?process.env.REACT_APP_API:'http://localhost:8000/api'}/user/orders`,
        headers:{authtoken}
 
     }

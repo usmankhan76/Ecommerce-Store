@@ -3,7 +3,7 @@ import axios from "axios"
 export const saveCartToDb=async(cart,authtoken)=>{
     const options={
         method:'POST',
-        url:'http://localhost:8000/api/user/cart',
+        url:`${process.env.NODE_ENV==='production'?process.env.REACT_APP_API:'http://localhost:8000/api'}/user/cart`,
         data:{cart},
         headers:{authtoken}
 
@@ -14,7 +14,7 @@ export const saveCartToDb=async(cart,authtoken)=>{
 export const getUserCart=async(authtoken)=>{
     const options={
         method:'GET',
-        url:'http://localhost:8000/api/user/cart',
+        url:`${process.env.NODE_ENV==='production'?process.env.REACT_APP_API:'http://localhost:8000/api'}/user/cart`,
         headers:{authtoken}
     }
     return axios.request(options)
@@ -24,7 +24,7 @@ export const getUserCart=async(authtoken)=>{
 export const emptyCart=async(authtoken)=>{
     const options={
         method:'DELETE',
-        url:'http://localhost:8000/api/user/cart',
+        url:`${process.env.NODE_ENV==='production'?process.env.REACT_APP_API:'http://localhost:8000/api'}/user/cart`,
         headers:{authtoken}
     }
     return axios.request(options)
@@ -33,7 +33,7 @@ export const emptyCart=async(authtoken)=>{
 export const saveUserAddress=async(cartAddress,authtoken)=>{
     const options={
         method:'POST',
-        url:'http://localhost:8000/api/user/address',
+        url:`${process.env.NODE_ENV==='production'?process.env.REACT_APP_API:'http://localhost:8000/api'}/user/address`,
         data:{cartAddress},
         headers:{authtoken}
 
