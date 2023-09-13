@@ -56,7 +56,7 @@ const FileUpload = ({values,setValues}) => {
         
         let options={
             method:"POST",
-            url:'`${process.env.REACT_APP_API}`/removeimage',
+            url:`${process.env.NODE_ENV==='production' ? process.env.REACT_APP_API:'http://localhost:8000/api'}/removeimage`,
             data:{public_id},
             headers:{authtoken:authUserToken}
         }
