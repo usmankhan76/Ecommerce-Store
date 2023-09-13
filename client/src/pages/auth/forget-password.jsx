@@ -18,7 +18,7 @@ const ForgetPassword = () => {
     }
     const navigate=useNavigate();
     const config={
-        url:process.enn.REACT_APP_FROGET_PASSWORD_REDIRECT,
+        url:process.env.NODE_ENV==="production"?`${process.env.REACT_APP_FROGET_PASSWORD_REDIRECT}/login`:'http://localhost:3000/login',
         handleOnChange:true
     }
     const handleSubmit=()=>{

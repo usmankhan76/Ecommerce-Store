@@ -33,7 +33,7 @@ const Register = () => {
     
   }
   const config={
-        url:'http://localhost:3000/',
+        url:process.env.NODE_ENV==="production"?process.env.REACT_APP_REDIRECT_HOME_URL:'http://localhost:3000/',
         handleOnChange:true
     }
 
