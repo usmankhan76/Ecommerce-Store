@@ -12,7 +12,7 @@ const ListCategoryComponent = () => {
     const laodCategories=()=>{
         setLoading(true)
         getCategories().then((res)=>{
-           
+           console.log("---------------><",res.data)
             setLoading(false)
             setCategories(res.data)
         }).catch(err=>console.log("Load categories error",err.message))
@@ -43,8 +43,10 @@ const ListCategoryComponent = () => {
     // }
 
 
+
      const  showCategories=()=>{
-        return categories.map(item=>{
+        console.log("->>>>>>>>>>",loading,categories.length)
+        return  categories.map(item=>{
             return <Grid item lg={3} md={3} sm={4} xs={12}
                 // div className='col'
                         key={item._id} 
@@ -86,7 +88,7 @@ const ListCategoryComponent = () => {
 
      <Grid container rowSpacing={2} item lg={12} md={12} sm={12} xs={12}>
         {/* <Grid item lg={3} md={3} sm={3} xs={3}> */}
-            {loading ? <h4>Loading...</h4> : (showCategories())}
+            {loading ? <h4>Loading...</h4> :(showCategories())}
         {/* </Grid> */}
     </Grid>
     </Grid>
