@@ -28,6 +28,7 @@ exports.create=async (req,res)=>{
 }
 
 exports.list=async (req,res)=>{
+    res.header("Access-Control-Allow-Origin", "*");
     return  res.json(await subCategoryModel.find({}).sort({createdAt:-1}).exec())
 }
 

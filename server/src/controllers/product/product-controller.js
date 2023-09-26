@@ -88,6 +88,7 @@ exports.update=async(req,res)=> {
 exports.productsCount=async(req,res)=>{
     try {
         const allProductsCount=await productModel.find({}).estimatedDocumentCount().exec()
+        res.header("Access-Control-Allow-Origin", "*");
         res.json(allProductsCount)
     } catch (error) {
         console.log("getProductForPagination error",error.message);
@@ -158,7 +159,8 @@ exports.productRating=async(req,res)=>{
             {new:true}, // it is used to send newly updated data to the front end and use it when we update
             
             ).exec()
-            console.log("rating added",addRatingToProduct)
+            // console.log("rating added",addRatingToProduct)
+            res.header("Access-Control-Allow-Origin", "*");
             res.json(addRatingToProduct)
 
         }else{
@@ -168,7 +170,8 @@ exports.productRating=async(req,res)=>{
                 {$set:{"ratings.$.stars":stars}},// this will set stars to star in rating array
                 {new:true}
             ).exec()
-             console.log("rating added",ratingUpdated)
+            //  console.log("rating added",ratingUpdated)
+             res.header("Access-Control-Allow-Origin", "*");
             res.json(ratingUpdated)
 
         }
@@ -202,7 +205,7 @@ const handleQuery=async(req,res,query)=>{
     .populate('category','_id name')
     .populate('subs','_id name')
     .exec()
-
+    res.header("Access-Control-Allow-Origin", "*");
     res.json(findProducts)
 }
 
@@ -217,7 +220,7 @@ const handlePrice=async(req,res,price)=>{
         .populate('category','_id name')
         .populate('subs','_id name')
         .exec()
-
+        res.header("Access-Control-Allow-Origin", "*");
         res.json(findProducts)
 
     } catch (error) {
@@ -231,7 +234,7 @@ const handleCategory=async(req,res,category)=>{
         .populate('category','_id name')
         .populate('subs','_id name')
         .exec()
-        
+        res.header("Access-Control-Allow-Origin", "*");
         res.json(findProducts)
     } catch (error) {
         console.log("handlePrice category",error.message)
