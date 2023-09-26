@@ -42,7 +42,7 @@ const corsOptions = {
 //middleware
 app.use(cors(corsOptions))
 app.use(morgan("dev"))
-app.use(bodyParser.json({limit:'50mb'}))
+app.use(bodyParser.json({limit:'100mb'}))
 
 
 if(process.env.NODE_ENV==="production"){ 
