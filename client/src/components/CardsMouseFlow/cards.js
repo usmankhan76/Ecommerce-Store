@@ -127,9 +127,7 @@ export default function Card({product}) {
       <div
         className="card"
         ref={cardRef}
-        style={{
-          transform: `rotateX(${xRotation}deg) rotateY(${yRotation}deg)`,
-        }}
+       
       >
         <img alt="example" src={images&& images.length?images[0].url:dummy}  
                 ref={imgRef} className="sneaaker-img"

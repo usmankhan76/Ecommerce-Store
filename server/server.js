@@ -6,6 +6,7 @@ const cors=require('cors')
 const fs = require('fs');
 const enforce=require('express-sslify')
 const path = require('path');
+require('dotenv').config();
 
 const { performMigration } = require('./src/services/mongoose-connection');
 require('dotenv').config();
