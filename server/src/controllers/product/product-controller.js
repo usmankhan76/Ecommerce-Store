@@ -129,7 +129,7 @@ exports.listProducts=async(req,res)=>{
         res.header("Access-Control-Allow-Origin", "*");
         return res.json(products)
     } catch (error) {
-        
+        return res.json(error.message)
     }
 }
 exports.productRating=async(req,res)=>{

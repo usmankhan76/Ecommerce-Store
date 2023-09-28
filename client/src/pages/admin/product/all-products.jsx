@@ -23,7 +23,7 @@ const AllProducts = () => {
   }
   let authtoken=authUserToken;
   const handleRemove=async(slug)=>{
-    console.log(slug);
+    // console.log(slug);
     setLoading(true);
     let confirm=window.confirm("You want to Delet?")
     if(confirm){

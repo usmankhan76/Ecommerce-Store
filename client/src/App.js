@@ -52,7 +52,6 @@ const PaymentPage =lazy(()=>import("./pages/payment/payment")) ;
 
 function App() {
   const dispatch=useDispatch();
-  console.log("=================",process.env.NODE_ENV)
   // const navigate=useNavigate();
 
   const {loginUser}=useSelector(state=>state.user)

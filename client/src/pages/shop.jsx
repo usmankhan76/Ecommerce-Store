@@ -427,13 +427,8 @@ const ShopPage = () => {
                     //     </ListSubheader>
                     // }
                     >
-                        {/* <ListItemButton>
-                                <ListItemIcon>
-                                <SendIcon />
-                                </ListItemIcon>
-                                <ListItemText primary="Sent mail" />
-                        </ListItemButton> */}
-                        <ListItemButton onClick={handleClickCategories}>
+                      
+                        {/* <ListItemButton onClick={handleClickCategories}>
                                 <ListItemIcon>
                                     <CategoryIcon />
                                 </ListItemIcon>
@@ -443,15 +438,14 @@ const ShopPage = () => {
                         <Collapse in={open2} timeout="auto" unmountOnExit>
                             <List component="div" disablePadding>
                             
-                                {/* <ListItemButton> */}
+                                
                                     <FormGroup >
                                         {showCategories()}
                                     </FormGroup>
-                                {/* </ListItemButton> */}
                                     
                             </List>
                         </Collapse>
-                        <Divider />
+                        <Divider /> */}
                     
                         <ListItemButton onClick={handleClickPrice}>
                                 <ListItemIcon>
@@ -511,7 +505,8 @@ const ShopPage = () => {
                             </List>
                         </Collapse>
                         <Divider />
-                        <ListItemButton onClick={handleClickSub}>
+
+                        {/* <ListItemButton onClick={handleClickSub}>
                                 <ListItemIcon>
                                     <SubdirectoryArrowRightIcon />
                                 </ListItemIcon>
@@ -526,7 +521,7 @@ const ShopPage = () => {
                                 </List>
                         </Collapse>
                     
-                        <Divider />
+                        <Divider /> */}
                         
                         <ListItemButton onClick={handleClickBrand}>
                                 <ListItemIcon>

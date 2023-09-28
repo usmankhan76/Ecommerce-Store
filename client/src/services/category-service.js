@@ -1,6 +1,7 @@
 import axios from "axios"
 
 export const getCategories=async() => {
+    
     const options = {
         method: 'GET',
         url: `${process.env.NODE_ENV==='production'?process.env.REACT_APP_API:'http://localhost:8000/api'}/categories`,
@@ -12,12 +13,13 @@ export const getCategories=async() => {
 
 export const getcategory=async(slug) => {
     // console.log("category slug",slug)
+    
     const options = {
         method: 'GET',
         url: `${process.env.NODE_ENV==='production'?process.env.REACT_APP_API:'http://localhost:8000/api'}/category/${slug}`,
         // url: `${process.env.REACT_APP_API}/category/${slug}`,
     };
-
+    
      return await axios.request(options);
  }
  export const removeCategory=async(slug,authtoken) => {

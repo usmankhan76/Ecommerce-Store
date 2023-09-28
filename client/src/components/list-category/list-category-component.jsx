@@ -12,10 +12,11 @@ const ListCategoryComponent = () => {
     const laodCategories=()=>{
         setLoading(true)
         getCategories().then((res)=>{
-           console.log("---------------><",res.data)
+         
             setLoading(false)
             setCategories(res.data)
-        }).catch(err=>console.log("Load categories error",err.message))
+        }).catch(err=>console.log("Load categories error",err.message)
+        )
 
     }
 
@@ -45,7 +46,7 @@ const ListCategoryComponent = () => {
 
 
      const  showCategories=()=>{
-        console.log("->>>>>>>>>>",loading,categories.length)
+        
         return  categories.map(item=>{
             return <Grid item lg={3} md={3} sm={4} xs={12}
                 // div className='col'
