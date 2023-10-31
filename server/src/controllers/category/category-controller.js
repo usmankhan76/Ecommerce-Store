@@ -26,25 +26,34 @@ exports.create=async (req,res)=>{
 }
 
 exports.list=async (req,res)=>{
-    res.header("Access-Control-Allow-Origin", "*");
-    return  res.json(await categoryModel.find({}).sort({createdAt:-1}).exec())
+    try {
+        res.header("Access-Control-Allow-Origin", "*");
+        return  res.json(await categoryModel.find({}).sort({createdAt:-1}).exec())
+        
+    } catch (error) {
+        res.status(400).send(error.message)
+    }
 }
 
 exports.read=async(req,res)=>{
-    console.log("read slug",req.params.slug)
-    const category=await categoryModel.findOne({slug:req.params.slug}).exec()
-
-    const findProducts= await productModel.find({category}).populate("category").exec()
-
-
-    res.json({findProducts,category})
+    try {
+        
+        const category=await categoryModel.findOne({slug:req.params.slug}).exec()
+    
+        const findProducts= await productModel.find({category}).populate("category").exec()
+    
+    
+        res.json({findProducts,category})
+    } catch (error) {
+        
+    }
 
 }
 
 exports.update=async (req,res)=>{
     try {
         const {category}=req.body;
-        console.log("update",category,req.params.slug)
+        
         const update=await categoryModel.findOneAndUpdate(
             {slug:req.params.slug},
             {name:category,slug:slugify(category)},
@@ -58,16 +67,26 @@ exports.update=async (req,res)=>{
 }
 
 exports.remove=async(req,res)=>{
-    const removedCategory=await categoryModel.findOneAndDelete({slug:req.params.slug});
-    res.json(removedCategory) 
+    try {
+        const removedCategory=await categoryModel.findOneAndDelete({slug:req.params.slug});
+        res.json(removedCategory) 
+        
+    } catch (error) {
+                res.status(400).send(error.message)
+
+    }
 
 }
 
-exports.getSubCategoryFromParent=(req,res)=>{
-    
-    return  subCategoryModel.find({parent:req.params._id}).exec((err,subs)=>{
-        if(err) console.log(err);
-       
-        res.json(subs)
-    })
+exports.getSubCategoryFromParent=async(req,res)=>{
+    try {
+        
+        return await subCategoryModel.find({parent:req.params._id}).exec((err,subs)=>{
+            if(err) console.log(err);
+           
+            res.json(subs)
+        })
+    } catch (error) {
+                res.status(400).send(error.message)
+    }
 }

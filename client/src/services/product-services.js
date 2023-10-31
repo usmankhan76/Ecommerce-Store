@@ -3,7 +3,7 @@ import axios from "axios"
 export const createProduct=async(product,authtoken)=>{
     const options={
         method: 'POST',
-        url: `${process.env.NODE_ENV==='production'?process.env.REACT_APP_API:'http://localhost:8000/api'}/product`,
+        url: `/api/product`,
         data: {product},
         headers:{
             authtoken,
@@ -14,7 +14,7 @@ export const createProduct=async(product,authtoken)=>{
 export const getProductsbyCount=async(count)=>{
     const options={
         method: 'GET',
-        url: `${process.env.NODE_ENV==='production'?process.env.REACT_APP_API:'http://localhost:8000/api'}/products/${count}`,
+        url: `/api/products/${count}`,
 
         
        
@@ -24,7 +24,7 @@ export const getProductsbyCount=async(count)=>{
 export const getProduct=async(slug)=>{
     const options={
         method: 'GET',
-        url: `${process.env.NODE_ENV==='production'?process.env.REACT_APP_API:'http://localhost:8000/api'}/product/${slug}`,
+        url: `/api/product/${slug}`,
         
        
     }
@@ -34,7 +34,7 @@ export const getProduct=async(slug)=>{
 export const removeProduct=async(slug,authtoken)=>{
     const options={
         method: 'DELETE',
-        url: `${process.env.NODE_ENV==='production'?process.env.REACT_APP_API:'http://localhost:8000/api'}/product/${slug}`,
+        url: `/api/product/${slug}`,
          headers:{
             authtoken,
         }
@@ -47,7 +47,7 @@ export const removeProduct=async(slug,authtoken)=>{
 export const updateProduct=async(slug,product,authtoken)=>{
     const options={
         method: 'PUT',
-        url: `${process.env.NODE_ENV==='production'?process.env.REACT_APP_API:'http://localhost:8000/api'}/product/${slug}`,
+        url: `/api/product/${slug}`,
         data: {product},
         headers:{
             authtoken,
@@ -58,7 +58,7 @@ export const updateProduct=async(slug,product,authtoken)=>{
 export const getProducts=async(sort,order,page)=>{
     const options={
         method: 'POST',
-        url: `${process.env.NODE_ENV==='production'?process.env.REACT_APP_API:'http://localhost:8000/api'}/products`,
+        url: `/api/products`,
         data: {sort,order,page},
         
     }
@@ -67,7 +67,7 @@ export const getProducts=async(sort,order,page)=>{
 export const getProductsCounting=async()=>{
     const options={
         method: 'GET',
-        url: `${process.env.NODE_ENV==='production'?process.env.REACT_APP_API:'http://localhost:8000/api'}/products/total`,
+        url: `/api/products/total`,
        
         
     }
@@ -78,7 +78,7 @@ export const productStars=async(productId,stars,authtoken)=>{
     
     const options={
         method: 'PUT',
-        url: `${process.env.NODE_ENV==='production'?process.env.REACT_APP_API:'http://localhost:8000/api'}/product/stars/${productId}`,
+        url: `/api/product/stars/${productId}`,
         data:{stars},
         headers:{authtoken}
         
@@ -90,7 +90,7 @@ export const getListRelatedProducts=async(productId)=>{
     
     const options={
         method: 'GET',
-        url: `${process.env.NODE_ENV==='production'?process.env.REACT_APP_API:'http://localhost:8000/api'}/product/related/${productId}`,
+        url: `/api/product/related/${productId}`,
         
         
     }
@@ -102,7 +102,7 @@ export const getProductsFromSearch=async(query)=>{
     console.log("query",query);
     const options = {
         method: 'POST',
-        url: `${process.env.NODE_ENV==='production'?process.env.REACT_APP_API:'http://localhost:8000/api'}/product/search/filter`,
+        url: `/api/product/search/filter`,
         data: {query}
     };
 

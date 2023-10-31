@@ -3,7 +3,7 @@ import axios from "axios"
 export const addToWishlist=async(productId,authtoken)=>{
     const options={
         method:'POST',
-        url:`${process.env.NODE_ENV==='production'?process.env.REACT_APP_API:'http://localhost:8000/api'}/user/wishlist`,
+        url:`/api/user/wishlist`,
         data:{productId},
         headers:{authtoken}
 
@@ -14,7 +14,7 @@ export const addToWishlist=async(productId,authtoken)=>{
 export const getWishlistFromB=async(authtoken)=>{
     const options={
         method:'GET',
-        url:`${process.env.NODE_ENV==='production'?process.env.REACT_APP_API:'http://localhost:8000/api'}/user/wishlist`,
+        url:`/api/user/wishlist`,
        headers:{authtoken}
 
     }
@@ -24,7 +24,7 @@ export const getWishlistFromB=async(authtoken)=>{
 export const removeFromWishlist=async(productId,authtoken)=>{
     const options={
         method:'PUT',
-        url:`${process.env.NODE_ENV==='production'?process.env.REACT_APP_API:'http://localhost:8000/api'}/user/wishlist/${productId}`,
+        url:`/api/user/wishlist/${productId}`,
         data:{},
        headers:{authtoken}
 

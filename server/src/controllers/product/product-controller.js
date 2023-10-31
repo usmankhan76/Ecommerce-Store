@@ -27,7 +27,9 @@ exports.productslist=async(req,res)=>{
         .exec()
         res.json(readProducts)
     } catch (error) {
-        console.log("product read error",error.message);        
+        console.log("product read error",error.message); 
+                res.status(400).send(error.message)
+       
     }
 }
 
@@ -91,7 +93,8 @@ exports.productsCount=async(req,res)=>{
         res.header("Access-Control-Allow-Origin", "*");
         res.json(allProductsCount)
     } catch (error) {
-        console.log("getProductForPagination error",error.message);
+                res.status(400).send(error.message)
+
 
     }
 }

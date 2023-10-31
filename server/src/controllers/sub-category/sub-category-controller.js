@@ -28,14 +28,25 @@ exports.create=async (req,res)=>{
 }
 
 exports.list=async (req,res)=>{
-    res.header("Access-Control-Allow-Origin", "*");
-    return  res.json(await subCategoryModel.find({}).sort({createdAt:-1}).exec())
+    try {
+        res.header("Access-Control-Allow-Origin", "*");
+        return  res.json(await subCategoryModel.find({}).sort({createdAt:-1}).exec())
+        
+    } catch (error) {
+        res.status(400).send(error.message)
+    }
 }
 
 exports.read=async(req,res)=>{
-    const Subategory=await subCategoryModel.findOne({slug:req.params.slug}).exec()
-   const findProducts= await productModel.find({subs:Subategory}).populate("category").exec()
-    res.json({Subategory,findProducts})
+    try {
+        const Subategory=await subCategoryModel.findOne({slug:req.params.slug}).exec()
+       const findProducts= await productModel.find({subs:Subategory}).populate("category").exec()
+        res.json({Subategory,findProducts})
+        
+    } catch (error) {
+        res.status(400).send(error.message)
+        
+    }
 
 }
 
@@ -55,7 +66,13 @@ exports.update=async (req,res)=>{
 }
 
 exports.remove=async(req,res)=>{
-    const removedSubCategory=await subCategoryModel.findOneAndDelete({slug:req.params.slug});
-    res.json(removedSubCategory) 
+    try {
+        const removedSubCategory=await subCategoryModel.findOneAndDelete({slug:req.params.slug});
+        res.json(removedSubCategory) 
+        
+    } catch (error) {
+        res.status(400).send(error.message)
+        
+    }
 
 }

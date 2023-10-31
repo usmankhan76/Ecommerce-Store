@@ -4,7 +4,7 @@ export const getCategories=async() => {
     
     const options = {
         method: 'GET',
-        url: `${process.env.NODE_ENV==='production'?process.env.REACT_APP_API:'http://localhost:8000/api'}/categories`,
+        url: `/api/categories`,
         //  url: `${process.env.REACT_APP_API}/categories`,
     };
 
@@ -16,7 +16,7 @@ export const getcategory=async(slug) => {
     
     const options = {
         method: 'GET',
-        url: `${process.env.NODE_ENV==='production'?process.env.REACT_APP_API:'http://localhost:8000/api'}/category/${slug}`,
+        url: `/api/category/${slug}`,
         // url: `${process.env.REACT_APP_API}/category/${slug}`,
     };
     
@@ -25,7 +25,7 @@ export const getcategory=async(slug) => {
  export const removeCategory=async(slug,authtoken) => {
     const options = {
         method: 'DELETE',
-        url: `${process.env.NODE_ENV==='production'?process.env.REACT_APP_API:'http://localhost:8000/api'}/category/${slug}`,
+        url: `/api/category/${slug}`,
         // url: `${process.env.REACT_APP_API}/category/${slug}`,
         headers:{authtoken}
     };
@@ -36,7 +36,7 @@ export const updateCategory=async(slug,category,authtoken) => {
     
     const options = {
         method: 'PUT',
-        url: `${process.env.NODE_ENV==='production'?process.env.REACT_APP_API:'http://localhost:8000/api'}/category/${slug}`,
+        url: `/api/category/${slug}`,
         // url: `${process.env.REACT_APP_API}/category/${slug}`,
         data:{category},
         headers:{
@@ -51,7 +51,7 @@ export const updateCategory=async(slug,category,authtoken) => {
    
     const options = {
         method: 'POST',
-        url: `${process.env.NODE_ENV==='production'?process.env.REACT_APP_API:'http://localhost:8000/api'}/category`,
+        url: `/api/category`,
         // url: `${process.env.REACT_APP_API}/category`,
         data: {category},
         headers:{
@@ -60,7 +60,7 @@ export const updateCategory=async(slug,category,authtoken) => {
     };
 
     return await axios.request(options);
-    // return await  axios.post('`${process.env.NODE_ENV==='production'?process.env.REACT_APP_API:'http://localhost:8000/api'}`/category',category,{
+    // return await  axios.post('`/api`/category',category,{
     //     headers:{authtoken}
     // })
  }
@@ -69,7 +69,7 @@ export const updateCategory=async(slug,category,authtoken) => {
     console.log("ID check",_id);
     const options = {
         method: 'GET',
-        url: `${process.env.NODE_ENV==='production'?process.env.REACT_APP_API:'http://localhost:8000/api'}/category/sub/${_id}`,
+        url: `/api/category/sub/${_id}`,
         // url: `${process.env.REACT_APP_API}/category/sub/${_id}`,
     };
 

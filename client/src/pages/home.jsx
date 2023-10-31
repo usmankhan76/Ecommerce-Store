@@ -39,8 +39,8 @@ import { Container, Grid } from '@mui/material';
         </Grid>
         <Grid container item lg={12} md={12} sm={12}><NewArrivalComponent/></Grid>
         <Grid container item xl={12} lg={12} md={12} sm={12} ><BestSellerComponent/></Grid>
-        {/* <Grid container item xl={12} lg={12} md={12} sm={12}><ListCategoryComponent/></Grid>
-        <Grid container item xl={12} lg={12} md={12} sm={12}><ListSubCategoryComponent/></Grid> */}
+        <Grid container item xl={12} lg={12} md={12} sm={12}><ListCategoryComponent/></Grid>
+        <Grid container item xl={12} lg={12} md={12} sm={12}><ListSubCategoryComponent/></Grid>
         <br />
         <br />
       </Grid>
